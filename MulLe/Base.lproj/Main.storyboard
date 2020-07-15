@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4bB-Mx-nuN">
-                                    <rect key="frame" x="0.0" y="99.5" width="414" height="44"/>
+                                    <rect key="frame" x="0.0" y="108.5" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="Add Data"/>
                                     <connections>
@@ -27,22 +27,50 @@
                                     </connections>
                                 </button>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="nFn-mw-7Nb" style="IBUITableViewCellStyleDefault" id="DyK-Ph-yqi">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="DyK-Ph-yqi" customClass="CustomTableViewCell" customModule="MulLe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="52.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DyK-Ph-yqi" id="BBQ-R8-VJt">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="52.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nFn-mw-7Nb">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4st-A8-Y2C">
+                                                    <rect key="frame" x="241" y="11" width="30" height="30.5"/>
+                                                    <state key="normal" title="Play"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ge-DB-JKb">
+                                                    <rect key="frame" x="362" y="11" width="32" height="30.5"/>
+                                                    <state key="normal" title="Stop"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0al-DO-u2Y">
+                                                    <rect key="frame" x="20" y="11" width="42" height="30.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTa-DQ-IBn">
+                                                    <rect key="frame" x="112" y="11" width="49" height="30.5"/>
+                                                    <state key="normal" title="Record"/>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="0al-DO-u2Y" secondAttribute="bottom" id="DCV-uG-Pvg"/>
+                                                <constraint firstItem="0al-DO-u2Y" firstAttribute="top" secondItem="BBQ-R8-VJt" secondAttribute="topMargin" id="KvC-Uf-k3b"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="6ge-DB-JKb" secondAttribute="bottom" id="Omb-v4-ftU"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="4st-A8-Y2C" secondAttribute="bottom" id="TlO-pz-fwq"/>
+                                                <constraint firstItem="6ge-DB-JKb" firstAttribute="trailing" secondItem="BBQ-R8-VJt" secondAttribute="trailingMargin" id="Vlb-uq-FHP"/>
+                                                <constraint firstItem="4st-A8-Y2C" firstAttribute="top" secondItem="BBQ-R8-VJt" secondAttribute="topMargin" id="am0-XO-mX3"/>
+                                                <constraint firstItem="4st-A8-Y2C" firstAttribute="leading" secondItem="wTa-DQ-IBn" secondAttribute="trailing" constant="80" id="cVA-T6-6O5"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="wTa-DQ-IBn" secondAttribute="bottom" id="eA7-Us-CUv"/>
+                                                <constraint firstItem="0al-DO-u2Y" firstAttribute="leading" secondItem="BBQ-R8-VJt" secondAttribute="leadingMargin" id="j5X-ek-BEr"/>
+                                                <constraint firstItem="wTa-DQ-IBn" firstAttribute="leading" secondItem="0al-DO-u2Y" secondAttribute="trailing" constant="50" id="q0c-zG-EnC"/>
+                                                <constraint firstItem="wTa-DQ-IBn" firstAttribute="top" secondItem="BBQ-R8-VJt" secondAttribute="topMargin" id="uBh-rV-bcn"/>
+                                                <constraint firstItem="6ge-DB-JKb" firstAttribute="top" secondItem="BBQ-R8-VJt" secondAttribute="topMargin" id="zmH-tI-aG2"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="recordLabel" destination="0al-DO-u2Y" id="06t-Fo-Nog"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
