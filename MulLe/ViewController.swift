@@ -7,20 +7,21 @@
 //
 
 import UIKit
+import AVFoundation
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+               
     @IBOutlet weak var tableView:UITableView!
-    
+       
     let cellIdentifier: String = "cell"
-    var numberOfRecords: Int = 0
-    var no: [String] = []
+    var numberOfRecords: Int = 10
+    var no = Array(1...10)
          
     @IBAction func touchUpAddButton(_ sender: UIButton) {
         
         numberOfRecords += 1
         print(String(numberOfRecords))
-        no.append(String(numberOfRecords))
+        no.append(numberOfRecords)
         self.tableView.reloadData()
         
     }
@@ -33,17 +34,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
         
-        let text: String = no[indexPath.row]
+        let text: String = String(no[indexPath.row])
         cell.recordLabel.text = text
-        
+
         return cell
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    }
+      }
 
 
 }

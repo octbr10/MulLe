@@ -51,6 +51,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTa-DQ-IBn">
                                                     <rect key="frame" x="112" y="11" width="49" height="30.5"/>
                                                     <state key="normal" title="Record"/>
+                                                    <connections>
+                                                        <action selector="recordAudio:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="w4v-62-nAm"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -69,7 +72,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="playButton" destination="4st-A8-Y2C" id="fOA-Br-qC8"/>
+                                            <outlet property="recordButton" destination="wTa-DQ-IBn" id="NFS-mR-6gm"/>
                                             <outlet property="recordLabel" destination="0al-DO-u2Y" id="06t-Fo-Nog"/>
+                                            <outlet property="stopButton" destination="6ge-DB-JKb" id="owx-wy-f8u"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

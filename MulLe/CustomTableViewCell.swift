@@ -11,7 +11,10 @@ import UIKit
 class CustomTableViewCell: UITableViewCell {
     
     @IBOutlet var recordLabel: UILabel!
-
+    @IBOutlet var recordButton: UIButton!
+    @IBOutlet var playButton: UIButton!
+    @IBOutlet var stopButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,5 +25,11 @@ class CustomTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
+    @IBAction func recordAudio(_ sender: Any) {
+        print("Recording Starts")
+        print(recordLabel.text ?? 99)
+        playButton.isEnabled = false
+        recordButton.isEnabled = false
+    }
 }
