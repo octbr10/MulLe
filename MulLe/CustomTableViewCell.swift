@@ -10,7 +10,8 @@ import UIKit
 
 class CustomTableViewCell: UITableViewCell {
     
-    @IBOutlet var recordLabel: UILabel!
+    @IBOutlet var audioIndexLabel: UILabel!
+    @IBOutlet var audioTitleText: UITextField!
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var playButton: UIButton!
     @IBOutlet var stopButton: UIButton!
@@ -28,8 +29,13 @@ class CustomTableViewCell: UITableViewCell {
     
     @IBAction func recordAudio(_ sender: Any) {
         print("Recording Starts")
-        print(recordLabel.text ?? 99)
+        print(audioIndexLabel.text ?? 99)
         playButton.isEnabled = false
         recordButton.isEnabled = false
+    }
+    
+    func confgureCell(item:Item) {
+        audioIndexLabel.text = String(item.audioIndex)
+        audioTitleText.text = item.audioTitle
     }
 }
