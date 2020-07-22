@@ -27,12 +27,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4st-A8-Y2C">
-                                                    <rect key="frame" x="332" y="7" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4st-A8-Y2C">
+                                                    <rect key="frame" x="301" y="7" width="30" height="30"/>
                                                     <state key="normal" title="Play"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ge-DB-JKb">
-                                                    <rect key="frame" x="372" y="7" width="32" height="30"/>
+                                                    <rect key="frame" x="341" y="7" width="32" height="30"/>
                                                     <state key="normal" title="Stop"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0al-DO-u2Y">
@@ -41,17 +41,16 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tsU-7e-SOe">
-                                                    <rect key="frame" x="80" y="5" width="183" height="34"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tsU-7e-SOe">
+                                                    <rect key="frame" x="82" y="5" width="150" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="cXN-QG-P3i"/>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="ucl-ua-5fM"/>
+                                                        <constraint firstAttribute="width" constant="150" id="lrq-qt-Htv"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTa-DQ-IBn">
-                                                    <rect key="frame" x="273" y="7" width="49" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTa-DQ-IBn">
+                                                    <rect key="frame" x="242" y="7" width="49" height="30"/>
                                                     <state key="normal" title="Record"/>
                                                     <connections>
                                                         <action selector="recordAudio:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="w4v-62-nAm"/>
@@ -60,14 +59,14 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="tsU-7e-SOe" firstAttribute="centerY" secondItem="BBQ-R8-VJt" secondAttribute="centerY" id="DoQ-Vb-edH"/>
-                                                <constraint firstItem="4st-A8-Y2C" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wTa-DQ-IBn" secondAttribute="trailing" constant="10" id="G1J-S8-lpm"/>
+                                                <constraint firstItem="4st-A8-Y2C" firstAttribute="leading" secondItem="wTa-DQ-IBn" secondAttribute="trailing" constant="10" id="G1J-S8-lpm"/>
                                                 <constraint firstItem="4st-A8-Y2C" firstAttribute="centerY" secondItem="BBQ-R8-VJt" secondAttribute="centerY" id="Sob-fy-eE5"/>
-                                                <constraint firstItem="6ge-DB-JKb" firstAttribute="trailing" secondItem="BBQ-R8-VJt" secondAttribute="trailingMargin" constant="10" id="UO0-m8-rdV"/>
-                                                <constraint firstItem="wTa-DQ-IBn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tsU-7e-SOe" secondAttribute="trailing" constant="10" id="iDc-G2-btJ"/>
+                                                <constraint firstItem="tsU-7e-SOe" firstAttribute="leading" secondItem="0al-DO-u2Y" secondAttribute="trailing" constant="10" id="ZlZ-u3-sib"/>
+                                                <constraint firstItem="wTa-DQ-IBn" firstAttribute="leading" secondItem="tsU-7e-SOe" secondAttribute="trailing" constant="10" id="iDc-G2-btJ"/>
                                                 <constraint firstItem="0al-DO-u2Y" firstAttribute="centerY" secondItem="BBQ-R8-VJt" secondAttribute="centerY" id="ijN-RM-ARz"/>
                                                 <constraint firstItem="6ge-DB-JKb" firstAttribute="centerY" secondItem="BBQ-R8-VJt" secondAttribute="centerY" id="tIu-st-eM2"/>
                                                 <constraint firstItem="0al-DO-u2Y" firstAttribute="leading" secondItem="BBQ-R8-VJt" secondAttribute="leadingMargin" constant="10" id="v0F-WS-d6z"/>
-                                                <constraint firstItem="6ge-DB-JKb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4st-A8-Y2C" secondAttribute="trailing" constant="10" id="wwH-tT-zKD"/>
+                                                <constraint firstItem="6ge-DB-JKb" firstAttribute="leading" secondItem="4st-A8-Y2C" secondAttribute="trailing" constant="10" id="wwH-tT-zKD"/>
                                                 <constraint firstItem="wTa-DQ-IBn" firstAttribute="centerY" secondItem="BBQ-R8-VJt" secondAttribute="centerY" id="xLP-KA-Gqn"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -85,9 +84,8 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="xzx-qV-hU8"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guC-Uy-IoS">
-                                <rect key="frame" x="364" y="69" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guC-Uy-IoS">
+                                <rect key="frame" x="364" y="64" width="30" height="30"/>
                                 <state key="normal" title="Add"/>
                                 <connections>
                                     <action selector="touchUpAddButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Py2-YW-Rf5"/>
@@ -95,6 +93,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="guC-Uy-IoS" secondAttribute="trailing" constant="20" id="JaU-Qx-8Fz"/>
+                            <constraint firstItem="guC-Uy-IoS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="nIM-dq-YRe"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
