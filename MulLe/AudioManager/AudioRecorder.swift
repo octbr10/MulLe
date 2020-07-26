@@ -8,18 +8,16 @@ import AVFoundation
 
 
 class AudioRecorder: NSObject {
-    
+     
     override init() {
         super.init()
         fetchRecordings()
     }
     
-//    let objectWillChange = PassthroughSubject<AudioRecorder, Never>()
-    
     var audioRecorder: AVAudioRecorder!
     var recordings = [Recording]()
-
-    var isRecording     =  false
+    var currentAudioFileName: URL?
+    var isRecording = false
      
     func startRecording() {
         print("recording starts")
@@ -33,7 +31,7 @@ class AudioRecorder: NSObject {
         }
 
         let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let audioFilename = documentPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "dd-MM-YY'_at_'HH:mm:ss")).m4a")
+        currentAudioFileName = documentPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "dd-MM-YY'_at_'HH:mm:ss")).m4a")
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -43,7 +41,7 @@ class AudioRecorder: NSObject {
         ]
 
         do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            audioRecorder = try AVAudioRecorder(url: currentAudioFileName!, settings: settings)
             audioRecorder.record()
             isRecording = true
 
@@ -52,12 +50,13 @@ class AudioRecorder: NSObject {
         }
     }
     
+    
     func updateRecording(audio: URL) {
         print("Re-recording starts")
         let audioFilename = audio
         print("updateRecording URL:")
         print(audioFilename)
-        deleteRecording(urlsToDelete: audioFilename)
+        deleteAudioFile(urlsToDelete: audioFilename)
 
         let recordingSession = AVAudioSession.sharedInstance()
 
@@ -67,7 +66,6 @@ class AudioRecorder: NSObject {
         } catch {
             print("Failed to set up recording session")
         }
-
 
 
         let settings = [
@@ -88,11 +86,15 @@ class AudioRecorder: NSObject {
     }
     
     
-    func stopRecording() {
-        print("recording Stopped")
-        audioRecorder.stop()
-        isRecording = false
-        fetchRecordings()
+    func stopRecording() -> URL? {
+        if isRecording == true {
+            print("recording Stopped")
+            audioRecorder.stop()
+            isRecording = false
+            fetchRecordings()
+            return currentAudioFileName!
+        }
+        return nil
     }
     
     func fetchRecordings() {
@@ -106,27 +108,10 @@ class AudioRecorder: NSObject {
             let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio))
             recordings.append(recording)
         }
-
-        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedDescending})
-
+        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
     }
     
-    func deleteRecordings(urlsToDelete: [URL]) {
-        
-        for url in urlsToDelete {
-            print(url)
-            do {
-               try FileManager.default.removeItem(at: url)
-            } catch {
-                print("File could not be deleted!")
-            }
-        }
-        
-        fetchRecordings()
-    }
-    
-    func deleteRecording(urlsToDelete: URL) {
-        
+    func deleteAudioFile(urlsToDelete: URL) {
            do {
                try FileManager.default.removeItem(at: urlsToDelete)
             } catch {
@@ -134,6 +119,19 @@ class AudioRecorder: NSObject {
             }
         fetchRecordings()
     }
-    
+
+    //    func deleteRecordings(urlsToDelete: [URL]) {
+//
+//        for url in urlsToDelete {
+//            print(url)
+//            do {
+//               try FileManager.default.removeItem(at: url)
+//            } catch {
+//                print("File could not be deleted!")
+//            }
+//        }
+//
+//        fetchRecordings()
+//    }
     
 }

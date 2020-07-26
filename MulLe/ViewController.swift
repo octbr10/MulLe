@@ -11,7 +11,7 @@ import AVFoundation
 
 class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate{
 
-    var audioPlayer: AVAudioPlayer?
+    var avAudioPlayer: AVAudioPlayer?
     var audioRecorder: AudioRecorder?
     
     @IBOutlet weak var tableView:UITableView!
@@ -28,14 +28,22 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
     
     @IBAction func touchUpRecordButton(_ sender: UIButton) {
         if audioRecorder?.isRecording == false {
-            audioRecorder?.startRecording()
+            audioRecorder!.startRecording()
             recordButton.setTitle("Stop", for: .normal)
             self.tableView.reloadData()
             //self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
         } else {
             recordButton.setTitle("Record", for: .normal)
-            audioRecorder?.stopRecording()
+            let lastURL = audioRecorder!.stopRecording()
+            if var urlToPlay = lastURL {
+                print(urlToPlay)
+                let audioPlayer = AudioPlayer()
+                urlToPlay = audioRecorder!.recordings[0].fileURL
+                print(urlToPlay)
+                audioPlayer.startPlayback(audio: urlToPlay, owner: self)
+            }
             self.tableView.reloadData()
+           // audioPlayer.startPlayback(audio: audioRecorder?.recordings[0].fileURL, owner: self)
 //            self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
         }
     }
@@ -53,6 +61,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return audioRecorder?.recordings.count ?? 0
     }
@@ -63,17 +75,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
         
         cell.myTableViewController = self
-   
-        cell.audioURL = audioRecorder?.recordings[indexPath.row].fileURL
+        cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
+        cell.sequenceNo.text = String(indexPath.row)
         
-        cell.sequenceNo.text = String(audioRecorder!.recordings.count - indexPath.row)
-        
-        cell.timeRecorded.text = String(audioRecorder?.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YY-MM-dd HH:mm:ss") ?? "non")
+        cell.timeRecorded.text = String(audioRecorder!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YY-MM-dd HH:mm:ss"))
         
   
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: cell.audioURL)
-            let duration = CGFloat(audioPlayer!.duration)
+            avAudioPlayer = try AVAudioPlayer(contentsOf: cell.audioURL)
+            let duration = CGFloat(avAudioPlayer!.duration)
             let stringDuration = String(format: "%.2f", Double(duration))
             cell.audioDuration.text = stringDuration + " s"
            
@@ -83,25 +93,30 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedObjTemp = audioRecorder?.recordings[sourceIndexPath.item]
-        audioRecorder?.recordings.remove(at: sourceIndexPath.item)
-        audioRecorder?.recordings.insert(movedObjTemp!, at: destinationIndexPath.item)
+        let movedObjTemp = audioRecorder!.recordings[sourceIndexPath.item]
+        audioRecorder!.recordings.remove(at: sourceIndexPath.item)
+        audioRecorder!.recordings.insert(movedObjTemp, at: destinationIndexPath.item)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            audioRecorder?.recordings.remove(at: indexPath.item)
+            audioRecorder!.deleteAudioFile(urlsToDelete: (audioRecorder!.recordings[indexPath.row].fileURL))
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            audioRecorder?.deleteRecording(urlsToDelete: (audioRecorder?.recordings[indexPath.row].fileURL)!)
-            
         }
     }
-    
+  
     func deleteCell(cell: UITableViewCell) {
         if let deletionIndexPath = tableView.indexPath(for: cell) {
-            audioRecorder?.recordings.remove(at: deletionIndexPath.item)
+            for itemq in audioRecorder!.recordings {
+                print (itemq)
+            }
+
+            print("deletionIndexPath: ", deletionIndexPath[1])
+            print("audioRecorder!.recordings.count: ", audioRecorder!.recordings.count)
+            print(audioRecorder!.recordings[deletionIndexPath[1]].fileURL)
+            audioRecorder!.deleteAudioFile(urlsToDelete: audioRecorder!.recordings[deletionIndexPath[1]].fileURL)
             tableView.deleteRows(at: [deletionIndexPath], with: .automatic)
-            audioRecorder?.deleteRecording(urlsToDelete: (audioRecorder?.recordings[deletionIndexPath.row].fileURL)!)
+
         }
     }
    

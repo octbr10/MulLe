@@ -8,12 +8,13 @@ import UIKit
 import AVFoundation
 
 class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
-   
+  
     var isPlaying = false
     
     var audioPlayer: AVAudioPlayer!
     
     func startPlayback (audio: URL, owner: AVAudioPlayerDelegate) {
+        print("starting playback...")
         
         let playbackSession = AVAudioSession.sharedInstance()
         
@@ -31,6 +32,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
         } catch {
             print("Playback failed.")
         }
+        print("playback is over...")
     }
     
     func stopPlayback() {
