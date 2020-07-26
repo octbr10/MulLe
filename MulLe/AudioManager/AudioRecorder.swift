@@ -50,6 +50,17 @@ class AudioRecorder: NSObject {
         }
     }
     
+              
+    func stopRecording() {
+        if isRecording == true {
+            print("recording Stopped")
+            audioRecorder.stop()
+            isRecording = false
+            fetchRecordings()
+//            return currentAudioFileName!
+        }
+//        return nil
+    }
     
     func updateRecording(audio: URL) {
         print("Re-recording starts")
@@ -85,18 +96,6 @@ class AudioRecorder: NSObject {
         }
     }
     
-    
-    func stopRecording() -> URL? {
-        if isRecording == true {
-            print("recording Stopped")
-            audioRecorder.stop()
-            isRecording = false
-            fetchRecordings()
-            return currentAudioFileName!
-        }
-        return nil
-    }
-    
     func fetchRecordings() {
         print("fetch is working")
         recordings.removeAll()
@@ -108,7 +107,7 @@ class AudioRecorder: NSObject {
             let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio))
             recordings.append(recording)
         }
-        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
+        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedDescending})
     }
     
     func deleteAudioFile(urlsToDelete: URL) {

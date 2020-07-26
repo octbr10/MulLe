@@ -34,14 +34,15 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
             //self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
         } else {
             recordButton.setTitle("Record", for: .normal)
-            let lastURL = audioRecorder!.stopRecording()
-            if var urlToPlay = lastURL {
-                print(urlToPlay)
-                let audioPlayer = AudioPlayer()
-                urlToPlay = audioRecorder!.recordings[0].fileURL
-                print(urlToPlay)
-                audioPlayer.startPlayback(audio: urlToPlay, owner: self)
-            }
+            audioRecorder!.stopRecording()
+//            let lastURL = audioRecorder!.stopRecording()
+//            if var urlToPlay = lastURL {
+//                print(urlToPlay)
+//                let audioPlayer = AudioPlayer()
+//                urlToPlay = audioRecorder!.recordings[0].fileURL
+//                print(urlToPlay)
+//                audioPlayer.startPlayback(audio: urlToPlay, owner: self)
+//            }
             self.tableView.reloadData()
            // audioPlayer.startPlayback(audio: audioRecorder?.recordings[0].fileURL, owner: self)
 //            self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
@@ -76,7 +77,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.myTableViewController = self
         cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
-        cell.sequenceNo.text = String(indexPath.row)
+        cell.sequenceNo.text = String(audioRecorder!.recordings.count - indexPath.row)
         
         cell.timeRecorded.text = String(audioRecorder!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YY-MM-dd HH:mm:ss"))
         
@@ -107,13 +108,14 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
   
     func deleteCell(cell: UITableViewCell) {
         if let deletionIndexPath = tableView.indexPath(for: cell) {
-            for itemq in audioRecorder!.recordings {
-                print (itemq)
-            }
-
-            print("deletionIndexPath: ", deletionIndexPath[1])
-            print("audioRecorder!.recordings.count: ", audioRecorder!.recordings.count)
-            print(audioRecorder!.recordings[deletionIndexPath[1]].fileURL)
+            
+//            for itemq in audioRecorder!.recordings {
+//                print (itemq)
+//            }
+//            print("deletionIndexPath: ", deletionIndexPath[1])
+//            print("audioRecorder!.recordings.count: ", audioRecorder!.recordings.count)
+//            print(audioRecorder!.recordings[deletionIndexPath[1]].fileURL)
+            
             audioRecorder!.deleteAudioFile(urlsToDelete: audioRecorder!.recordings[deletionIndexPath[1]].fileURL)
             tableView.deleteRows(at: [deletionIndexPath], with: .automatic)
 
