@@ -28,10 +28,20 @@
                                 </items>
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dda-vW-BBu">
-                                <rect key="frame" x="182.5" y="822" width="49" height="30"/>
+                                <rect key="frame" x="50" y="822" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="fkt-92-8ba"/>
+                                </constraints>
                                 <state key="normal" title="Record"/>
                                 <connections>
                                     <action selector="touchUpRecordButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VhN-wF-cVG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7j-tY-JOy">
+                                <rect key="frame" x="300" y="822" width="64" height="30"/>
+                                <state key="normal" title="Play All"/>
+                                <connections>
+                                    <action selector="playAllAudios:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0BX-nP-PoT"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CUv-im-zOK">
@@ -135,16 +145,18 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="Dda-vW-BBu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="3qL-sL-JUy"/>
+                            <constraint firstItem="L7j-tY-JOy" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Dda-vW-BBu" secondAttribute="trailing" constant="200" id="4Y7-lk-gWo"/>
                             <constraint firstItem="NRa-KN-ejv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7Ij-fp-n7i"/>
-                            <constraint firstItem="Dda-vW-BBu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AmO-ta-XPc"/>
+                            <constraint firstItem="L7j-tY-JOy" firstAttribute="centerY" secondItem="Dda-vW-BBu" secondAttribute="centerY" id="Dne-K4-Igw"/>
                             <constraint firstItem="CUv-im-zOK" firstAttribute="top" secondItem="NRa-KN-ejv" secondAttribute="bottom" id="Has-W9-3td"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Dda-vW-BBu" secondAttribute="bottom" constant="10" id="Mlx-B5-gTh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="L7j-tY-JOy" secondAttribute="trailing" constant="50" id="POR-vV-14l"/>
                             <constraint firstItem="NRa-KN-ejv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="SAt-X3-8XE"/>
                             <constraint firstItem="NRa-KN-ejv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ULH-QX-fkf"/>
                             <constraint firstItem="NRa-KN-ejv" firstAttribute="leading" secondItem="CUv-im-zOK" secondAttribute="leading" id="WXF-G7-3HZ"/>
                             <constraint firstItem="Dda-vW-BBu" firstAttribute="top" secondItem="CUv-im-zOK" secondAttribute="bottom" constant="10" id="caw-NA-VB4"/>
                             <constraint firstItem="CUv-im-zOK" firstAttribute="top" secondItem="NRa-KN-ejv" secondAttribute="bottom" id="flF-Z8-dp8"/>
-                            <constraint firstItem="NRa-KN-ejv" firstAttribute="centerX" secondItem="Dda-vW-BBu" secondAttribute="centerX" id="mTn-Wx-3bz"/>
                             <constraint firstItem="NRa-KN-ejv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="nbz-p7-BuP"/>
                             <constraint firstItem="NRa-KN-ejv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="sJt-03-WTh"/>
                             <constraint firstItem="NRa-KN-ejv" firstAttribute="trailing" secondItem="CUv-im-zOK" secondAttribute="trailing" id="vNX-au-bBq"/>
@@ -152,6 +164,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="playAllButton" destination="L7j-tY-JOy" id="tqf-xR-cjc"/>
                         <outlet property="recordButton" destination="Dda-vW-BBu" id="opf-ZO-76u"/>
                         <outlet property="tableView" destination="CUv-im-zOK" id="fNE-mR-Fyb"/>
                     </connections>

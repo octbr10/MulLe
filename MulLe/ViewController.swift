@@ -12,11 +12,14 @@ import AVFoundation
 class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate{
 
     var avAudioPlayer: AVAudioPlayer?
+    var avQueuePlayer: AVQueuePlayer?
+    var audioPlayer:  AudioPlayer?
     var audioRecorder: AudioRecorder?
     
-    @IBOutlet weak var tableView:UITableView!
     
+    @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var playAllButton: UIButton!
     
     let cellIdentifier: String = "cell"
     
@@ -24,6 +27,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
         super.viewDidLoad()
         tableView.reloadData()
         audioRecorder = AudioRecorder()
+        audioPlayer = AudioPlayer()
     }
     
     @IBAction func touchUpRecordButton(_ sender: UIButton) {
@@ -48,6 +52,21 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
 //            self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
         }
     }
+    
+    @IBAction func playAllAudios(_ sender: UIButton) {
+        
+        var audioPlayerItems: [AVPlayerItem] = []
+        
+        for item in audioRecorder!.recordings {
+            let url = item.fileURL
+            let audioPlayerItem = AVPlayerItem(url: url)
+            audioPlayerItems.append(audioPlayerItem)
+        }
+        
+        avQueuePlayer = AVQueuePlayer(items: audioPlayerItems)
+        avQueuePlayer?.play()
+  }
+    
     
     @IBAction func editList(_ sender: UIBarItem) {
         self.tableView.isEditing = !self.tableView.isEditing
@@ -75,8 +94,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
        
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
         
-        cell.myTableViewController = self
         cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
+        cell.myTableViewController = self
         cell.sequenceNo.text = String(audioRecorder!.recordings.count - indexPath.row)
         
         cell.timeRecorded.text = String(audioRecorder!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YY-MM-dd HH:mm:ss"))

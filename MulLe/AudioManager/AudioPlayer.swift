@@ -10,7 +10,6 @@ import AVFoundation
 class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
   
     var isPlaying = false
-    
     var audioPlayer: AVAudioPlayer!
     
     func startPlayback (audio: URL, owner: AVAudioPlayerDelegate) {
@@ -27,6 +26,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audio)
             audioPlayer.delegate = owner
+            audioPlayer.prepareToPlay()
             audioPlayer.play()
             isPlaying = true
         } catch {
@@ -48,7 +48,6 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
         if flag {
             isPlaying = false
             print("playing is finished")
-        }
+        } else {print("playbackfinishing failed")}
     }
-    
 }
