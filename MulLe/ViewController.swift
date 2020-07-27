@@ -15,7 +15,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
     var avQueuePlayer: AVQueuePlayer?
     var audioPlayer:  AudioPlayer?
     var audioRecorder: AudioRecorder?
-    
+    var isPlaying = false
     
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var recordButton: UIButton!
@@ -39,23 +39,22 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
         } else {
             recordButton.setTitle("Record", for: .normal)
             audioRecorder!.stopRecording()
-//            let lastURL = audioRecorder!.stopRecording()
-//            if var urlToPlay = lastURL {
-//                print(urlToPlay)
-//                let audioPlayer = AudioPlayer()
-//                urlToPlay = audioRecorder!.recordings[0].fileURL
-//                print(urlToPlay)
-//                audioPlayer.startPlayback(audio: urlToPlay, owner: self)
-//            }
             self.tableView.reloadData()
-           // audioPlayer.startPlayback(audio: audioRecorder?.recordings[0].fileURL, owner: self)
-//            self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
         }
     }
+    
+   @objc func playerDidFinishPlaying(sender: Notification) {
+       print("Finished Queue playing")
+       isPlaying = false
+       playAllButton.setTitle("Play All", for: .normal)
+   }
     
     @IBAction func playAllAudios(_ sender: UIButton) {
         
         var audioPlayerItems: [AVPlayerItem] = []
+      
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioPlayerItems)
         
         for item in audioRecorder!.recordings {
             let url = item.fileURL
@@ -63,8 +62,19 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
             audioPlayerItems.append(audioPlayerItem)
         }
         
+        
         avQueuePlayer = AVQueuePlayer(items: audioPlayerItems)
-        avQueuePlayer?.play()
+        
+        if isPlaying == false {
+            avQueuePlayer?.play()
+            isPlaying = true
+            playAllButton.setTitle("Stop", for: .normal)
+        } else {
+            avQueuePlayer?.pause()
+            isPlaying = false
+            playAllButton.setTitle("Play All", for: .normal)
+        }
+
   }
     
     
