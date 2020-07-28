@@ -107,7 +107,7 @@ class AudioRecorder: NSObject {
             let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio))
             recordings.append(recording)
         }
-        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedDescending})
+        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
     }
     
     func deleteAudioFile(urlsToDelete: URL) {
