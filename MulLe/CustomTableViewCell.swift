@@ -10,9 +10,13 @@ import AVFoundation
 
 // Mark: - CustomTableViewCell
 
-class CustomTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
+class CustomTableViewCell: UITableViewCell{
     
     var myTableViewController: ViewController?
+
+    var audioURL: URL!
+    var audioPlayer = AudioPlayer()
+    var audioRecorder = AudioRecorder()
     
     @IBOutlet var textRecognized: UILabel!
     @IBOutlet var sequenceNo: UILabel!
@@ -21,15 +25,16 @@ class CustomTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     @IBOutlet var reRecordButton: UIButton!
     @IBOutlet var playButton: UIButton!
     
-    var audioURL: URL!
-    var audioPlayer = AudioPlayer()
-    var audioRecorder = AudioRecorder()
-   
+    @objc func updatePlayButtonText() {
+        print("notified...")
+        playButton.setTitle("Play", for: .normal)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -38,7 +43,7 @@ class CustomTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     
     @IBAction func playAudio(_ sender: Any) {
         if audioPlayer.isPlaying == false {
-            audioPlayer.startPlayback(audio: audioURL, owner: self)
+            audioPlayer.startPlayback(audio: audioURL)
             playButton.setTitle("Stop", for: .normal)
             reRecordButton.isEnabled = false
         } else {
@@ -71,11 +76,12 @@ class CustomTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         }
      }
     
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if flag {
-            print("playing is finished.............")
-            playButton.setTitle("Play", for: .normal)
-            reRecordButton.isEnabled = true
-        }
-    }
+//    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+//        if flag {
+//            print("CustomTableViewCell")
+//            playButton.setTitle("Play", for: .normal)
+//            reRecordButton.isEnabled = true
+//            audioPlayer.isPlaying = false
+//        }
+//    }
 }

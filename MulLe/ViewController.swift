@@ -9,13 +9,12 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate{
+class ViewController: UIViewController{
 
     var avAudioPlayer: AVAudioPlayer?
-    var avQueuePlayer: AVQueuePlayer?
     var audioPlayer:  AudioPlayer?
     var audioRecorder: AudioRecorder?
-    var isPlaying = false
+    var audioQueuePlayer: AudioQueuePlayer?
     
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var recordButton: UIButton!
@@ -28,7 +27,18 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
         tableView.reloadData()
         audioRecorder = AudioRecorder()
         audioPlayer = AudioPlayer()
+        NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
     }
+  
+    @objc func resetPlayAllButton() {
+        playAllButton.setTitle("Play all", for: .normal)
+    }
+    
+    @objc func resetButtons() {
+        tableView.reloadData()
+    }
+    
     
     @IBAction func touchUpRecordButton(_ sender: UIButton) {
         if audioRecorder?.isRecording == false {
@@ -43,49 +53,31 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
         }
     }
     
-   @objc func playerDidFinishPlaying(sender: Notification) {
-       print("Finished Queue playing")
-       isPlaying = false
-       playAllButton.setTitle("Play All", for: .normal)
-   }
-    
-    @IBAction func playAllAudios(_ sender: UIButton) {
-        
-        var audioPlayerItems: [AVPlayerItem] = []
-      
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioPlayerItems)
-        
-        for item in audioRecorder!.recordings {
-            let url = item.fileURL
-            let audioPlayerItem = AVPlayerItem(url: url)
-            audioPlayerItems.append(audioPlayerItem)
-        }
-        
-        
-        avQueuePlayer = AVQueuePlayer(items: audioPlayerItems)
-        
-        if isPlaying == false {
-            avQueuePlayer?.play()
-            isPlaying = true
-            playAllButton.setTitle("Stop", for: .normal)
+    @IBAction func playAllAudios(_ sender: Any) {
+        if audioQueuePlayer?.isPlaying == true{
+            audioQueuePlayer!.stopPlayback()
+            playAllButton.setTitle("Play all", for: .normal)
         } else {
-            avQueuePlayer?.pause()
-            isPlaying = false
-            playAllButton.setTitle("Play All", for: .normal)
+            
+            var urls: [URL] = []
+            for item in audioRecorder!.recordings {
+                let url = item.fileURL
+                print("url", url)
+                urls.append(url)
+                }
+            audioQueuePlayer = AudioQueuePlayer(items: urls)
+            playAllButton.setTitle("Stop", for: .normal)
+            audioQueuePlayer!.startPlayback()
         }
-
-  }
     
+  }
     
     @IBAction func editList(_ sender: UIBarItem) {
         self.tableView.isEditing = !self.tableView.isEditing
         sender.title = (self.tableView.isEditing) ? "Done": "Edit"
         
     }
-    
 }
-
 
 // Mark: - UITableViewCell 정의
 
@@ -103,6 +95,10 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
+        
+        cell.reRecordButton.isEnabled = true
+        cell.playButton.setTitle("Play", for: .normal)
+        
         
         cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
         cell.myTableViewController = self
@@ -135,7 +131,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
   
-    func deleteCell(cell: UITableViewCell) {
+    @objc func deleteCell(cell: UITableViewCell) {
         if let deletionIndexPath = tableView.indexPath(for: cell) {
             
 //            for itemq in audioRecorder!.recordings {

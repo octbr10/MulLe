@@ -7,12 +7,13 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
+class AudioPlayer: NSObject, AVAudioPlayerDelegate{
   
     var isPlaying = false
-    var audioPlayer: AVAudioPlayer!
     
-    func startPlayback (audio: URL, owner: AVAudioPlayerDelegate) {
+    var audioPlayer: AVAudioPlayer!
+   
+    func startPlayback (audio: URL) {
         print("starting playback...")
         
         let playbackSession = AVAudioSession.sharedInstance()
@@ -25,14 +26,14 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audio)
-            audioPlayer.delegate = owner
+            audioPlayer.delegate = self
             audioPlayer.prepareToPlay()
             audioPlayer.play()
             isPlaying = true
         } catch {
             print("Playback failed.")
         }
-        print("playback is over...")
+        print("startPlayback funciton ends here")
     }
     
     func stopPlayback() {
@@ -47,7 +48,8 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
             isPlaying = false
-            print("playing is finished")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
+            print("audioPlayerDidFinishPlaying is called")
         } else {print("playbackfinishing failed")}
     }
 }
