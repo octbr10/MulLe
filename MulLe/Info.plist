@@ -62,5 +62,7 @@
 	</array>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Recorder will use mic. Do you allow it?</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Recorded speech will be converted to text. Do you allow it?</string>
 </dict>
 </plist>

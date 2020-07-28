@@ -23,6 +23,31 @@ class ViewController: UIViewController{
     
     let cellIdentifier: String = "cell"
     
+    @IBOutlet weak var transcriptionTextField: UITextField!
+    
+    func requestSpeechAuth() {
+        SFSpeechRecognizer.requestAuthorization { authStatus in
+            if authStatus == SFSpeechRecognizerAuthorizationStatus.authorized {
+                
+                let path = self.audioRecorder!.recordings[0].fileURL
+                let recognizer = SFSpeechRecognizer()
+                let request = SFSpeechURLRecognitionRequest(url: path)
+                recognizer?.recognitionTask(with: request) { (result, error) in
+                    if let error = error {
+                        print("There was an error: \(error)")
+                    } else {
+                        self.transcriptionTextField.text = result?.bestTranscription.formattedString
+                        if (result?.isFinal)! {
+                            print("Success")
+                        }
+                    }
+                    }
+                }
+            }
+        }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
@@ -30,6 +55,7 @@ class ViewController: UIViewController{
         audioPlayer = AudioPlayer()
         NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
+        requestSpeechAuth()
     }
   
     @objc func resetPlayAllButton() {

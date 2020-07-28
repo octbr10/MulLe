@@ -142,6 +142,12 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="xzx-qV-hU8"/>
                                 </connections>
                             </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hPC-zH-dK9">
+                                <rect key="frame" x="117" y="822" width="175" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -167,6 +173,7 @@
                         <outlet property="playAllButton" destination="L7j-tY-JOy" id="tqf-xR-cjc"/>
                         <outlet property="recordButton" destination="Dda-vW-BBu" id="opf-ZO-76u"/>
                         <outlet property="tableView" destination="CUv-im-zOK" id="fNE-mR-Fyb"/>
+                        <outlet property="transcriptionTextField" destination="hPC-zH-dK9" id="3Ql-v6-rtf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
