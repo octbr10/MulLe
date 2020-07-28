@@ -50,10 +50,17 @@ class ViewController: UIViewController{
             recordButton.setTitle("Record", for: .normal)
             audioRecorder!.stopRecording()
             self.tableView.reloadData()
+            playNewRecord()
         }
     }
     
-    @IBAction func playAllAudios(_ sender: Any) {
+    func playNewRecord() {
+        let url = audioRecorder!.recordings[0].fileURL
+        audioQueuePlayer = AudioQueuePlayer(items: [url])
+        audioQueuePlayer!.startPlayback()
+    }
+    
+    @IBAction func playAllAudios(_ sender: UIButton) {
         if audioQueuePlayer?.isPlaying == true{
             audioQueuePlayer!.stopPlayback()
             playAllButton.setTitle("Play all", for: .normal)
