@@ -16,7 +16,8 @@ class ViewController: UIViewController{
     var audioPlayer:  AudioPlayer?
     var audioRecorder: AudioRecorder?
     var audioQueuePlayer: AudioQueuePlayer?
-    
+  
+   
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playAllButton: UIButton!
@@ -24,29 +25,8 @@ class ViewController: UIViewController{
     let cellIdentifier: String = "cell"
     
     @IBOutlet weak var transcriptionTextField: UITextField!
-    
-    func requestSpeechAuth() {
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            if authStatus == SFSpeechRecognizerAuthorizationStatus.authorized {
-                
-                let path = self.audioRecorder!.recordings[0].fileURL
-                let recognizer = SFSpeechRecognizer()
-                let request = SFSpeechURLRecognitionRequest(url: path)
-                recognizer?.recognitionTask(with: request) { (result, error) in
-                    if let error = error {
-                        print("There was an error: \(error)")
-                    } else {
-                        self.transcriptionTextField.text = result?.bestTranscription.formattedString
-                        if (result?.isFinal)! {
-                            print("Success")
-                        }
-                    }
-                    }
-                }
-            }
-        }
-    
-    
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,25 +47,64 @@ class ViewController: UIViewController{
     }
     
     
-    @IBAction func touchUpRecordButton(_ sender: UIButton) {
-        if audioRecorder?.isRecording == false {
-            audioRecorder!.startRecording()
-            recordButton.setTitle("Stop", for: .normal)
-            self.tableView.reloadData()
-            //self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
-        } else {
-            recordButton.setTitle("Record", for: .normal)
-            audioRecorder!.stopRecording()
-            self.tableView.reloadData()
-            playNewRecord()
-        }
+//    @IBAction func touchUpRecordButton(_ sender: UIButton) {
+//        if audioRecorder?.isRecording == false {
+//            audioRecorder!.startRecording()
+//            recordButton.setTitle("Stop", for: .normal)
+//            self.tableView.reloadData()
+//            //self.tableView.reloadSections(IndexSet(0...0), with: UITableView.RowAnimation.automatic)
+//        } else {
+//            recordButton.setTitle("Record", for: .normal)
+//            audioRecorder!.stopRecording()
+//            self.tableView.reloadData()
+//            playNewRecord()
+//        }
+//    }
+    
+    @IBAction func touchDownRecord(_ sender: UIButton) {
+                audioRecorder!.startRecording()
     }
     
+    @IBAction func touchUpRecordStop(_ sender: UIButton) {
+                    audioRecorder!.stopRecording()
+                    self.tableView.reloadData()
+                    playNewRecord()
+    }
+    
+        
     func playNewRecord() {
-        let url = audioRecorder!.recordings[0].fileURL
+        let lastIndex = audioRecorder!.recordings.endIndex - 1
+        let url = audioRecorder!.recordings[lastIndex].fileURL
         audioQueuePlayer = AudioQueuePlayer(items: [url])
         audioQueuePlayer!.startPlayback()
     }
+    
+    func requestSpeechAuth() {
+        SFSpeechRecognizer.requestAuthorization { authStatus in
+            if authStatus == SFSpeechRecognizerAuthorizationStatus.authorized {
+                
+                if self.audioRecorder!.recordings.count != 0 {
+                    let path = self.audioRecorder!.recordings[0].fileURL
+                    let recognizer = SFSpeechRecognizer()
+                    let request = SFSpeechURLRecognitionRequest(url: path)
+                    recognizer?.recognitionTask(with: request)
+                    { (result, error) in
+                        if let error = error {
+                            print("There was an error: \(error)")
+                        } else {
+                            self.transcriptionTextField.text = result?.bestTranscription.formattedString
+                            if (result?.isFinal)! {
+                                print("Success")
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+    
+    
     
     @IBAction func playAllAudios(_ sender: UIButton) {
         if audioQueuePlayer?.isPlaying == true{
@@ -130,14 +149,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
        
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
         
+        cell.sequenceNo.text = String(indexPath.row + 1)
+//        cell.sequenceNo.text = String(audioRecorder!.recordings.count - indexPath.row)
+        cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
         cell.reRecordButton.isEnabled = true
         cell.playButton.setTitle("Play", for: .normal)
-        
-        
-        cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
         cell.myTableViewController = self
-        cell.sequenceNo.text = String(audioRecorder!.recordings.count - indexPath.row)
-        
         cell.timeRecorded.text = String(audioRecorder!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YY-MM-dd HH:mm:ss"))
         
   

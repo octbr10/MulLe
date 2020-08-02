@@ -34,7 +34,8 @@
                                 </constraints>
                                 <state key="normal" title="Record"/>
                                 <connections>
-                                    <action selector="touchUpRecordButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VhN-wF-cVG"/>
+                                    <action selector="touchDownRecord:" destination="BYZ-38-t0r" eventType="touchDown" id="2B8-UK-OFh"/>
+                                    <action selector="touchUpRecordStop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hba-Yt-MiJ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7j-tY-JOy">
@@ -58,7 +59,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zQa-6M-jGZ">
                                                     <rect key="frame" x="0.0" y="-10" width="414" height="90"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-wT-QJv">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TextRecognized" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-wT-QJv">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
