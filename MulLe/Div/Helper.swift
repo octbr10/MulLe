@@ -14,3 +14,15 @@ func getCreationDate(for file: URL) -> Date {
     }
 }
 
+func appendToFileName(fileURL: URL, newFileName: String) {
+
+    var fileURL = fileURL
+    let oldFileName = fileURL.lastPathComponent.components(separatedBy: ".")[0]
+    let oldDate = oldFileName.components(separatedBy: "_")[0]
+    let newName = oldDate + "_" + newFileName + ".m4a"
+    var rv = URLResourceValues()
+    
+    rv.name = newName
+    try? fileURL.setResourceValues(rv)
+ 
+}

@@ -16,10 +16,13 @@ class CustomTableViewCell: UITableViewCell{
     var myTableViewController: ViewController?
 
     var audioURL: URL!
-    var audioPlayer: AudioPlayer!
+    var audioPlayer = AudioPlayer()
     var audioRecorder = AudioRecorder()
+    var audioQueuePlayer: AudioQueuePlayer?
+   
     
-    @IBOutlet var textRecognized: UILabel!
+    
+    @IBOutlet var fileName: UITextView!
     @IBOutlet var sequenceNo: UILabel!
     @IBOutlet var audioDuration: UILabel!
     @IBOutlet var timeRecorded: UILabel!
@@ -76,6 +79,26 @@ class CustomTableViewCell: UITableViewCell{
                  print("recordingStopped")
         }
      }
+    
+    @IBAction func touchDownReRecord(_ sender: Any) {
+        if audioRecorder.isRecording == false {
+            audioRecorder.updateRecording(audio: audioURL)
+            
+        }
+    }
+    
+    @IBAction func touchUpReRecordStop(_ sender: Any) {
+        audioRecorder.stopRecording()
+        
+        if audioRecorder.speechToText(fileURL: audioURL) != "no text recognized" {
+            print(audioRecorder.speechToText(fileURL: audioURL)) //return 값이 "no text recognized" 임
+        }
+        
+        let url = audioURL!
+        audioQueuePlayer = AudioQueuePlayer(items: [url])
+        audioQueuePlayer!.startPlayback()
+        
+    }
     
 //    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
 //        if flag {

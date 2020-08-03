@@ -6,6 +6,9 @@
 import Foundation
 
 struct Recording {
-    let fileURL: URL
-    let createdAt: Date
+    let fileURL: URL // File path including document(directory) path
+    let filePath: String
+    var fileName: String
+    let createdAt: Date // file creation or audioUpdated date.
+    var textRecognized: String
 }

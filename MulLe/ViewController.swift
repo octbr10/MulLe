@@ -53,10 +53,13 @@ class ViewController: UIViewController{
   
     @objc func resetPlayAllButton() {
         playAllButton.setTitle("Play all", for: .normal)
+        audioRecorder?.fetchRecordings()
+        self.tableView.reloadData()
     }
     
     @objc func resetButtons() {
-        tableView.reloadData()
+        //audioRecorder?.fetchRecordings()
+        self.tableView.reloadData()
     }
     
     
@@ -79,72 +82,65 @@ class ViewController: UIViewController{
     }
     
     @IBAction func touchUpRecordStop(_ sender: UIButton) {
-                    audioRecorder?.stopRecording()
-                    self.tableView.reloadData()
-                    playNewRecord()
-    }
-    
-        
-    func playNewRecord() {
+        audioRecorder?.stopRecording()
+
         let lastIndex = audioRecorder!.recordings.endIndex - 1
         let url = audioRecorder!.recordings[lastIndex].fileURL
+        
+        if audioRecorder?.speechToText(fileURL: url) != "no text recognized" {
+            print(audioRecorder?.speechToText(fileURL: url) ?? "no text recognized") //return 값이 "no text recognized" 임
+        }
+        
+        playNewRecord(fileURL: url)
+
+        // scroll to the last row
+        self.tableView.reloadData()
+        let indexPath = NSIndexPath(row: lastIndex, section: 0)
+        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+
+    }
+        
+    func playNewRecord(fileURL: URL) {
+        
+        let url = fileURL
+                    
         audioQueuePlayer = AudioQueuePlayer(items: [url])
         audioQueuePlayer!.startPlayback()
         
-        var textRecognized: String
-        textRecognized = speechToText(fileURL: url)
-        print(textRecognized) // 여기서는 textRecognized가 널 임. speedchToText 내에서 처리해야함.
-    }
-    
-//    func requestSpeechAuth(path:URL) {
-//        let path = path
-//        SFSpeechRecognizer.requestAuthorization { authStatus in
-//            if authStatus == SFSpeechRecognizerAuthorizationStatus.authorized {
-//                if self.audioRecorder!.recordings.count != 0 {
-//
-////                  self.transcriptionTextField.text = self.speechToText(fileURL: path)
-//
-//                    let recognizer = SFSpeechRecognizer()
-//                    let request = SFSpeechURLRecognitionRequest(url: path)
-//                    recognizer?.recognitionTask(with: request)
-//                    { (result, error) in
-//                        if let error = error {
-//                            print("There was an error: \(error)")
-//                        } else {
-//                            self.transcriptionTextField.text = result?.bestTranscription.formattedString
-//                            if (result?.isFinal)! {
-//                                print("Success")
-//                            }
-//                        }
-//                    }
-//
-//                }
-//            }
+//        if speechToText(fileURL: url) != "no text recognized" {
+//            print(speechToText(fileURL: url)) //return 값이 "no text recognized" 임
 //        }
+    }
+
+    
+//    func speechToText(fileURL: URL) -> String {
+//        let fileURL =  fileURL
+//        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "de-DE"))
+//        let request = SFSpeechURLRecognitionRequest(url: fileURL)
+//        request.shouldReportPartialResults = false
+//
+//        var textFromSpeech: String = "no text recognized"
+//
+//        if (recognizer?.isAvailable)! {
+//
+//            recognizer?.recognitionTask(with: request) { result, error in
+//                guard error == nil else { print("Error: \(error!)"); return }
+//                guard let result = result, result.isFinal else { print("No result!"); return }
+//                textFromSpeech = result.bestTranscription.formattedString
+//                print("textResult: ", textFromSpeech)
+//
+//                appendToFileName(fileURL: fileURL, newFileName: textFromSpeech)
+//
+//            }
+//        } else {
+//            print("Device doesn't support speech recognition")
+//
+//        }
+//        return textFromSpeech
 //    }
     
-    func speechToText(fileURL: URL) -> String {
-        
-        var textResult: String = "no Text Recoginized"
-   
-        let fileURL =  fileURL
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "de-DE"))
-        let request = SFSpeechURLRecognitionRequest(url: fileURL)
-        request.shouldReportPartialResults = true
-
-        if (recognizer?.isAvailable)! {
-
-            recognizer?.recognitionTask(with: request) { result, error in
-                guard error == nil else { print("Error: \(error!)"); return }
-                guard let result = result else { print("No result!"); return }
-                textResult = result.bestTranscription.formattedString
-                print("SpeechToText Print: ", result.bestTranscription.formattedString)
-            }
-        } else {
-            print("Device doesn't support speech recognition")
-        }
-            return textResult
-    }
+    
+    
     
     
     @IBAction func playAllAudios(_ sender: UIButton) {
@@ -190,14 +186,16 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
        
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
         
+        cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
+        cell.fileName.text = cell.audioURL.lastPathComponent
         cell.sequenceNo.text = String(indexPath.row + 1)
 //        cell.sequenceNo.text = String(audioRecorder!.recordings.count - indexPath.row)
 //        cell.textRecognized.text = speechToText(fileURL: audioRecorder!.recordings[indexPath.row].fileURL)
-        cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
+       
         cell.reRecordButton.isEnabled = true
         cell.playButton.setTitle("Play", for: .normal)
         cell.myTableViewController = self
-        cell.timeRecorded.text = String(audioRecorder!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YY-MM-dd HH:mm:ss"))
+        cell.timeRecorded.text = String(audioRecorder!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss"))
         
   
         do {

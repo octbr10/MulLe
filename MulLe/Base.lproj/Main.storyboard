@@ -45,7 +45,7 @@
                                     <action selector="playAllAudios:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0BX-nP-PoT"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CUv-im-zOK">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CUv-im-zOK">
                                 <rect key="frame" x="0.0" y="88" width="414" height="724"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
@@ -59,12 +59,16 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zQa-6M-jGZ">
                                                     <rect key="frame" x="0.0" y="-10" width="414" height="90"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TextRecognized" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-wT-QJv">
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="text view: text recognized" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zkz-DJ-hL5">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="ocO-L7-a9s"/>
+                                                            </constraints>
+                                                            <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                        </textView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" id="Sux-Ie-ase">
                                                             <rect key="frame" x="0.0" y="60" width="414" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -94,7 +98,8 @@
                                                                     </constraints>
                                                                     <state key="normal" title="Record"/>
                                                                     <connections>
-                                                                        <action selector="reRecordAudio:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="Y9T-1u-JnI"/>
+                                                                        <action selector="touchDownReRecord:" destination="DyK-Ph-yqi" eventType="touchDown" id="79n-e2-Iof"/>
+                                                                        <action selector="touchUpReRecordStop:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="Rr1-NX-RIi"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7lo-A5-ltE">
@@ -130,10 +135,10 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="audioDuration" destination="HP0-Iw-Kyk" id="KgJ-8Y-u8E"/>
+                                            <outlet property="fileName" destination="Zkz-DJ-hL5" id="YWz-bE-aYd"/>
                                             <outlet property="playButton" destination="4st-A8-Y2C" id="fOA-Br-qC8"/>
                                             <outlet property="reRecordButton" destination="wTa-DQ-IBn" id="NFS-mR-6gm"/>
                                             <outlet property="sequenceNo" destination="0al-DO-u2Y" id="s3R-Ks-avd"/>
-                                            <outlet property="textRecognized" destination="uVe-wT-QJv" id="Ikf-xf-iUx"/>
                                             <outlet property="timeRecorded" destination="CGi-FY-8st" id="ySg-c1-EDS"/>
                                         </connections>
                                     </tableViewCell>

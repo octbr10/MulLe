@@ -5,6 +5,7 @@
 
 import UIKit
 import AVFoundation
+import Speech
 
 
 class AudioRecorder: NSObject {
@@ -31,8 +32,8 @@ class AudioRecorder: NSObject {
         }
 
         let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        currentAudioFileName = documentPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "dd-MM-YY'_at_'HH:mm:ss")).m4a")
-        print("currentAudioFileName: ", currentAudioFileName?.lastPathComponent ?? "noLatPathComponent")
+        currentAudioFileName = documentPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss")).m4a")
+        print("currentAudioFileName: ", currentAudioFileName?.lastPathComponent ?? "noLastPathComponent")
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -86,6 +87,7 @@ class AudioRecorder: NSObject {
         ]
 
         do {
+    
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder.record()
             isRecording = true
@@ -95,6 +97,38 @@ class AudioRecorder: NSObject {
         }
     }
     
+    func speechToText(fileURL: URL) -> String {
+        let fileURL =  fileURL
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "de-DE"))
+        let request = SFSpeechURLRecognitionRequest(url: fileURL)
+        request.shouldReportPartialResults = false
+        
+        var textFromSpeech: String = "no text recognized"
+        
+        if (recognizer?.isAvailable)! {
+
+            recognizer?.recognitionTask(with: request) { result, error in
+                guard error == nil else { print("Error: \(error!)"); return }
+                guard let result = result, result.isFinal else { print("No result!"); return }
+                textFromSpeech = result.bestTranscription.formattedString
+                print("textResult: ", textFromSpeech)
+                
+                appendToFileName(fileURL: fileURL, newFileName: textFromSpeech)
+           
+            }
+        } else {
+            print("Device doesn't support speech recognition")
+
+        }
+        return textFromSpeech
+    }
+    
+    
+    
+    
+    
+    
+    
     func fetchRecordings() {
         print("fetch is working")
         recordings.removeAll()
@@ -103,11 +137,12 @@ class AudioRecorder: NSObject {
         let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let directoryContents = try! fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
         for audio in directoryContents {
-            let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio))
+            let recording = Recording(fileURL: audio, filePath: audio.deletingLastPathComponent().relativePath, fileName: audio.lastPathComponent, createdAt: getCreationDate(for: audio), textRecognized: "non")
             recordings.append(recording)
-            //print(audio)
+            print(audio.lastPathComponent)
         }
-        recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
+        //recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
+        recordings.sort(by: { $0.fileName.compare($1.fileName) == .orderedAscending})
     }
     
     func deleteAudioFile(urlsToDelete: URL) {
