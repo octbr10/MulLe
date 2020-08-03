@@ -45,7 +45,7 @@ class AudioQueuePlayer: NSObject{
     
     @objc func qPlayerDidFinishPlaying(sender: Notification) {
         if audioItemsCount == 1 {
-            print("all itmes are played.")
+            //print("all itmes are played.")
             isPlaying = false
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
         } else {

@@ -32,6 +32,7 @@ class AudioRecorder: NSObject {
 
         let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         currentAudioFileName = documentPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "dd-MM-YY'_at_'HH:mm:ss")).m4a")
+        print("currentAudioFileName: ", currentAudioFileName?.lastPathComponent ?? "noLatPathComponent")
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -63,10 +64,8 @@ class AudioRecorder: NSObject {
     }
     
     func updateRecording(audio: URL) {
-        print("Re-recording starts")
         let audioFilename = audio
-        print("updateRecording URL:")
-        print(audioFilename)
+        print("updateRecording URL:", audioFilename)
         deleteAudioFile(urlsToDelete: audioFilename)
 
         let recordingSession = AVAudioSession.sharedInstance()
@@ -106,6 +105,7 @@ class AudioRecorder: NSObject {
         for audio in directoryContents {
             let recording = Recording(fileURL: audio, createdAt: getCreationDate(for: audio))
             recordings.append(recording)
+            //print(audio)
         }
         recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
     }

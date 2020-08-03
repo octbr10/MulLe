@@ -26,16 +26,29 @@ class ViewController: UIViewController{
     
     @IBOutlet weak var transcriptionTextField: UITextField!
 
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
+        //tableView.reloadData()
+        
         audioRecorder = AudioRecorder()
         audioPlayer = AudioPlayer()
+
         NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
-        requestSpeechAuth()
+        
+        SFSpeechRecognizer.requestAuthorization { (authStatus) in  //4
+            switch authStatus {  //5
+            case .authorized: break
+            case .denied:
+                print("User denied access to speech recognition")
+            case .restricted:
+                print("Speech recognition restricted on this device")
+            case .notDetermined:
+                print("Speech recognition not yet authorized")
+            @unknown default:
+                print("Speech recognition auth, unknow error")
+            }
+        }
     }
   
     @objc func resetPlayAllButton() {
@@ -62,11 +75,11 @@ class ViewController: UIViewController{
 //    }
     
     @IBAction func touchDownRecord(_ sender: UIButton) {
-                audioRecorder!.startRecording()
+                audioRecorder?.startRecording()
     }
     
     @IBAction func touchUpRecordStop(_ sender: UIButton) {
-                    audioRecorder!.stopRecording()
+                    audioRecorder?.stopRecording()
                     self.tableView.reloadData()
                     playNewRecord()
     }
@@ -77,38 +90,66 @@ class ViewController: UIViewController{
         let url = audioRecorder!.recordings[lastIndex].fileURL
         audioQueuePlayer = AudioQueuePlayer(items: [url])
         audioQueuePlayer!.startPlayback()
+        
+        var textRecognized: String
+        textRecognized = speechToText(fileURL: url)
+        print(textRecognized) // 여기서는 textRecognized가 널 임. speedchToText 내에서 처리해야함.
     }
     
-    func requestSpeechAuth() {
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            if authStatus == SFSpeechRecognizerAuthorizationStatus.authorized {
-                
-                if self.audioRecorder!.recordings.count != 0 {
-                    let path = self.audioRecorder!.recordings[0].fileURL
-                    let recognizer = SFSpeechRecognizer()
-                    let request = SFSpeechURLRecognitionRequest(url: path)
-                    recognizer?.recognitionTask(with: request)
-                    { (result, error) in
-                        if let error = error {
-                            print("There was an error: \(error)")
-                        } else {
-                            self.transcriptionTextField.text = result?.bestTranscription.formattedString
-                            if (result?.isFinal)! {
-                                print("Success")
-                            }
-                        }
-                    }
-                }
-                
+//    func requestSpeechAuth(path:URL) {
+//        let path = path
+//        SFSpeechRecognizer.requestAuthorization { authStatus in
+//            if authStatus == SFSpeechRecognizerAuthorizationStatus.authorized {
+//                if self.audioRecorder!.recordings.count != 0 {
+//
+////                  self.transcriptionTextField.text = self.speechToText(fileURL: path)
+//
+//                    let recognizer = SFSpeechRecognizer()
+//                    let request = SFSpeechURLRecognitionRequest(url: path)
+//                    recognizer?.recognitionTask(with: request)
+//                    { (result, error) in
+//                        if let error = error {
+//                            print("There was an error: \(error)")
+//                        } else {
+//                            self.transcriptionTextField.text = result?.bestTranscription.formattedString
+//                            if (result?.isFinal)! {
+//                                print("Success")
+//                            }
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
+    
+    func speechToText(fileURL: URL) -> String {
+        
+        var textResult: String = "no Text Recoginized"
+   
+        let fileURL =  fileURL
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "de-DE"))
+        let request = SFSpeechURLRecognitionRequest(url: fileURL)
+        request.shouldReportPartialResults = true
+
+        if (recognizer?.isAvailable)! {
+
+            recognizer?.recognitionTask(with: request) { result, error in
+                guard error == nil else { print("Error: \(error!)"); return }
+                guard let result = result else { print("No result!"); return }
+                textResult = result.bestTranscription.formattedString
+                print("SpeechToText Print: ", result.bestTranscription.formattedString)
             }
+        } else {
+            print("Device doesn't support speech recognition")
         }
+            return textResult
     }
-    
     
     
     @IBAction func playAllAudios(_ sender: UIButton) {
         if audioQueuePlayer?.isPlaying == true{
-            audioQueuePlayer!.stopPlayback()
+            audioQueuePlayer?.stopPlayback()
             playAllButton.setTitle("Play all", for: .normal)
         } else {
             
@@ -151,6 +192,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.sequenceNo.text = String(indexPath.row + 1)
 //        cell.sequenceNo.text = String(audioRecorder!.recordings.count - indexPath.row)
+//        cell.textRecognized.text = speechToText(fileURL: audioRecorder!.recordings[indexPath.row].fileURL)
         cell.audioURL = audioRecorder!.recordings[indexPath.row].fileURL
         cell.reRecordButton.isEnabled = true
         cell.playButton.setTitle("Play", for: .normal)

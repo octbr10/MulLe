@@ -7,7 +7,7 @@
 //
 import UIKit
 import AVFoundation
-import Speech
+
 
 // Mark: - CustomTableViewCell
 
@@ -16,7 +16,7 @@ class CustomTableViewCell: UITableViewCell{
     var myTableViewController: ViewController?
 
     var audioURL: URL!
-    var audioPlayer = AudioPlayer()
+    var audioPlayer: AudioPlayer!
     var audioRecorder = AudioRecorder()
     
     @IBOutlet var textRecognized: UILabel!
