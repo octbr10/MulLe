@@ -16,13 +16,14 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate{
     func startPlayback (audio: URL) {
         print("starting playback...")
         
+        // playing via Speaker instead of phone call mode
         let playbackSession = AVAudioSession.sharedInstance()
-        
         do {
             try playbackSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
         } catch {
             print("Playing over the device's speakers failed")
         }
+        
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audio)

@@ -122,12 +122,7 @@ class AudioRecorder: NSObject {
         }
         return textFromSpeech
     }
-    
-    
-    
-    
-    
-    
+
     
     func fetchRecordings() {
         print("fetch is working")

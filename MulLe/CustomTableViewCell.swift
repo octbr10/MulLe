@@ -19,8 +19,7 @@ class CustomTableViewCell: UITableViewCell{
     var audioPlayer = AudioPlayer()
     var audioRecorder = AudioRecorder()
     var audioQueuePlayer: AudioQueuePlayer?
-   
-    
+  
     
     @IBOutlet var fileName: UITextView!
     @IBOutlet var sequenceNo: UILabel!
@@ -46,14 +45,14 @@ class CustomTableViewCell: UITableViewCell{
     }
     
     @IBAction func playAudio(_ sender: Any) {
-        if audioPlayer.isPlaying == false {
-            audioPlayer.startPlayback(audio: audioURL)
-            playButton.setTitle("Stop", for: .normal)
-            reRecordButton.isEnabled = false
-        } else {
-            audioPlayer.stopPlayback()
+        
+        if audioQueuePlayer?.isPlaying == true {
+            audioQueuePlayer?.stopPlayback()
             playButton.setTitle("Play", for: .normal)
-            reRecordButton.isEnabled = true
+        } else {
+            audioQueuePlayer = AudioQueuePlayer(items: [audioURL])
+            audioQueuePlayer!.startPlayback()
+            playButton.setTitle("Stop", for: .normal)
         }
     }
     
@@ -64,21 +63,21 @@ class CustomTableViewCell: UITableViewCell{
     }
    
     
-    @IBAction func reRecordAudio(_ sender: Any) {
-        if audioRecorder.isRecording == false {
-            print("Re-Record URL:")
-            print(audioURL ?? "test")
-            audioRecorder.updateRecording(audio: audioURL)
-            reRecordButton.setTitle("Stop", for: .normal)
-            playButton.isEnabled = false
-            print("recordingStarts")
-        } else {
-                 reRecordButton.setTitle("Record", for: .normal)
-                 audioRecorder.stopRecording()
-                 playButton.isEnabled = true
-                 print("recordingStopped")
-        }
-     }
+//    @IBAction func reRecordAudio(_ sender: Any) {
+//        if audioRecorder.isRecording == false {
+//            print("Re-Record URL:")
+//            print(audioURL ?? "test")
+//            audioRecorder.updateRecording(audio: audioURL)
+//            reRecordButton.setTitle("Stop", for: .normal)
+//            playButton.isEnabled = false
+//            print("recordingStarts")
+//        } else {
+//                 reRecordButton.setTitle("Record", for: .normal)
+//                 audioRecorder.stopRecording()
+//                 playButton.isEnabled = true
+//                 print("recordingStopped")
+//        }
+//     }
     
     @IBAction func touchDownReRecord(_ sender: Any) {
         if audioRecorder.isRecording == false {

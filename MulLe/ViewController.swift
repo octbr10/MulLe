@@ -59,7 +59,7 @@ class ViewController: UIViewController{
     
     @objc func resetButtons() {
         //audioRecorder?.fetchRecordings()
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
     }
     
     
