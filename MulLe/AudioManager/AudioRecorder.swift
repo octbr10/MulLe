@@ -3,7 +3,7 @@
 //Created by BLCKBIRDS on 28.10.19.
 //Visit www.BLCKBIRDS.com for more.
 
-import UIKit
+//import UIKit
 import AVFoundation
 import Speech
 
@@ -12,11 +12,9 @@ class AudioRecorder: NSObject {
      
     override init() {
         super.init()
-        fetchRecordings()
     }
     
     var audioRecorder: AVAudioRecorder!
-    var recordings = [Recording]()
     var currentAudioFileName: URL?
     var isRecording = false
      
@@ -58,10 +56,7 @@ class AudioRecorder: NSObject {
             print("recording Stopped")
             audioRecorder.stop()
             isRecording = false
-            fetchRecordings()
-//            return currentAudioFileName!
         }
-//        return nil
     }
     
     func updateRecording(audio: URL) {
@@ -124,43 +119,12 @@ class AudioRecorder: NSObject {
     }
 
     
-    func fetchRecordings() {
-        print("fetch is working")
-        recordings.removeAll()
-
-        let fileManager = FileManager.default
-        let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let directoryContents = try! fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
-        for audio in directoryContents {
-            let recording = Recording(fileURL: audio, filePath: audio.deletingLastPathComponent().relativePath, fileName: audio.lastPathComponent, createdAt: getCreationDate(for: audio), textRecognized: "non")
-            recordings.append(recording)
-            print(audio.lastPathComponent)
-        }
-        //recordings.sort(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending})
-        recordings.sort(by: { $0.fileName.compare($1.fileName) == .orderedAscending})
-    }
-    
     func deleteAudioFile(urlsToDelete: URL) {
            do {
                try FileManager.default.removeItem(at: urlsToDelete)
             } catch {
                 print("File could not be deleted!")
             }
-        fetchRecordings()
     }
 
-    //    func deleteRecordings(urlsToDelete: [URL]) {
-//
-//        for url in urlsToDelete {
-//            print(url)
-//            do {
-//               try FileManager.default.removeItem(at: url)
-//            } catch {
-//                print("File could not be deleted!")
-//            }
-//        }
-//
-//        fetchRecordings()
-//    }
-    
 }

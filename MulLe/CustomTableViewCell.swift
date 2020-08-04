@@ -16,9 +16,9 @@ class CustomTableViewCell: UITableViewCell{
     var myTableViewController: ViewController?
 
     var audioURL: URL!
-    var audioPlayer = AudioPlayer()
     var audioRecorder = AudioRecorder()
     var audioQueuePlayer: AudioQueuePlayer?
+    var recordFileManager: RecordFileManager?
   
     
     @IBOutlet var fileName: UITextView!
@@ -58,6 +58,7 @@ class CustomTableViewCell: UITableViewCell{
     
     @IBAction func deleteRecord(_ sender: Any) {
         myTableViewController?.deleteCell(cell: self)
+        recordFileManager?.fetchRecordings()
 //        audioRecorder.deleteRecording(urlsToDelete: audioURL)
 
     }
@@ -88,6 +89,7 @@ class CustomTableViewCell: UITableViewCell{
     
     @IBAction func touchUpReRecordStop(_ sender: Any) {
         audioRecorder.stopRecording()
+        recordFileManager?.fetchRecordings()
         
         if audioRecorder.speechToText(fileURL: audioURL) != "no text recognized" {
             print(audioRecorder.speechToText(fileURL: audioURL)) //return 값이 "no text recognized" 임
