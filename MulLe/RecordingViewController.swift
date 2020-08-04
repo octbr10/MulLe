@@ -12,11 +12,13 @@ import Speech
 
 class RecordingViewController: UIViewController{
 
+    var titleText: String?
+    
     var avAudioPlayer: AVAudioPlayer?
     var audioQueuePlayer: AudioQueuePlayer?
     var recordFileManager: RecordFileManager?
     var audioRecorder: AudioRecorder?
-   
+      
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playAllButton: UIButton!
@@ -45,6 +47,11 @@ class RecordingViewController: UIViewController{
                 print("Speech recognition auth, unknow error")
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.title = titleText
     }
   
     @objc func resetPlayAllButton() {
@@ -151,10 +158,12 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
+        print("sourceIndexPath.item: ", sourceIndexPath.item)
         recordFileManager!.recordings.remove(at: sourceIndexPath.item)
         recordFileManager!.recordings.insert(movedObjTemp, at: destinationIndexPath.item)
     }
     
+    // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             audioRecorder!.deleteAudioFile(urlsToDelete: (recordFileManager!.recordings[indexPath.row].fileURL))

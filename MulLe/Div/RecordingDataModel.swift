@@ -7,7 +7,7 @@ import Foundation
 
 struct Recording {
     let fileURL: URL // File path including document(directory) path
-    let filePath: String
+    let filePath: String // 마지막 제외
     var fileName: String
     let createdAt: Date // file creation or audioUpdated date.
     var textRecognized: String
