@@ -13,7 +13,7 @@ import Speech
 class ViewController: UIViewController{
 
     var avAudioPlayer: AVAudioPlayer?
-    var audioPlayer:  AudioPlayer?
+//    var audioPlayer:  AudioPlayer?
     var audioRecorder: AudioRecorder?
     var audioQueuePlayer: AudioQueuePlayer?
   
@@ -31,10 +31,10 @@ class ViewController: UIViewController{
         //tableView.reloadData()
         
         audioRecorder = AudioRecorder()
-        audioPlayer = AudioPlayer()
+//        audioPlayer = AudioPlayer()
 
         NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
         
         SFSpeechRecognizer.requestAuthorization { (authStatus) in  //4
             switch authStatus {  //5
@@ -57,10 +57,10 @@ class ViewController: UIViewController{
         self.tableView.reloadData()
     }
     
-    @objc func resetButtons() {
-        //audioRecorder?.fetchRecordings()
-        //self.tableView.reloadData()
-    }
+//    @objc func resetButtons() {
+//        //audioRecorder?.fetchRecordings()
+//        //self.tableView.reloadData()
+//    }
     
     
 //    @IBAction func touchUpRecordButton(_ sender: UIButton) {
