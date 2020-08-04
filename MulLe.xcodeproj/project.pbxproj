@@ -14,9 +14,10 @@
 		6039E13324C88DC200438E51 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6039E13224C88DC200438E51 /* Helper.swift */; };
 		603E802124CA13850099ACA8 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603E802024CA13850099ACA8 /* CustomTableViewCell.swift */; };
 		6055CFA524D9437800973790 /* RecordFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CFA424D9437800973790 /* RecordFileManager.swift */; };
+		6055CFA724D9737100973790 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CFA624D9737100973790 /* FolderViewController.swift */; };
 		60E9EF1224BF14F3005C7CD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9EF1124BF14F3005C7CD8 /* AppDelegate.swift */; };
 		60E9EF1424BF14F3005C7CD8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9EF1324BF14F3005C7CD8 /* SceneDelegate.swift */; };
-		60E9EF1624BF14F3005C7CD8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9EF1524BF14F3005C7CD8 /* ViewController.swift */; };
+		60E9EF1624BF14F3005C7CD8 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9EF1524BF14F3005C7CD8 /* RecordingViewController.swift */; };
 		60E9EF1924BF14F3005C7CD8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60E9EF1724BF14F3005C7CD8 /* Main.storyboard */; };
 		60E9EF1B24BF14F4005C7CD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E9EF1A24BF14F4005C7CD8 /* Assets.xcassets */; };
 		60E9EF1E24BF14F4005C7CD8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60E9EF1C24BF14F4005C7CD8 /* LaunchScreen.storyboard */; };
@@ -30,10 +31,11 @@
 		6039E13224C88DC200438E51 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		603E802024CA13850099ACA8 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		6055CFA424D9437800973790 /* RecordFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFileManager.swift; sourceTree = "<group>"; };
+		6055CFA624D9737100973790 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		60E9EF0E24BF14F3005C7CD8 /* MulLe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MulLe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E9EF1124BF14F3005C7CD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60E9EF1324BF14F3005C7CD8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		60E9EF1524BF14F3005C7CD8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		60E9EF1524BF14F3005C7CD8 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
 		60E9EF1824BF14F3005C7CD8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		60E9EF1A24BF14F4005C7CD8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60E9EF1D24BF14F4005C7CD8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,8 +67,8 @@
 			isa = PBXGroup;
 			children = (
 				6039E12E24C88C8100438E51 /* AudioRecorder.swift */,
-				6055CFA424D9437800973790 /* RecordFileManager.swift */,
 				6020829924CF472500DB9CCA /* AudioQueuePlayer.swift */,
+				6055CFA424D9437800973790 /* RecordFileManager.swift */,
 			);
 			path = AudioManager;
 			sourceTree = "<group>";
@@ -92,7 +94,8 @@
 			children = (
 				60E9EF1124BF14F3005C7CD8 /* AppDelegate.swift */,
 				60E9EF1324BF14F3005C7CD8 /* SceneDelegate.swift */,
-				60E9EF1524BF14F3005C7CD8 /* ViewController.swift */,
+				6055CFA624D9737100973790 /* FolderViewController.swift */,
+				60E9EF1524BF14F3005C7CD8 /* RecordingViewController.swift */,
 				603E802024CA13850099ACA8 /* CustomTableViewCell.swift */,
 				60E9EF1724BF14F3005C7CD8 /* Main.storyboard */,
 				60E9EF1A24BF14F4005C7CD8 /* Assets.xcassets */,
@@ -177,12 +180,13 @@
 			files = (
 				6055CFA524D9437800973790 /* RecordFileManager.swift in Sources */,
 				603E802124CA13850099ACA8 /* CustomTableViewCell.swift in Sources */,
-				60E9EF1624BF14F3005C7CD8 /* ViewController.swift in Sources */,
+				60E9EF1624BF14F3005C7CD8 /* RecordingViewController.swift in Sources */,
 				6039E13324C88DC200438E51 /* Helper.swift in Sources */,
 				60E9EF1224BF14F3005C7CD8 /* AppDelegate.swift in Sources */,
 				60E9EF1424BF14F3005C7CD8 /* SceneDelegate.swift in Sources */,
 				6039E13124C88CE400438E51 /* RecordingDataModel.swift in Sources */,
 				6020829A24CF472500DB9CCA /* AudioQueuePlayer.swift in Sources */,
+				6055CFA724D9737100973790 /* FolderViewController.swift in Sources */,
 				6039E12A24C8789F00438E51 /* Extensions.swift in Sources */,
 				6039E12F24C88C8100438E51 /* AudioRecorder.swift in Sources */,
 			);

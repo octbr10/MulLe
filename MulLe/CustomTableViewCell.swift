@@ -13,7 +13,7 @@ import AVFoundation
 
 class CustomTableViewCell: UITableViewCell{
     
-    var myTableViewController: ViewController?
+    var myTableViewController: RecordingViewController?
 
     var audioURL: URL!
     var audioRecorder = AudioRecorder()

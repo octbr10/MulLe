@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Speech
 
-class ViewController: UIViewController{
+class RecordingViewController: UIViewController{
 
     var avAudioPlayer: AVAudioPlayer?
     var audioQueuePlayer: AudioQueuePlayer?
@@ -23,8 +23,6 @@ class ViewController: UIViewController{
     
     let cellIdentifier: String = "cell"
     
-    @IBOutlet weak var transcriptionTextField: UITextField!
-
     override func viewDidLoad() {
         super.viewDidLoad()
         //tableView.reloadData()
@@ -116,7 +114,7 @@ class ViewController: UIViewController{
 
 // Mark: - UITableViewCell 정의
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

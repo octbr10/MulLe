@@ -16,7 +16,8 @@ class RecordFileManager: NSObject {
     }
     
     var recordings = [Recording]()
-     
+
+    
     func fetchRecordings() {
         recordings.removeAll()
 
