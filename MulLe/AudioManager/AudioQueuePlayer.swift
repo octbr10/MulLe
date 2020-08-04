@@ -37,13 +37,14 @@ class AudioQueuePlayer: NSObject{
       
       audioQueuePlayer = AVQueuePlayer(items: audioItems)
       
-      // playing via Speaker instead of phone call mode
-      let playbackSession = AVAudioSession.sharedInstance()
-      do {
-        try playbackSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
-      } catch {
-        print("Playing over the device's speakers failed")
+      // playing when silentmode
+
+        do {
+           try AVAudioSession.sharedInstance().setCategory(.playback)
+        } catch(let error) {
+            print(error.localizedDescription)
         }
+               
              
       audioQueuePlayer.play()
       print("audioQPlay starts")

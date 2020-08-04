@@ -18,7 +18,6 @@ class RecordFileManager: NSObject {
     var recordings = [Recording]()
      
     func fetchRecordings() {
-        print("fetch is working")
         recordings.removeAll()
 
         let fileManager = FileManager.default
@@ -30,5 +29,6 @@ class RecordFileManager: NSObject {
             print(audio.lastPathComponent)
         }
         recordings.sort(by: { $0.fileName.compare($1.fileName) == .orderedAscending})
+        print("====", recordings.count, " audio files are fetched.====")
     }
 }

@@ -97,7 +97,7 @@ class ViewController: UIViewController{
             var urls: [URL] = []
             for item in recordFileManager!.recordings {
                 let url = item.fileURL
-                print("url", url)
+                //print("url", url)
                 urls.append(url)
                 }
             audioQueuePlayer = AudioQueuePlayer(items: urls)
