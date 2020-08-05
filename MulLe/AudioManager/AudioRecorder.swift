@@ -7,7 +7,6 @@
 import AVFoundation
 import Speech
 
-
 class AudioRecorder: NSObject {
      
     override init() {
@@ -18,7 +17,10 @@ class AudioRecorder: NSObject {
     var currentAudioFileName: URL?
     var isRecording = false
      
-    func startRecording() {
+    func startRecording(at newAudioURL:URL) {
+ 
+        let newAudioURL = newAudioURL
+        
         print("recording starts")
         let recordingSession = AVAudioSession.sharedInstance()
 
@@ -29,9 +31,9 @@ class AudioRecorder: NSObject {
             print("Failed to set up recording session")
         }
 
-        let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        currentAudioFileName = documentPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss")).m4a")
-        print("currentAudioFileName: ", currentAudioFileName?.lastPathComponent ?? "noLastPathComponent")
+//        let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        currentAudioFileName = documentPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss")).m4a")
+//        print("currentAudioFileName: ", currentAudioFileName?.lastPathComponent ?? "noLastPathComponent")
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -41,7 +43,7 @@ class AudioRecorder: NSObject {
         ]
 
         do {
-            audioRecorder = try AVAudioRecorder(url: currentAudioFileName!, settings: settings)
+            audioRecorder = try AVAudioRecorder(url: newAudioURL, settings: settings)
             audioRecorder.record()
             isRecording = true
 

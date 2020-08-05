@@ -12,7 +12,6 @@ import Foundation
 class FolderViewController: UIViewController {
         
     var folderArray: [String] = []
-    
     let cellIdentifier: String = "CellForFolder"
     
     @IBOutlet weak var tableView: UITableView!
@@ -77,8 +76,6 @@ class FolderViewController: UIViewController {
         recordingViewController.titleText = cell.textLabel?.text
         
     }
-    
- 
 
 }
 
@@ -113,14 +110,8 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
         }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
        
     }
-    
-  
-    
-    
         
-    
 }
 

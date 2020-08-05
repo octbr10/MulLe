@@ -13,10 +13,10 @@ import Speech
 class RecordingViewController: UIViewController{
 
     var titleText: String?
+    var recordFileManager: RecordFileManager?
     
     var avAudioPlayer: AVAudioPlayer?
     var audioQueuePlayer: AudioQueuePlayer?
-    var recordFileManager: RecordFileManager?
     var audioRecorder: AudioRecorder?
       
     @IBOutlet weak var tableView:UITableView!
@@ -25,11 +25,16 @@ class RecordingViewController: UIViewController{
     
     let cellIdentifier: String = "cell"
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.title = titleText
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //tableView.reloadData()
         
-        recordFileManager = RecordFileManager()
+        recordFileManager = RecordFileManager(in: titleText!)
         audioRecorder = AudioRecorder()
 
         NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
@@ -48,11 +53,6 @@ class RecordingViewController: UIViewController{
             }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.title = titleText
-    }
   
     @objc func resetPlayAllButton() {
         playAllButton.setTitle("Play all", for: .normal)
@@ -61,14 +61,15 @@ class RecordingViewController: UIViewController{
     }
    
     @IBAction func touchDownRecord(_ sender: UIButton) {
-                audioRecorder?.startRecording()
+
+        let newAudioURL = recordFileManager!.getNewAudioURL()
+        audioRecorder?.startRecording(at: newAudioURL)
     }
     
     @IBAction func touchUpRecordStop(_ sender: UIButton) {
         audioRecorder?.stopRecording()
         recordFileManager?.fetchRecordings()
         
-
         let lastIndex = recordFileManager!.recordings.endIndex - 1
         let url = recordFileManager!.recordings[lastIndex].fileURL
         
@@ -137,7 +138,15 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
         
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
-        cell.fileName.text = cell.audioURL.lastPathComponent
+        
+        let s = cell.audioURL.lastPathComponent
+        let start = s.index(s.startIndex, offsetBy: 20)
+        let end = s.index(s.endIndex, offsetBy: -4)
+        if s.count == 23 {
+            cell.fileName.text = cell.audioURL.lastPathComponent
+        } else {cell.fileName.text = String(s[start..<end])}
+        //cell.fileName.text = cell.audioURL.lastPathComponent
+        
         cell.sequenceNo.text = String(indexPath.row + 1)
         cell.reRecordButton.isEnabled = true
         cell.playButton.setTitle("Play", for: .normal)
