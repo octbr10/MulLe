@@ -12,6 +12,9 @@ class RecordFileManager: NSObject {
   
     var recordings = [Recording]()
     
+//    var folderArray: [String] = []
+//     var fileCountArray: [String] = []
+    
     let folderName: String // user created folder name
     let documentPath: URL // Document Directory
     let folderPath: URL //  Document/folderName

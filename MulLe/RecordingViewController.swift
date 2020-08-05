@@ -67,20 +67,21 @@ class RecordingViewController: UIViewController{
     }
     
     @IBAction func touchUpRecordStop(_ sender: UIButton) {
+        
         audioRecorder?.stopRecording()
         recordFileManager?.fetchRecordings()
         
         let lastIndex = recordFileManager!.recordings.endIndex - 1
         let url = recordFileManager!.recordings[lastIndex].fileURL
-        
         if audioRecorder?.speechToText(fileURL: url) != "no text recognized" {
             print(audioRecorder?.speechToText(fileURL: url) ?? "no text recognized") //return 값이 "no text recognized" 임
         }
         
         playNewRecord(fileURL: url)
 
-        // scroll to the last row
         self.tableView.reloadData()
+
+        // scroll to the last row
         let indexPath = NSIndexPath(row: lastIndex, section: 0)
         self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
 
@@ -165,12 +166,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
-        print("sourceIndexPath.item: ", sourceIndexPath.item)
-        recordFileManager!.recordings.remove(at: sourceIndexPath.item)
-        recordFileManager!.recordings.insert(movedObjTemp, at: destinationIndexPath.item)
-    }
+
     
     // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -189,6 +185,13 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
 
         }
     }
-   
+    
+   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+       let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
+       print("sourceIndexPath.item: ", sourceIndexPath.item)
+       recordFileManager!.recordings.remove(at: sourceIndexPath.item)
+       recordFileManager!.recordings.insert(movedObjTemp, at: destinationIndexPath.item)
+   }
+    
 }
 

@@ -11,8 +11,46 @@ import Foundation
 
 class FolderViewController: UIViewController {
         
-    var folderArray: [String] = []
+//    var folderArray: [String] = []
+//    var fileCountArray: [String] = []
+    
+    var folderManager: FolderManager?
+    
     let cellIdentifier: String = "CellForFolder"
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("folderViewController apppers.")
+        folderManager?.fetchFolders()
+        self.tableView.reloadData()
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+
+        folderManager = FolderManager()
+        
+        // Do any additional setup after loading the view.
+//        folderArray = fetchFolders()
+//        fileCountArray = countFiles(in: folderArray)
+//        print("folderArray: ", folderArray)
+//        print("fileCountArray: ", fileCountArray)
+        
+    }
+    
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        // Takes care of toggling the button's title.
+        super.setEditing(editing, animated: true)
+
+        // Toggle table view editing.
+        tableView.setEditing(editing, animated: true)
+    }
+    
+    
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,15 +63,10 @@ class FolderViewController: UIViewController {
         let confirmAction = UIAlertAction(title: "OK", style: .default) { _ in
             let textField = alertController.textFields![0]
             if let newFolderName = textField.text, newFolderName != "" {
-                self.folderArray.append(newFolderName)
-                print("self.folderArray: ", self.folderArray)
-                let indexPath = IndexPath(row: self.folderArray.count - 1, section: 0)
-                print("folderArray.count : ", self.folderArray.count)
-                print("indexPath.row: ", indexPath.row)
                 
-                createFolder(folderName: newFolderName)
-                self.tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-
+               createFolder(folderName: newFolderName)
+               self.folderManager?.fetchFolders()
+               self.tableView.reloadData()
                 }
             }
                         
@@ -45,17 +78,7 @@ class FolderViewController: UIViewController {
         
     }
 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.leftBarButtonItem = editButtonItem
-        
-        // Do any additional setup after loading the view.
-        folderArray = fetchFolders()
-        print("folderArray: ", folderArray)
-        
-    }
+
     
     
     // MARK: - Navigation
@@ -82,15 +105,15 @@ class FolderViewController: UIViewController {
 extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return folderArray.count
+        return folderManager?.folders.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let myCell = tableView.dequeueReusableCell(withIdentifier: "CellForFolder", for: indexPath)
         
-        myCell.textLabel?.text = folderArray[indexPath.row]
-        print(folderArray[indexPath.row])
+        myCell.textLabel?.text = folderManager?.folders[indexPath.row].folderName
+        myCell.detailTextLabel?.text = folderManager?.folders[indexPath.row].fileCount
         
         return myCell
     }
@@ -100,8 +123,8 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             
             // delete sequence is importanct. array should be deleted earlier than table cell
-            let folderNameToDelete = folderArray[indexPath.row] // this should be done before array changes
-            folderArray.remove(at: indexPath.row)
+            let folderNameToDelete = (folderManager?.folders[indexPath.row].folderName)!
+            folderManager?.folders.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic) // delete from Table 삭제
             deleteFolder(folderName: folderNameToDelete)// delete from fileDocument
             print("indexPath.row : ", indexPath.row)
@@ -109,6 +132,7 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
     
+    // cell move
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
        
     }

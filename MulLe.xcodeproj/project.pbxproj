@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6020829A24CF472500DB9CCA /* AudioQueuePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6020829924CF472500DB9CCA /* AudioQueuePlayer.swift */; };
+		6024D5B124DB047700279381 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024D5B024DB047700279381 /* FolderManager.swift */; };
 		6039E12A24C8789F00438E51 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6039E12924C8789F00438E51 /* Extensions.swift */; };
 		6039E12F24C88C8100438E51 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6039E12E24C88C8100438E51 /* AudioRecorder.swift */; };
 		6039E13124C88CE400438E51 /* RecordingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6039E13024C88CE400438E51 /* RecordingDataModel.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		6020829924CF472500DB9CCA /* AudioQueuePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioQueuePlayer.swift; sourceTree = "<group>"; };
+		6024D5B024DB047700279381 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		6039E12924C8789F00438E51 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6039E12E24C88C8100438E51 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		6039E13024C88CE400438E51 /* RecordingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDataModel.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				6039E12E24C88C8100438E51 /* AudioRecorder.swift */,
+				6024D5B024DB047700279381 /* FolderManager.swift */,
 				6055CFA424D9437800973790 /* RecordFileManager.swift */,
 				6020829924CF472500DB9CCA /* AudioQueuePlayer.swift */,
 			);
@@ -191,6 +194,7 @@
 				6055CFA924D9F86100973790 /* FolderDataModel.swift in Sources */,
 				6020829A24CF472500DB9CCA /* AudioQueuePlayer.swift in Sources */,
 				6055CFA724D9737100973790 /* FolderViewController.swift in Sources */,
+				6024D5B124DB047700279381 /* FolderManager.swift in Sources */,
 				6039E12A24C8789F00438E51 /* Extensions.swift in Sources */,
 				6039E12F24C88C8100438E51 /* AudioRecorder.swift in Sources */,
 			);
