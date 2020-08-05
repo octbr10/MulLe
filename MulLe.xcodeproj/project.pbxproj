@@ -70,8 +70,8 @@
 			isa = PBXGroup;
 			children = (
 				6039E12E24C88C8100438E51 /* AudioRecorder.swift */,
-				6020829924CF472500DB9CCA /* AudioQueuePlayer.swift */,
 				6055CFA424D9437800973790 /* RecordFileManager.swift */,
+				6020829924CF472500DB9CCA /* AudioQueuePlayer.swift */,
 			);
 			path = AudioManager;
 			sourceTree = "<group>";

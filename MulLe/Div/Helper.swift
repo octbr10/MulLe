@@ -64,6 +64,23 @@ func fetchFolders() -> [String] {
     return []
 }
 
+func countFiles(in folder: [String]) -> [String] {
+    
+    var fileCounts: [String] = []
+    let fileManager = FileManager.default
+    
+
+    for folder in fetchFolders() {
+        let folderPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(folder)
+        let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
+        let count = directoryContents.count
+        fileCounts.append(String(count))
+        //print("fileCounts:", fileCounts)
+    }
+      
+    return fileCounts
+}
+
 func deleteFolder(folderName: String) {
     
     let fileManager = FileManager.default
