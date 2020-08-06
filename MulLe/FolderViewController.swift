@@ -92,14 +92,19 @@ class FolderViewController: UIViewController {
         
     }
 
+    // Edit Toggle
     override func setEditing(_ editing: Bool, animated: Bool) {
         // Takes care of toggling the button's title.
         super.setEditing(editing, animated: true)
 
         // Toggle table view editing.
         tableView.setEditing(editing, animated: true)
+        tableView.allowsSelectionDuringEditing = true
+        print("tableView.isEditing: ", tableView.isEditing )
+        self.tableView.reloadData()
+        
     }
-
+    
 }
 
 extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
@@ -108,15 +113,61 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
         return folderManager?.folders.count ?? 0
     }
     
+    // Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let myCell = tableView.dequeueReusableCell(withIdentifier: "CellForFolder", for: indexPath)
         
-        myCell.textLabel?.text = folderManager?.folders[indexPath.row].folderName
-        myCell.detailTextLabel?.text = String(describing: folderManager!.folders[indexPath.row].fileCount)
+        if tableView.isEditing {
+            myCell.textLabel?.text = folderManager?.folders[indexPath.row].folderName
+            myCell.detailTextLabel?.text = String(describing: folderManager!.folders[indexPath.row].fileCount)
+        } else {
+               myCell.textLabel?.text = folderManager?.folders[indexPath.row].folderName
+               myCell.detailTextLabel?.text = String(describing: folderManager!.folders[indexPath.row].fileCount)
+        }
         
         return myCell
+
     }
+    
+    // segue disable when edit mode
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return !tableView.isEditing
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       if tableView.isEditing {
+                print("clicked")
+        
+        let alertController = UIAlertController(title: "Change Folder Name", message: "Please input a new folder name.", preferredStyle: .alert)
+        alertController.addTextField {(UITextField) in UITextField.text = self.folderManager?.folders[indexPath.row].folderName}
+        
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { _ in
+            let textField = alertController.textFields![0]
+            if let newFolderName = textField.text, newFolderName != "" {
+                
+                var oldFolderURL = self.folderManager?.folders[indexPath.row].folderURL
+                var rv = URLResourceValues()
+                rv.name = textField.text
+                try? oldFolderURL?.setResourceValues(rv)
+                
+               self.folderManager?.fetchFolders()
+               self.tableView.reloadData()
+                }
+            }
+                        
+        let cancelAction = UIAlertAction(title:"Cancel", style: .cancel) { _ in
+        }
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+        
+
+            }
+    }
+    
+    
+    
     
     // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
