@@ -42,14 +42,6 @@ class FolderViewController: UIViewController {
     }
     
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        // Takes care of toggling the button's title.
-        super.setEditing(editing, animated: true)
-
-        // Toggle table view editing.
-        tableView.setEditing(editing, animated: true)
-    }
-    
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -100,6 +92,14 @@ class FolderViewController: UIViewController {
         
     }
 
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        // Takes care of toggling the button's title.
+        super.setEditing(editing, animated: true)
+
+        // Toggle table view editing.
+        tableView.setEditing(editing, animated: true)
+    }
+
 }
 
 extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
@@ -113,7 +113,7 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
         let myCell = tableView.dequeueReusableCell(withIdentifier: "CellForFolder", for: indexPath)
         
         myCell.textLabel?.text = folderManager?.folders[indexPath.row].folderName
-        myCell.detailTextLabel?.text = folderManager?.folders[indexPath.row].fileCount
+        myCell.detailTextLabel?.text = String(describing: folderManager!.folders[indexPath.row].fileCount)
         
         return myCell
     }
@@ -124,14 +124,38 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
             
             // delete sequence is importanct. array should be deleted earlier than table cell
             let folderNameToDelete = (folderManager?.folders[indexPath.row].folderName)!
-            folderManager?.folders.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic) // delete from Table 삭제
-            deleteFolder(folderName: folderNameToDelete)// delete from fileDocument
-            print("indexPath.row : ", indexPath.row)
             
+            if folderManager?.folders[indexPath.row].fileCount != 0 {
+                
+                let alertController = UIAlertController(title: "Warning", message: "Recording files in this folder will be deleted too.", preferredStyle: .alert)
+                
+                let confirmAction = UIAlertAction(title: "OK", style: .default) { _ in
+                    
+                    self.folderManager?.folders.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic) // delete from Table 삭제
+                    deleteFolder(folderName: folderNameToDelete)// delete from fileDocument
+                    print("indexPath.row : ", indexPath.row)
+                    
+                }
+                
+                let cancelAction = UIAlertAction(title:"Cancel", style: .cancel) { _ in
+                }
+                alertController.addAction(confirmAction)
+                alertController.addAction(cancelAction)
+                self.present(alertController, animated: true, completion: nil)
+                
+            } else {
+                
+                self.folderManager?.folders.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic) // delete from Table 삭제
+                deleteFolder(folderName: folderNameToDelete)// delete from fileDocument
+                print("indexPath.row : ", indexPath.row)
             }
+            
         }
+    }
     
+   
     // cell move
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
        

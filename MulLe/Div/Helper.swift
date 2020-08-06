@@ -43,43 +43,43 @@ func createFolder(folderName: String){
     
 }
 
-func fetchFolders() -> [String] {
-    let fileManager = FileManager.default
-    let dirPaths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-    let myDocumentsDirectory = dirPaths[0]
-
-    do {
-        let directoryContents = try FileManager.default.contentsOfDirectory(at: myDocumentsDirectory, includingPropertiesForKeys: nil, options: [])
-        let subdirs = directoryContents.filter{ $0.hasDirectoryPath }
-        var subDirNamesStr = subdirs.map{ $0.lastPathComponent }
-        subDirNamesStr.sort(by: { $0.compare($1) == .orderedAscending})
-
-        
-        print("subDirNamesStr :", subDirNamesStr)
-        return subDirNamesStr
-        // now do whatever with the onlyFileNamesStr & subdirNamesStr
-    } catch let error as NSError {
-        print(error.localizedDescription)
-    }
-    return []
-}
-
-func countFiles(in folder: [String]) -> [String] {
-    
-    var fileCounts: [String] = []
-    let fileManager = FileManager.default
-    
-
-    for folder in fetchFolders() {
-        let folderPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(folder)
-        let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
-        let count = directoryContents.count
-        fileCounts.append(String(count))
-        //print("fileCounts:", fileCounts)
-    }
-      
-    return fileCounts
-}
+//func fetchFolders() -> [String] {
+//    let fileManager = FileManager.default
+//    let dirPaths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+//    let myDocumentsDirectory = dirPaths[0]
+//
+//    do {
+//        let directoryContents = try FileManager.default.contentsOfDirectory(at: myDocumentsDirectory, includingPropertiesForKeys: nil, options: [])
+//        let subdirs = directoryContents.filter{ $0.hasDirectoryPath }
+//        var subDirNamesStr = subdirs.map{ $0.lastPathComponent }
+//        subDirNamesStr.sort(by: { $0.compare($1) == .orderedAscending})
+//
+//        
+//        print("subDirNamesStr :", subDirNamesStr)
+//        return subDirNamesStr
+//        // now do whatever with the onlyFileNamesStr & subdirNamesStr
+//    } catch let error as NSError {
+//        print(error.localizedDescription)
+//    }
+//    return []
+//}
+//
+//func countFiles(in folder: [String]) -> [String] {
+//    
+//    var fileCounts: [String] = []
+//    let fileManager = FileManager.default
+//    
+//
+//    for folder in fetchFolders() {
+//        let folderPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(folder)
+//        let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
+//        let count = directoryContents.count
+//        fileCounts.append(String(count))
+//        //print("fileCounts:", fileCounts)
+//    }
+//      
+//    return fileCounts
+//}
 
 func deleteFolder(folderName: String) {
     

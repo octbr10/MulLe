@@ -34,7 +34,7 @@ class FolderManager: NSObject {
                 let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
                 let count = directoryContents.count
                 
-                let folder = Folder(folderURL: folderPath, folderName: folder, fileCount: String(count), createdAt: getCreationDate(for: folderPath))
+                let folder = Folder(folderURL: folderPath, folderName: folder, fileCount: count, createdAt: getCreationDate(for: folderPath))
                 folders.append(folder)
                 //print("fileCounts:", fileCounts)
             }

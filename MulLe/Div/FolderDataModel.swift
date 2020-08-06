@@ -11,6 +11,6 @@ import Foundation
 struct Folder {
     let folderURL: URL
     let folderName: String
-    let fileCount: String
+    let fileCount: Int
     let createdAt: Date
 }
