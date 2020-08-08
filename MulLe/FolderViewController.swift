@@ -135,6 +135,7 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
         return !tableView.isEditing
     }
     
+    // edit mode folder name change
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        if tableView.isEditing {
                 print("clicked")

@@ -22,6 +22,7 @@ class RecordingViewController: UIViewController{
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playAllButton: UIButton!
+
     
     let cellIdentifier: String = "cell"
     

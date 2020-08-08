@@ -23,6 +23,8 @@
 		60E9EF1924BF14F3005C7CD8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60E9EF1724BF14F3005C7CD8 /* Main.storyboard */; };
 		60E9EF1B24BF14F4005C7CD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60E9EF1A24BF14F4005C7CD8 /* Assets.xcassets */; };
 		60E9EF1E24BF14F4005C7CD8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60E9EF1C24BF14F4005C7CD8 /* LaunchScreen.storyboard */; };
+		60F6FF9324DDF40C003CA49A /* LocaleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F6FF9224DDF40C003CA49A /* LocaleViewController.swift */; };
+		60F6FF9524DDF9D8003CA49A /* LanguageDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F6FF9424DDF9D8003CA49A /* LanguageDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		60E9EF1A24BF14F4005C7CD8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60E9EF1D24BF14F4005C7CD8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		60E9EF1F24BF14F4005C7CD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		60F6FF9224DDF40C003CA49A /* LocaleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleViewController.swift; sourceTree = "<group>"; };
+		60F6FF9424DDF9D8003CA49A /* LanguageDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,7 @@
 			children = (
 				6039E13024C88CE400438E51 /* RecordingDataModel.swift */,
 				6055CFA824D9F86100973790 /* FolderDataModel.swift */,
+				60F6FF9424DDF9D8003CA49A /* LanguageDataModel.swift */,
 				6039E12924C8789F00438E51 /* Extensions.swift */,
 				6039E13224C88DC200438E51 /* Helper.swift */,
 			);
@@ -103,6 +108,7 @@
 				6055CFA624D9737100973790 /* FolderViewController.swift */,
 				60E9EF1524BF14F3005C7CD8 /* RecordingViewController.swift */,
 				603E802024CA13850099ACA8 /* CustomTableViewCell.swift */,
+				60F6FF9224DDF40C003CA49A /* LocaleViewController.swift */,
 				60E9EF1724BF14F3005C7CD8 /* Main.storyboard */,
 				60E9EF1A24BF14F4005C7CD8 /* Assets.xcassets */,
 				6039E12D24C88C6600438E51 /* AudioManager */,
@@ -188,7 +194,9 @@
 				603E802124CA13850099ACA8 /* CustomTableViewCell.swift in Sources */,
 				60E9EF1624BF14F3005C7CD8 /* RecordingViewController.swift in Sources */,
 				6039E13324C88DC200438E51 /* Helper.swift in Sources */,
+				60F6FF9324DDF40C003CA49A /* LocaleViewController.swift in Sources */,
 				60E9EF1224BF14F3005C7CD8 /* AppDelegate.swift in Sources */,
+				60F6FF9524DDF9D8003CA49A /* LanguageDataModel.swift in Sources */,
 				60E9EF1424BF14F3005C7CD8 /* SceneDelegate.swift in Sources */,
 				6039E13124C88CE400438E51 /* RecordingDataModel.swift in Sources */,
 				6055CFA924D9F86100973790 /* FolderDataModel.swift in Sources */,

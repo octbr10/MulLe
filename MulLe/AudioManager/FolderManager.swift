@@ -29,6 +29,9 @@ class FolderManager: NSObject {
             var subDirNamesStr = subdirs.map{ $0.lastPathComponent }
             subDirNamesStr.sort(by: { $0.compare($1) == .orderedAscending})
             
+            
+            
+            
             for folder in subDirNamesStr {
                 let folderPath = dirPaths.appendingPathComponent(folder)
                 let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
@@ -37,6 +40,12 @@ class FolderManager: NSObject {
                 let folder = Folder(folderURL: folderPath, folderName: folder, fileCount: count, createdAt: getCreationDate(for: folderPath))
                 folders.append(folder)
                 //print("fileCounts:", fileCounts)
+                
+                
+                
+                
+                
+                
             }
         } catch let error as NSError {
             print(error.localizedDescription)
