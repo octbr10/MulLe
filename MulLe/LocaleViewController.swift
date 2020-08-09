@@ -13,22 +13,11 @@ class LocaleViewController: UIViewController {
 
     var availableLanguages: [SupportedLanguage] = []
     var indexPathOfSelectedLang: IndexPath?
-//    var lastSelection: NSIndexPath!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchSupportedLanguage()
-        
-//        let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
-//        if let indexOfLang = availableLanguages.firstIndex(where: { $0.code == userDefaultLanguage }) {
-//            print("index viewDidLoad:", indexOfLang)
-//            indexPathOfSelectedLang = IndexPath(row: indexOfLang, section: 0)
-//            // check mark is done here
-//            tableView.cellForRow(at: indexPathOfSelectedLang!)?.accessoryType = .checkmark
-//        }
 
-        //print(availableLanguages)
-        // Do any additional setup after loading the view.
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -55,10 +44,7 @@ class LocaleViewController: UIViewController {
             print("index fetchSupportedLanguage:", indexOfLang)
             availableLanguages[indexOfLang].selected = true
             indexPathOfSelectedLang = IndexPath(row: indexOfLang, section:0)
-        //print("fetchSupportedLanguage", Locale.init(identifier: "en").localizedString(forIdentifier: locale.identifier)! as Any)
         }
-        // print("availableLanguages: ", availableLanguages)
-        
         
      }
     
@@ -99,47 +85,26 @@ extension LocaleViewController: UITableViewDataSource, UITableViewDelegate {
             cell.accessoryType = .checkmark
         } else {cell.accessoryType = .none}
         
-//      let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
-//      if let index = availableLanguages.firstIndex(where: { $0.code == userDefaultLanguage }) {
-//          print("index:", index)
-//      }
-
         return cell
             
     }
     
     // checkmark when a row is selected/deselectedß
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("didSelectRowAt indexPathOfSelectedLang: ", indexPathOfSelectedLang as Any)
-        tableView.cellForRow(at: indexPathOfSelectedLang!)?.accessoryType = .none
-//        availableLanguages[indexPathOfSelectedLang!.row].selected = false
-//
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        indexPathOfSelectedLang = indexPath
 
-//        print("selected indexPath:", indexPath)
-//
-//        for var item in availableLanguages {
-//            item.selected = false
-//        }
-//        availableLanguages[indexPath.row].selected = true
-//
-//        // store the selected lang as userDefault
+        tableView.cellForRow(at: indexPathOfSelectedLang!)?.accessoryType = .none
+
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+
+        indexPathOfSelectedLang = indexPath
         let newSelectedLang = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
         UserDefaults.standard.set(newSelectedLang, forKey: "speechLanguage")
         print("newSelectedLang: ", newSelectedLang!)
-        //self.tableView.reloadData()
-        
-
-        
     }
+
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        
-//        availableLanguages[indexPath.row].selected = false
-//        print("Deselected indexPath:", indexPath)
-//        self.tableView.reloadData()
         
     }
 
