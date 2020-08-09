@@ -11,4 +11,5 @@ import Foundation
 struct SupportedLanguage {
     let code: String
     let name: String
+    var selected: Bool
 }
