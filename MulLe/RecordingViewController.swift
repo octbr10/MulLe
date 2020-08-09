@@ -136,7 +136,23 @@ class RecordingViewController: UIViewController{
         
     }
     
-   
+   // when LocaleViewController is dismissed...
+    @IBAction func modalDismissed(segue: UIStoryboardSegue) {
+        
+        let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
+        let lang = Locale.init(identifier: userDefaultLanguage ?? "de-DE")
+        let enLocale = Locale.init(identifier: "en")
+        userLanguage =  enLocale.localizedString(forIdentifier: lang.identifier)
+        changeLanguage.setTitle(userLanguage, for: .normal)
+       
+        
+      // You can use segue.source to retrieve the VC
+      // being dismissed to collect any data which needs
+      // to be processed
+    }
+
+    
+    
 }
 
 // Mark: - UITableViewCell 정의
