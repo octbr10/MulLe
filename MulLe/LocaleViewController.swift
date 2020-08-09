@@ -25,26 +25,27 @@ class LocaleViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    func fetchSupportedLanguage() {
+         
+         let enLocale = Locale.init(identifier: "en-IE")
+       
+         //print("SFSpeechRecognizer.supportedLocales(): ", SFSpeechRecognizer.supportedLocales())
+           for locale in SFSpeechRecognizer.supportedLocales() {
+               let language = SupportedLanguage (
+                 code: locale.identifier,
+                 name: enLocale.localizedString(forIdentifier: locale.identifier)!
+               )
+               availableLanguages.append(language)
+             availableLanguages.sort(by: { $0.name.compare($1.name) == .orderedAscending})
+             print(Locale.init(identifier: "en").localizedString(forIdentifier: locale.identifier)! as Any)
+           }
+        // print("availableLanguages: ", availableLanguages)
+     }
+    
     @IBAction func dismissClick(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
-    func fetchSupportedLanguage() {
-      
-        //print("SFSpeechRecognizer.supportedLocales(): ", SFSpeechRecognizer.supportedLocales())
-          for locale in SFSpeechRecognizer.supportedLocales() {
-              let language = SupportedLanguage (
-                code: locale.languageCode ?? "en",
-                name: Locale.init(identifier: "en").localizedString(forIdentifier: locale.identifier)!
-              )
-              availableLanguages.append(language)
-            availableLanguages.sort(by: { $0.name.compare($1.name) == .orderedAscending})
-            print(Locale.init(identifier: "en").localizedString(forIdentifier: locale.identifier)! as Any)
-          }
-       // print("availableLanguages: ", availableLanguages)
-    }
   
-
     /*
     // MARK: - Navigation
 
@@ -55,22 +56,8 @@ class LocaleViewController: UIViewController {
     }
     */
     
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if self.lastSelection != nil {
-//            self.tableView.cellForRow(at: self.lastSelection as IndexPath)?.accessoryType = .none
-//        }
-//
-//        self.tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .checkmark
-//
-//        self.lastSelection = indexPath
-//
-//        self.tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-//    }
-
 
 }
-
-
 
 extension LocaleViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -83,6 +70,7 @@ extension LocaleViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "localeCell", for: indexPath)
         cell.textLabel?.text = availableLanguages[indexPath.row].name
+        cell.detailTextLabel?.text = availableLanguages[indexPath.row].code
         
         return cell
             
@@ -91,6 +79,9 @@ extension LocaleViewController: UITableViewDataSource, UITableViewDelegate {
     // checkmark when a row is selected/deselectedß
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        let selectedLang = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
+        UserDefaults.standard.set(selectedLang, forKey: "speechLanguage")
+        print("selectedLang", selectedLang!)
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none

@@ -19,30 +19,25 @@ class FolderViewController: UIViewController {
     let cellIdentifier: String = "CellForFolder"
     
     override func viewWillAppear(_ animated: Bool) {
-        print("folderViewController apppers.")
         folderManager?.fetchFolders()
         self.tableView.reloadData()
+        print("folderViewController viewWillAppear")
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         navigationItem.leftBarButtonItem = editButtonItem
 
         folderManager = FolderManager()
-        
-        // Do any additional setup after loading the view.
-//        folderArray = fetchFolders()
-//        fileCountArray = countFiles(in: folderArray)
-//        print("folderArray: ", folderArray)
-//        print("fileCountArray: ", fileCountArray)
-        
+
+        if isKeyPresentInUserDefaults(key: "speechLanguage") != true {
+            UserDefaults.standard.set("de-DE", forKey: "speechLanguage")
+            print("German is set as default speechLanguage. viewDidLoad FolderViewController")
+        }
     }
-    
-    
-    
+
     
     @IBOutlet weak var tableView: UITableView!
     

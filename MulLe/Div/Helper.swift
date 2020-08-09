@@ -59,7 +59,9 @@ func deleteFolder(folderName: String) {
     }
 }
 
-
+func isKeyPresentInUserDefaults(key: String) -> Bool {
+    return UserDefaults.standard.object(forKey: key) != nil
+}
 
 
 //func fetchFolders() {
@@ -91,4 +93,12 @@ func deleteFolder(folderName: String) {
 //    print(files)
 //} catch {
 //    print(error)
+//}
+
+
+
+
+
+//if let index = speechLanguage?.availableLanguages.firstIndex(where: { $0.code == "en" }) {
+//    print(speechLanguage?.availableLanguages[index].name ?? "German")
 //}

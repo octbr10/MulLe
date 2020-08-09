@@ -11,17 +11,20 @@ import AVFoundation
 import Speech
 
 class RecordingViewController: UIViewController{
-
-    var titleText: String?
-    var recordFileManager: RecordFileManager?
-    
+ 
     var avAudioPlayer: AVAudioPlayer?
+    var recordFileManager: RecordFileManager?
     var audioQueuePlayer: AudioQueuePlayer?
     var audioRecorder: AudioRecorder?
+    //var speechLanguage: SpeechLanguage?
+
+    var titleText: String?
+    var userLanguage: String?
       
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playAllButton: UIButton!
+    @IBOutlet weak var changeLanguage: UIButton!
 
     
     let cellIdentifier: String = "cell"
@@ -29,6 +32,7 @@ class RecordingViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = titleText
+  
     }
     
     override func viewDidLoad() {
@@ -37,6 +41,17 @@ class RecordingViewController: UIViewController{
         
         recordFileManager = RecordFileManager(in: titleText!)
         audioRecorder = AudioRecorder()
+        //speechLanguage = SpeechLanguage()
+          
+        let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
+        print("userDefaultLanguage: ", userDefaultLanguage ?? "de-DE")
+        let lang = Locale.init(identifier: userDefaultLanguage ?? "de-DE")
+        let enLocale = Locale.init(identifier: "en")
+        userLanguage =  enLocale.localizedString(forIdentifier: lang.identifier)
+        print("userLanguage RecordingViewController viewDidLoad: ", userLanguage!)
+        changeLanguage.setTitle(userLanguage, for: .normal)
+        
+//        print("speechLanguage:", speechLanguage!, "at LocaleViewController viewDidLoad")
 
         NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
         
@@ -115,11 +130,13 @@ class RecordingViewController: UIViewController{
     
   }
     
-    @IBAction func editList(_ sender: UIBarItem) {
+    @IBAction func changeSpeechLanguage(_ sender: UIBarItem) {
         self.tableView.isEditing = !self.tableView.isEditing
         sender.title = (self.tableView.isEditing) ? "Done": "Edit"
         
     }
+    
+   
 }
 
 // Mark: - UITableViewCell 정의
