@@ -96,7 +96,8 @@ class AudioRecorder: NSObject {
     
     func speechToText(fileURL: URL) -> String {
         let fileURL =  fileURL
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "de-DE"))
+        let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String ?? "ko-KR"
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: userDefaultLanguage))
         let request = SFSpeechURLRecognitionRequest(url: fileURL)
         request.shouldReportPartialResults = false
         
