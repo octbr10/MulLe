@@ -68,7 +68,7 @@ class RecordingViewController: UIViewController{
                 print("Speech recognition auth, unknow error")
             }
         }
-        print("viewDidLoad")
+        print("Recording view viewDidLoad")
     }
   
     @objc func resetPlayAllButton() {

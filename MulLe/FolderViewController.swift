@@ -36,6 +36,9 @@ class FolderViewController: UIViewController {
             UserDefaults.standard.set("de-DE", forKey: "speechLanguage")
             print("German is set as default speechLanguage. viewDidLoad FolderViewController")
         }
+        
+        print("folderview did load")
+        
     }
 
     
@@ -65,8 +68,6 @@ class FolderViewController: UIViewController {
         
     }
 
-
-    
     
     // MARK: - Navigation
 
