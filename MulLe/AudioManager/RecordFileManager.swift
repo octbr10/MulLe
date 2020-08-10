@@ -58,5 +58,8 @@ class RecordFileManager: NSObject {
         return newAudioURL
     }
     
-    
+    func getIndexForURL(audioURL: URL) -> Int {
+        return recordings.firstIndex(where: { $0.fileURL == audioURL }) ?? 0
+    }
 }
+

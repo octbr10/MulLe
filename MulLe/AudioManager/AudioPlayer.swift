@@ -13,6 +13,7 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
     
     var isPlaying = false
     var audioPlayer: AVAudioPlayer!
+    var currentAudio: URL?
     
     func startPlayback (audio: URL) {
         
@@ -28,6 +29,7 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
             audioPlayer.delegate = self
             audioPlayer.play()
             isPlaying = true
+            currentAudio = audio
         } catch {
             print("Playback failed.")
         }
@@ -44,7 +46,7 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
             isPlaying = false
         }
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil, userInfo: ["audioURL": currentAudio as Any])
         isPlaying = false
         NotificationCenter.default.removeObserver(self)
         

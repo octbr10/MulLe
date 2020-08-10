@@ -56,6 +56,7 @@ class RecordingViewController: UIViewController{
 //        print("speechLanguage:", speechLanguage!, "at LocaleViewController viewDidLoad")
 
         NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
         
         
@@ -80,10 +81,17 @@ class RecordingViewController: UIViewController{
         self.tableView.reloadData()
     }
     
-    @objc func resetButtons() {
+    @objc func resetButtons(notification: NSNotification) {
+        
+        if let audioURL = notification.userInfo?["audioURL"] as? URL {
+            print("notification audioURL: ", audioURL)
+            let index = recordFileManager?.getIndexForURL(audioURL: audioURL) ?? 0
+            self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
+        }
+
            //audioRecorder?.fetchRecordings()
            //self.tableView.reloadData()
-        self.tableView.reloadRows(at: [IndexPath.init(row: 2, section: 0)], with: UITableView.RowAnimation.none)
+
     }
    
     @IBAction func touchDownRecord(_ sender: UIButton) {
@@ -187,9 +195,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         
         
         cell.delegate = self
-        
-        
-        
+ 
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
        
         let s = cell.audioURL.lastPathComponent
