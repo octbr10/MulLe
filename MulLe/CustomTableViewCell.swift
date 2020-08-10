@@ -20,9 +20,9 @@ class CustomTableViewCell: UITableViewCell{
     var audioQueuePlayer: AudioQueuePlayer?
     var recordFileManager: RecordFileManager?
   
-    
-    @IBOutlet var fileName: UITextView!
-    @IBOutlet var sequenceNo: UILabel!
+ 
+
+    @IBOutlet var textTitle: UILabel!
     @IBOutlet var audioDuration: UILabel!
     @IBOutlet var timeRecorded: UILabel!
     @IBOutlet var reRecordButton: UIButton!
@@ -38,12 +38,7 @@ class CustomTableViewCell: UITableViewCell{
         // Initialization code
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
+   
     @IBAction func playAudio(_ sender: Any) {
         
         if audioQueuePlayer?.isPlaying == true {
@@ -52,7 +47,7 @@ class CustomTableViewCell: UITableViewCell{
         } else {
             audioQueuePlayer = AudioQueuePlayer(items: [audioURL])
             audioQueuePlayer!.startPlayback()
-            playButton.setTitle("Stop", for: .normal)
+            playButton.setTitle("Stop", for: .selected)
         }
     }
     

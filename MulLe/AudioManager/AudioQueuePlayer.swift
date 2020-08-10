@@ -29,12 +29,12 @@ class AudioQueuePlayer: NSObject{
       
       super.init()
       NotificationCenter.default.addObserver(self, selector: #selector(self.qPlayerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+      //
     }
      
     func startPlayback() {
-    
+     
 
-      
       audioQueuePlayer = AVQueuePlayer(items: audioItems)
       
       // playing when silentmode

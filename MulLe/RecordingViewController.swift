@@ -68,6 +68,7 @@ class RecordingViewController: UIViewController{
                 print("Speech recognition auth, unknow error")
             }
         }
+        print("viewDidLoad")
     }
   
     @objc func resetPlayAllButton() {
@@ -178,11 +179,10 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
         let start = s.index(s.startIndex, offsetBy: 20)
         let end = s.index(s.endIndex, offsetBy: -4)
         if s.count == 23 {
-            cell.fileName.text = cell.audioURL.lastPathComponent
-        } else {cell.fileName.text = String(s[start..<end])}
+            cell.textTitle.text = cell.audioURL.lastPathComponent
+        } else {cell.textTitle.text = String(s[start..<end])}
         //cell.fileName.text = cell.audioURL.lastPathComponent
         
-        cell.sequenceNo.text = String(indexPath.row + 1)
         cell.reRecordButton.isEnabled = true
         cell.playButton.setTitle("Play", for: .normal)
         cell.myTableViewController = self
@@ -192,15 +192,13 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
         do {
             avAudioPlayer = try AVAudioPlayer(contentsOf: cell.audioURL)
             let duration = CGFloat(avAudioPlayer!.duration)
-            let stringDuration = String(format: "%.2f", Double(duration))
+            let stringDuration = String(format: "%.1f", Double(duration))
             cell.audioDuration.text = stringDuration + " s"
            
         } catch {}  
         
         return cell
     }
-    
-
     
     // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
