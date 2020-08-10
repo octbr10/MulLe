@@ -14,8 +14,9 @@ class RecordingViewController: UIViewController{
  
     var avAudioPlayer: AVAudioPlayer?
     var recordFileManager: RecordFileManager?
-    //var audioQueuePlayer: AudioQueuePlayer?
+    var audioQueuePlayer = AudioQueuePlayer(items: [FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]])
     var audioRecorder: AudioRecorder?
+    var audioPlayer: AudioPlayer?
     //var speechLanguage: SpeechLanguage?
 
     var titleText: String?
@@ -41,7 +42,7 @@ class RecordingViewController: UIViewController{
         super.viewDidLoad()
         //tableView.reloadData()
         
-        recordFileManager = RecordFileManager(in: titleText!)
+        recordFileManager = RecordFileManager(in: titleText ?? "Default Folder")
         audioRecorder = AudioRecorder()
         //speechLanguage = SpeechLanguage()
           
@@ -85,8 +86,18 @@ class RecordingViewController: UIViewController{
         
         if let audioURL = notification.userInfo?["audioURL"] as? URL {
             print("notification audioURL: ", audioURL)
+            
+//            recordFileManager?.fetchRecordings()
+//            self.tableView.reloadData()
+
             let index = recordFileManager?.getIndexForURL(audioURL: audioURL) ?? 0
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
+//            }   else {
+//                recordFileManager?.fetchRecordings()
+//                self.tableView.reloadData()
+//            }
+            
+            
         }
 
            //audioRecorder?.fetchRecordings()
@@ -118,18 +129,21 @@ class RecordingViewController: UIViewController{
         // scroll to the last row
         let indexPath = NSIndexPath(row: lastIndex, section: 0)
         self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
-
+        //audioPlayer?.startPlayback(audio: url)
     }
         
     func playNewRecord(fileURL: URL) {
         
         let url = fileURL
-        AudioQueuePlayer.shared.startPlayback(items: [url])
+//        audioPlayer = AudioPlayer()
+//        audioPlayer?.startPlayback(audio: url)
+        audioQueuePlayer = AudioQueuePlayer(items: [url])
+        audioQueuePlayer.startPlayback()
     }
     
     @IBAction func playAllAudios(_ sender: UIButton) {
-        if  AudioQueuePlayer.shared.isPlaying == true{
-            AudioQueuePlayer.shared.stopPlayback()
+        if  audioQueuePlayer.isPlaying == true{
+            audioQueuePlayer.stopPlayback()
             playAllButton.setTitle("Play all", for: .normal)
         } else {
             
@@ -140,14 +154,18 @@ class RecordingViewController: UIViewController{
                 urls.append(url)
                 }
             playAllButton.setTitle("Stop", for: .normal)
-             AudioQueuePlayer.shared.startPlayback(items: urls)
+            audioQueuePlayer = AudioQueuePlayer(items: urls)
+            audioQueuePlayer.startPlayback()
         }
     
   }
     
-    @IBAction func changeSpeechLanguage(_ sender: UIBarItem) {
+    // MARK - IBACTION
+    @IBAction func editRecordingList(_ sender: UIBarItem) {
         self.tableView.isEditing = !self.tableView.isEditing
+        print(self.tableView.isEditing)
         sender.title = (self.tableView.isEditing) ? "Done": "Edit"
+          
         
     }
     
@@ -192,8 +210,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
-        
-        
+
         cell.delegate = self
  
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
@@ -204,10 +221,13 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         if s.count == 23 {
             cell.textTitle.text = cell.audioURL.lastPathComponent
         } else {cell.textTitle.text = String(s[start..<end])}
-        //cell.fileName.text = cell.audioURL.lastPathComponent
         
-        cell.reRecordButton.isEnabled = true
-        cell.playButton.setTitle("Play", for: .normal)
+        //cell.fileName.text = cell.audioURL.lastPathComponent
+           
+            cell.reRecordButton.isEnabled = true
+            cell.playButton.setTitle("Play", for: .normal)
+         
+        
         cell.myTableViewController = self
         cell.timeRecorded.text = String(recordFileManager!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss"))
         
@@ -232,7 +252,9 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+    
   
+
     @objc func deleteCell(cell: UITableViewCell) {
         if let deletionIndexPath = tableView.indexPath(for: cell) {
             audioRecorder!.deleteAudioFile(urlsToDelete: recordFileManager!.recordings[deletionIndexPath[1]].fileURL)
@@ -242,12 +264,12 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         }
     }
     
-   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-       let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
-       print("sourceIndexPath.item: ", sourceIndexPath.item)
-       recordFileManager!.recordings.remove(at: sourceIndexPath.item)
-       recordFileManager!.recordings.insert(movedObjTemp, at: destinationIndexPath.item)
-   }
+//   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//       let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
+//       print("sourceIndexPath.item: ", sourceIndexPath.item)
+//       recordFileManager!.recordings.remove(at: sourceIndexPath.item)
+//       recordFileManager!.recordings.insert(movedObjTemp, at: destinationIndexPath.item)
+//   }
     
 }
 

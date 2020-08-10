@@ -28,6 +28,8 @@ class CustomTableViewCell: UITableViewCell{
     @IBOutlet var timeRecorded: UILabel!
     @IBOutlet var reRecordButton: UIButton!
     @IBOutlet var playButton: UIButton!
+    @IBOutlet var deleteButton:UIButton!
+    
     
     @objc func updatePlayButtonText() {
         print("notified...")
@@ -43,9 +45,7 @@ class CustomTableViewCell: UITableViewCell{
     @IBAction func playAudio(_ sender: Any) {
         
         delegate?.buttonTapped(cell: self)
-        
-        
-        
+
         if  audioPlayer?.isPlaying == true {
             audioPlayer?.stopPlayback()
             playButton.setTitle("Play", for: .normal)
@@ -63,6 +63,8 @@ class CustomTableViewCell: UITableViewCell{
 //        audioRecorder.deleteRecording(urlsToDelete: audioURL)
 
     }
+    
+
    
     
 //    @IBAction func reRecordAudio(_ sender: Any) {

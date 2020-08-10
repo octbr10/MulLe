@@ -129,6 +129,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="audioDuration" destination="HP0-Iw-Kyk" id="KgJ-8Y-u8E"/>
+                                            <outlet property="deleteButton" destination="7lo-A5-ltE" id="SlC-pr-yiz"/>
                                             <outlet property="playButton" destination="4st-A8-Y2C" id="fOA-Br-qC8"/>
                                             <outlet property="reRecordButton" destination="wTa-DQ-IBn" id="NFS-mR-6gm"/>
                                             <outlet property="textTitle" destination="8DB-tp-1Fh" id="Riu-Q3-wkZ"/>
@@ -197,7 +198,7 @@
                     <navigationItem key="navigationItem" id="jVb-aM-bGS">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="1G8-sP-rxT">
                             <connections>
-                                <action selector="changeSpeechLanguage:" destination="BYZ-38-t0r" id="UDp-kg-LbC"/>
+                                <action selector="editRecordingList:" destination="BYZ-38-t0r" id="UDp-kg-LbC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

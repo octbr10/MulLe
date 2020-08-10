@@ -42,10 +42,6 @@ class FolderManager: NSObject {
                 //print("fileCounts:", fileCounts)
                 
                 
-                
-                
-                
-                
             }
         } catch let error as NSError {
             print(error.localizedDescription)
