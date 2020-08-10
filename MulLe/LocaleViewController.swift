@@ -48,8 +48,6 @@ class LocaleViewController: UIViewController {
         
      }
     
-  
-    
     
     @IBAction func dismissClick(_ sender: Any) {
         dismiss(animated: true, completion: nil)

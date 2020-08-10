@@ -14,13 +14,14 @@ import AVFoundation
 class CustomTableViewCell: UITableViewCell{
     
     var myTableViewController: RecordingViewController?
+    
+    weak var delegate: CustomCellDelegate?
 
     var audioURL: URL!
     var audioRecorder = AudioRecorder()
-    var audioQueuePlayer: AudioQueuePlayer?
+    //var audioQueuePlayer: AudioQueuePlayer?
+    var audioPlayer: AudioPlayer?
     var recordFileManager: RecordFileManager?
-  
- 
 
     @IBOutlet var textTitle: UILabel!
     @IBOutlet var audioDuration: UILabel!
@@ -41,13 +42,18 @@ class CustomTableViewCell: UITableViewCell{
    
     @IBAction func playAudio(_ sender: Any) {
         
-        if audioQueuePlayer?.isPlaying == true {
-            audioQueuePlayer?.stopPlayback()
+        delegate?.buttonTapped(cell: self)
+        
+        
+        
+        if  audioPlayer?.isPlaying == true {
+            audioPlayer?.stopPlayback()
             playButton.setTitle("Play", for: .normal)
         } else {
-            audioQueuePlayer = AudioQueuePlayer(items: [audioURL])
-            audioQueuePlayer!.startPlayback()
-            playButton.setTitle("Stop", for: .selected)
+            audioPlayer = AudioPlayer()
+            audioPlayer?.startPlayback(audio: audioURL)
+
+            playButton.setTitle("Stop", for: .normal)
         }
     }
     
@@ -91,8 +97,7 @@ class CustomTableViewCell: UITableViewCell{
         }
         
         let url = audioURL!
-        audioQueuePlayer = AudioQueuePlayer(items: [url])
-        audioQueuePlayer!.startPlayback()
+        audioPlayer?.startPlayback(audio: url)
         
     }
     
@@ -104,4 +109,8 @@ class CustomTableViewCell: UITableViewCell{
 //            audioPlayer.isPlaying = false
 //        }
 //    }
+}
+
+protocol CustomCellDelegate: AnyObject {
+    func buttonTapped(cell: CustomTableViewCell)
 }

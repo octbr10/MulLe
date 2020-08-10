@@ -14,7 +14,7 @@ class RecordingViewController: UIViewController{
  
     var avAudioPlayer: AVAudioPlayer?
     var recordFileManager: RecordFileManager?
-    var audioQueuePlayer: AudioQueuePlayer?
+    //var audioQueuePlayer: AudioQueuePlayer?
     var audioRecorder: AudioRecorder?
     //var speechLanguage: SpeechLanguage?
 
@@ -22,6 +22,8 @@ class RecordingViewController: UIViewController{
     var userLanguage: String?
       
     @IBOutlet weak var tableView:UITableView!
+    
+    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playAllButton: UIButton!
     @IBOutlet weak var changeLanguage: UIButton!
@@ -54,6 +56,8 @@ class RecordingViewController: UIViewController{
 //        print("speechLanguage:", speechLanguage!, "at LocaleViewController viewDidLoad")
 
         NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
+        
         
         SFSpeechRecognizer.requestAuthorization { (authStatus) in  //4
             switch authStatus {  //5
@@ -68,13 +72,18 @@ class RecordingViewController: UIViewController{
                 print("Speech recognition auth, unknow error")
             }
         }
-        print("Recording view viewDidLoad")
     }
   
     @objc func resetPlayAllButton() {
         playAllButton.setTitle("Play all", for: .normal)
         recordFileManager?.fetchRecordings()
         self.tableView.reloadData()
+    }
+    
+    @objc func resetButtons() {
+           //audioRecorder?.fetchRecordings()
+           //self.tableView.reloadData()
+        self.tableView.reloadRows(at: [IndexPath.init(row: 2, section: 0)], with: UITableView.RowAnimation.none)
     }
    
     @IBAction func touchDownRecord(_ sender: UIButton) {
@@ -107,14 +116,12 @@ class RecordingViewController: UIViewController{
     func playNewRecord(fileURL: URL) {
         
         let url = fileURL
-                    
-        audioQueuePlayer = AudioQueuePlayer(items: [url])
-        audioQueuePlayer!.startPlayback()
+        AudioQueuePlayer.shared.startPlayback(items: [url])
     }
     
     @IBAction func playAllAudios(_ sender: UIButton) {
-        if audioQueuePlayer?.isPlaying == true{
-            audioQueuePlayer?.stopPlayback()
+        if  AudioQueuePlayer.shared.isPlaying == true{
+            AudioQueuePlayer.shared.stopPlayback()
             playAllButton.setTitle("Play all", for: .normal)
         } else {
             
@@ -124,9 +131,8 @@ class RecordingViewController: UIViewController{
                 //print("url", url)
                 urls.append(url)
                 }
-            audioQueuePlayer = AudioQueuePlayer(items: urls)
             playAllButton.setTitle("Stop", for: .normal)
-            audioQueuePlayer!.startPlayback()
+             AudioQueuePlayer.shared.startPlayback(items: urls)
         }
     
   }
@@ -158,7 +164,13 @@ class RecordingViewController: UIViewController{
 
 // Mark: - UITableViewCell 정의
 
-extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
+extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, CustomCellDelegate {
+    
+    func buttonTapped(cell: CustomTableViewCell) {
+        let indexPath = self.tableView.indexPath(for: cell)
+        print("Play button clicked indexPath!.row", indexPath!.row)
+    }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -173,8 +185,13 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
        
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
         
-        cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
         
+        cell.delegate = self
+        
+        
+        
+        cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
+       
         let s = cell.audioURL.lastPathComponent
         let start = s.index(s.startIndex, offsetBy: 20)
         let end = s.index(s.endIndex, offsetBy: -4)
@@ -200,6 +217,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+   
     // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
