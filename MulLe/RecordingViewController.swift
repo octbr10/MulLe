@@ -97,12 +97,11 @@ class RecordingViewController: UIViewController{
 //                self.tableView.reloadData()
 //            }
             
-            
+
         }
 
            //audioRecorder?.fetchRecordings()
            //self.tableView.reloadData()
-
     }
    
     @IBAction func touchDownRecord(_ sender: UIButton) {
@@ -165,8 +164,9 @@ class RecordingViewController: UIViewController{
         self.tableView.isEditing = !self.tableView.isEditing
         print(self.tableView.isEditing)
         sender.title = (self.tableView.isEditing) ? "Done": "Edit"
-          
         
+        //if self.tableView.isEditing != true {self.tableView.reloadData()}
+    
     }
     
    // when LocaleViewController is dismissed...
@@ -241,8 +241,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         return cell
     }
     
-   
-   
+  
     // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
@@ -253,9 +252,6 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         }
     }
     
-
-    
-  
 
     @objc func deleteCell(cell: UITableViewCell) {
         if let deletionIndexPath = tableView.indexPath(for: cell) {

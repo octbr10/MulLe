@@ -104,30 +104,24 @@ class CustomTableViewCell: UITableViewCell{
         
     }
     
-    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        // Customize the cell's elements for both edit & non-edit mode
        
         self.playButton.isHidden = editing
         self.deleteButton.isHidden = editing
         self.reRecordButton.isHidden = editing
-        //self.audioDuration.frame.offsetBy(dx: -10, dy: 0)
         
-        var frame = self.audioDuration.frame
-        frame.origin.x = 15;                         // move the label 10pts to the left since no image will be present
-        self.audioDuration.frame = frame;
+        if isEditing == true {
+            var frame = self.audioDuration.frame
+             frame.origin.x = 15;
+             self.audioDuration.frame = frame;
+        } else {
+            var frame = self.audioDuration.frame
+             frame.origin.x = 50;
+             self.audioDuration.frame = frame;
+        }
     }
     
-    
-//    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-//        if flag {
-//            print("CustomTableViewCell")
-//            playButton.setTitle("Play", for: .normal)
-//            reRecordButton.isEnabled = true
-//            audioPlayer.isPlaying = false
-//        }
-//    }
 }
 
 protocol CustomCellDelegate: AnyObject {

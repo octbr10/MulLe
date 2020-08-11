@@ -97,7 +97,6 @@ class FolderViewController: UIViewController {
         tableView.setEditing(editing, animated: true)
         tableView.allowsSelectionDuringEditing = true
         print("tableView.isEditing: ", tableView.isEditing )
-        self.tableView.reloadData()
         
     }
     
