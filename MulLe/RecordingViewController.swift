@@ -14,7 +14,7 @@ class RecordingViewController: UIViewController{
  
     var avAudioPlayer: AVAudioPlayer?
     var recordFileManager: RecordFileManager?
-    var audioQueuePlayer = AudioQueuePlayer(items: [FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]])
+    var audioQueuePlayer: AudioQueuePlayer?
     var audioRecorder: AudioRecorder?
     var audioPlayer: AudioPlayer?
     //var speechLanguage: SpeechLanguage?
@@ -138,12 +138,12 @@ class RecordingViewController: UIViewController{
 //        audioPlayer = AudioPlayer()
 //        audioPlayer?.startPlayback(audio: url)
         audioQueuePlayer = AudioQueuePlayer(items: [url])
-        audioQueuePlayer.startPlayback()
+        audioQueuePlayer?.startPlayback()
     }
     
     @IBAction func playAllAudios(_ sender: UIButton) {
-        if  audioQueuePlayer.isPlaying == true{
-            audioQueuePlayer.stopPlayback()
+        if  audioQueuePlayer?.isPlaying == true{
+            audioQueuePlayer?.stopPlayback()
             playAllButton.setTitle("Play all", for: .normal)
         } else {
             
@@ -155,7 +155,7 @@ class RecordingViewController: UIViewController{
                 }
             playAllButton.setTitle("Stop", for: .normal)
             audioQueuePlayer = AudioQueuePlayer(items: urls)
-            audioQueuePlayer.startPlayback()
+            audioQueuePlayer?.startPlayback()
         }
     
   }
@@ -183,9 +183,7 @@ class RecordingViewController: UIViewController{
       // being dismissed to collect any data which needs
       // to be processed
     }
-
-    
-    
+   
 }
 
 // Mark: - UITableViewCell 정의
@@ -244,14 +242,18 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
     }
     
    
+   
     // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
         if (editingStyle == .delete) {
             audioRecorder!.deleteAudioFile(urlsToDelete: (recordFileManager!.recordings[indexPath.row].fileURL))
             recordFileManager?.fetchRecordings()
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+    
+
     
   
 
@@ -263,6 +265,8 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
 
         }
     }
+    
+  
     
 //   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 //       let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
