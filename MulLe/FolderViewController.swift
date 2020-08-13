@@ -10,27 +10,15 @@ import UIKit
 import Foundation
 
 
-protocol ChildToParentProtocol:class {
-    func buttonClickedByUser()
-    func needToPassInforToParent(with : [Folder])
-}
-
 
 class FolderViewController: UIViewController {
     
-
-    weak var delegate:ChildToParentProtocol? = nil
-    
-    
-    @IBAction func createTourPressed(_ sender: UIButton) {
-        delegate?.buttonClickedByUser()
-    }
-    
-        
+      
 //    var folderArray: [String] = []
 //    var fileCountArray: [String] = []
     
     var folderManager: FolderManager?
+    var audioQueuePlayer: AudioQueuePlayer?
     
     let cellIdentifier: String = "CellForFolder"
     
@@ -38,9 +26,7 @@ class FolderViewController: UIViewController {
         folderManager?.fetchFolders()
         self.tableView.reloadData()
         print("folderViewController viewWillAppear")
-        delegate?.needToPassInforToParent(with : folderManager!.folders)
-
-
+        
     }
     
     
@@ -50,6 +36,7 @@ class FolderViewController: UIViewController {
         navigationItem.leftBarButtonItem = editButtonItem
 
         folderManager = FolderManager()
+        audioQueuePlayer = AudioQueuePlayer(items: [FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]])
 
         if isKeyPresentInUserDefaults(key: "speechLanguage") != true {
             UserDefaults.standard.set("de-DE", forKey: "speechLanguage")
@@ -64,10 +51,8 @@ class FolderViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func addFolder(_ sender: UIBarButtonItem) {
-        
-        delegate?.needToPassInforToParent(with : folderManager!.folders)
-        print("delegate", delegate ?? "delegate is empty" )
-        
+ 
+       
         let alertController = UIAlertController(title: "New Forder", message: "Please input a folder name.", preferredStyle: .alert)
         alertController.addTextField {(UITextField) in UITextField.placeholder = "Folder Name for Voice Recordings"}
         
@@ -111,6 +96,7 @@ class FolderViewController: UIViewController {
         }
         
         recordingViewController.titleText = cell.textLabel?.text
+        recordingViewController.audioQueuePlayer = self.audioQueuePlayer
         //nowPlayingViewController.folderName.text = cell.textLabel?.text
         
     }

@@ -14,7 +14,7 @@ class RecordingViewController: UIViewController{
  
     var avAudioPlayer: AVAudioPlayer?
     var recordFileManager: RecordFileManager?
-    var audioQueuePlayer: AudioQueuePlayer?
+    var audioQueuePlayer: AudioQueuePlayer!
     var audioRecorder: AudioRecorder?
     var audioPlayer: AudioPlayer?
     //var speechLanguage: SpeechLanguage?
@@ -52,13 +52,7 @@ class RecordingViewController: UIViewController{
         userLanguage =  enLocale.localizedString(forIdentifier: lang.identifier)
         print("userLanguage RecordingViewController viewDidLoad: ", userLanguage!)
         changeLanguage.setTitle(userLanguage, for: .normal)
-        
-//        print("speechLanguage:", speechLanguage!, "at LocaleViewController viewDidLoad")
 
-        NotificationCenter.default.addObserver(self, selector: #selector(resetPlayAllButton), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(resetButtons), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
-        
         
         SFSpeechRecognizer.requestAuthorization { (authStatus) in  //4
             switch authStatus {  //5
@@ -73,29 +67,39 @@ class RecordingViewController: UIViewController{
                 print("Speech recognition auth, unknow error")
             }
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCell), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(itemPlayed), name: NSNotification.Name(rawValue: "qPlayerItemPlayed"), object: nil)
+
+
+
+    }
+    
+    @objc func itemPlayed(notification: NSNotification) {
+        if let itemcount = notification.userInfo?["audioItemsCount"] as? Int {
+            print("itemcount", itemcount)
+        
+        }
     }
   
-    @objc func resetPlayAllButton() {
+    @objc func reloadTable() {
         playAllButton.setTitle("Play all", for: .normal)
         recordFileManager?.fetchRecordings()
         self.tableView.reloadData()
     }
     
-    @objc func resetButtons(notification: NSNotification) {
+    @objc func reloadCell(notification: NSNotification) {
         
         if let audioURL = notification.userInfo?["audioURL"] as? URL {
-            print("notification audioURL: ", audioURL)
-            
-//            recordFileManager?.fetchRecordings()
-//            self.tableView.reloadData()
 
+            print("notification audioURL: ", audioURL)
             let index = recordFileManager?.getIndexForURL(audioURL: audioURL) ?? 0
+            print("index: ", index)
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
-//            }   else {
-//                recordFileManager?.fetchRecordings()
-//                self.tableView.reloadData()
-//            }
-            
 
         }
 
@@ -145,15 +149,21 @@ class RecordingViewController: UIViewController{
             playAllButton.setTitle("Play all", for: .normal)
         } else {
 
-            var urls: [URL] = []
+           // var urls: [URL] = []
+            var audioItems: [AVPlayerItem] = []
             for item in recordFileManager!.recordings {
                 let url = item.fileURL
                 //print("url", url)
-                urls.append(url)
+                let audioItem = AVPlayerItem(url: url)
+                audioItems.append(audioItem)
+                //urls.append(url)
                 }
             playAllButton.setTitle("Stop", for: .normal)
-            audioQueuePlayer = AudioQueuePlayer(items: urls)
-            audioQueuePlayer?.startPlayback()
+            print("audioItems", audioItems)
+            audioQueuePlayer?.replacePlayerItems(newPlayerItem: audioItems)
+            //audioQueuePlayer = AudioQueuePlayer(items: urls)
+
+            
         }
     
   }
@@ -262,14 +272,32 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         }
     }
     
+    // cell select then playback
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
 
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
+        
+        if audioPlayer?.currentAudio == cell.audioURL {
+            audioPlayer?.stopPlayback()
+        } else {
+        
         let labelText = cell.textTitle.text
         UIPasteboard.general.string = labelText
         print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
-        
+        print("cell.isSelected", cell.isSelected)
+       
         audioPlayer?.startPlayback(audio: cell.audioURL)
+        
+        }
+  
+       
+//        if cell.isSelected == true {
+//            audioPlayer?.stopPlayback()
+//        } else {
+//            audioPlayer?.startPlayback(audio: cell.audioURL)
+//        }
+
         //cell.textTitle.text = "playing"
 
     }
@@ -277,6 +305,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
         cell.setSelected(false, animated: true)
+        print("cell.isSelected", cell.isSelected)
         //cell.textTitle.text = "deselected"
         
 

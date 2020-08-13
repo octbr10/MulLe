@@ -57,13 +57,32 @@ class AudioQueuePlayer: NSObject{
         print(isPlaying)
     }
     
+    func replacePlayerItems(newPlayerItem: [AVPlayerItem]){
+        audioQueuePlayer?.removeAllItems()
+        audioItems = newPlayerItem
+        isPlaying = false
+        startPlayback()
+        audioItemsCount = audioItems.count
+     
+    }
+
+    
     @objc func qPlayerDidFinishPlaying(sender: Notification) {
         print("qPlayerDidFinishPlaying audioItemsCount: ", audioItemsCount)
         audioItemsCount = audioItemsCount - 1
+
+       
         if audioItemsCount == 0 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
             isPlaying = false
-            NotificationCenter.default.removeObserver(self)
+            //NotificationCenter.default.removeObserver(self)
+        } else {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "qPlayerItemPlayed"), object: nil, userInfo: ["audioItemsCount": audioItemsCount as Any])
         }
     }
 }
+
+
+//NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil, userInfo: ["audioURL": currentAudio as Any])
+//isPlaying = false
+//NotificationCenter.default.removeObserver(self)

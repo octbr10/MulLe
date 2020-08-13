@@ -52,13 +52,13 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
 
     }
     
-    func getNowPlaying() {
-        if isPlaying == true {
-            print("currentAudioURL: ", currentAudio as Any)
-        } else {
-            print("no current playing URL, no audio is playing")
-        }
-        
-    }
+//    func getNowPlaying() {
+//        if isPlaying == true {
+//            print("currentAudioURL: ", currentAudio as Any)
+//        } else {
+//            print("no current playing URL, no audio is playing")
+//        }
+//
+//    }
     
 }

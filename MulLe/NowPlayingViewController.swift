@@ -23,16 +23,26 @@ class NowPlayingViewController: UIViewController {
         super.viewDidLoad()
         folderManager = FolderManager()
         // Do any additional setup after loading the view.
+        
+        
+      NotificationCenter.default.addObserver(self, selector: #selector(testprint), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
+        
+        
+        
+    }
+    var count = 0
+    
+    @objc func testprint() {
+        count = count + 1
+        print("count: ", count)
+        folderName.text = String(count)
+        
     }
     
     override func prepare(for seque:UIStoryboardSegue, sender: Any?) {
 //        if let vc = seque.destination as? FolderViewController, seque.identifier == "homeToFolder" {
 //            vc.delegate = self
-            
-        if let vc = seque.destination as? FolderViewController {
-            vc.delegate = self
-            print("delegate set in Now Playing View Controller")
-        }
+
     }
     
     
@@ -69,13 +79,4 @@ class NowPlayingViewController: UIViewController {
 
 }
 
-extension NowPlayingViewController: ChildToParentProtocol {
-    func buttonClickedByUser() {
-            
-    }
-    func  needToPassInforToParent(with : [Folder]) {
-        folders = with
-        print("NowPlayingViewController folders", folders!)
 
-    }
-}
