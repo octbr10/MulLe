@@ -23,6 +23,7 @@ class RecordingViewController: UIViewController{
     var userLanguage: String?
       
     @IBOutlet weak var tableView:UITableView!
+    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playAllButton: UIButton!
     @IBOutlet weak var changeLanguage: UIButton!
@@ -120,13 +121,12 @@ class RecordingViewController: UIViewController{
         }
         
         playNewRecord(fileURL: url)
-
         self.tableView.reloadData()
 
         // scroll to the last row
-        let indexPath = NSIndexPath(row: lastIndex, section: 0)
-        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
-        //audioPlayer?.startPlayback(audio: url)
+        let indexPath = IndexPath(row: lastIndex, section: 0)
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+
     }
         
     func playNewRecord(fileURL: URL) {
@@ -139,11 +139,12 @@ class RecordingViewController: UIViewController{
     }
     
     @IBAction func playAllAudios(_ sender: UIButton) {
+        
         if  audioQueuePlayer?.isPlaying == true{
             audioQueuePlayer?.stopPlayback()
             playAllButton.setTitle("Play all", for: .normal)
         } else {
-            
+
             var urls: [URL] = []
             for item in recordFileManager!.recordings {
                 let url = item.fileURL
@@ -209,7 +210,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
 
         cell.delegate = self
         
-        cell.audioPlayer = audioPlayer
+        //cell.audioPlayer = audioPlayer
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
        
         let s = cell.audioURL.lastPathComponent
@@ -222,7 +223,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         //cell.fileName.text = cell.audioURL.lastPathComponent
            
             cell.reRecordButton.isEnabled = true
-            cell.playButton.setTitle("Play", for: .normal)
+            //cell.playButton.setTitle("Play", for: .normal)
          
         
         cell.myTableViewController = self
@@ -269,14 +270,14 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
         
         audioPlayer?.startPlayback(audio: cell.audioURL)
-        cell.textTitle.text = "playing"
+        //cell.textTitle.text = "playing"
 
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
         cell.setSelected(false, animated: true)
-        cell.textTitle.text = "deselected"
+        //cell.textTitle.text = "deselected"
         
 
     }

@@ -20,21 +20,21 @@ class CustomTableViewCell: UITableViewCell{
     var audioURL: URL!
     var audioRecorder = AudioRecorder()
     var audioQueuePlayer: AudioQueuePlayer?
-    var audioPlayer: AudioPlayer!
+    //var audioPlayer: AudioPlayer!
     var recordFileManager: RecordFileManager?
     
     @IBOutlet var textTitle: UILabel!
     @IBOutlet var audioDuration: UILabel!
     @IBOutlet var timeRecorded: UILabel!
     @IBOutlet var reRecordButton: UIButton!
-    @IBOutlet var playButton: UIButton!
+    //@IBOutlet var playButton: UIButton!
     @IBOutlet var deleteButton:UIButton!
     
     
-    @objc func updatePlayButtonText() {
-        print("notified...")
-        playButton.setTitle("Play", for: .normal)
-    }
+//    @objc func updatePlayButtonText() {
+//        print("notified...")
+//        playButton.setTitle("Play", for: .normal)
+//    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,22 +42,22 @@ class CustomTableViewCell: UITableViewCell{
     }
     
    
-    @IBAction func playAudio(_ sender: Any) {
-        
-        delegate?.buttonTapped(cell: self)
-
-        self.setSelected(true, animated: true)
-        //self.isSelected = !self.isSelected
-        
-        if  audioPlayer?.isPlaying == true {
-            audioPlayer?.stopPlayback()
-            playButton.setTitle("Play", for: .normal)
-        } else {
-            //audioPlayer = AudioPlayer()
-            audioPlayer?.startPlayback(audio: audioURL)
-            playButton.setTitle("Stop", for: .normal)
-        }
-    }
+//    @IBAction func playAudio(_ sender: Any) {
+//
+//        delegate?.buttonTapped(cell: self)
+//
+//        self.setSelected(true, animated: true)
+//        //self.isSelected = !self.isSelected
+//
+//        if  audioPlayer?.isPlaying == true {
+//            audioPlayer?.stopPlayback()
+//            playButton.setTitle("Play", for: .normal)
+//        } else {
+//            //audioPlayer = AudioPlayer()
+//            audioPlayer?.startPlayback(audio: audioURL)
+//            playButton.setTitle("Stop", for: .normal)
+//        }
+//    }
     
     @IBAction func deleteRecord(_ sender: Any) {
         myTableViewController?.deleteCell(cell: self)
@@ -114,7 +114,7 @@ class CustomTableViewCell: UITableViewCell{
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
        
-        self.playButton.isHidden = editing
+        //self.playButton.isHidden = editing
         self.deleteButton.isHidden = editing
         self.reRecordButton.isHidden = editing
         

@@ -54,23 +54,6 @@
                                                     <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4st-A8-Y2C">
-                                                    <rect key="frame" x="349" y="89" width="55" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="55" id="RZQ-Cs-VIG"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <inset key="titleEdgeInsets" minX="-7" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <inset key="imageEdgeInsets" minX="-11" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="Play" image="play" catalog="system">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
-                                                    </state>
-                                                    <state key="selected" title="Stop" image="stop" catalog="system"/>
-                                                    <connections>
-                                                        <action selector="playAudio:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="lFa-N8-f1B"/>
-                                                    </connections>
-                                                </button>
                                                 <button opaque="NO" contentMode="center" horizontalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7lo-A5-ltE">
                                                     <rect key="frame" x="20" y="91" width="20" height="16"/>
                                                     <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
@@ -93,7 +76,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTa-DQ-IBn">
-                                                    <rect key="frame" x="274" y="87" width="65" height="20"/>
+                                                    <rect key="frame" x="329" y="87" width="65" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="65" id="s1s-6U-fc3"/>
                                                     </constraints>
@@ -110,20 +93,17 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="4st-A8-Y2C" firstAttribute="leading" secondItem="wTa-DQ-IBn" secondAttribute="trailing" constant="10" id="0ey-Ed-IKf"/>
+                                                <constraint firstAttribute="trailing" secondItem="wTa-DQ-IBn" secondAttribute="trailing" constant="20" id="1c4-3t-Xcx"/>
                                                 <constraint firstItem="CGi-FY-8st" firstAttribute="leading" secondItem="HP0-Iw-Kyk" secondAttribute="trailing" constant="10" id="1uX-Df-eM9"/>
                                                 <constraint firstAttribute="bottom" secondItem="CGi-FY-8st" secondAttribute="bottom" constant="5" id="4YD-aJ-0OQ"/>
-                                                <constraint firstItem="4st-A8-Y2C" firstAttribute="bottom" secondItem="7lo-A5-ltE" secondAttribute="bottom" id="9DD-QB-ejh"/>
                                                 <constraint firstAttribute="bottom" secondItem="HP0-Iw-Kyk" secondAttribute="bottom" constant="5" id="9UP-sf-Cxt"/>
                                                 <constraint firstAttribute="bottom" secondItem="7lo-A5-ltE" secondAttribute="bottom" constant="5" id="B0j-aD-SVh"/>
                                                 <constraint firstAttribute="bottom" secondItem="wTa-DQ-IBn" secondAttribute="bottom" constant="5" id="BXH-U3-fws"/>
                                                 <constraint firstItem="7lo-A5-ltE" firstAttribute="leading" secondItem="BBQ-R8-VJt" secondAttribute="leading" constant="20" id="EGa-hU-96e"/>
-                                                <constraint firstAttribute="trailing" secondItem="4st-A8-Y2C" secondAttribute="trailing" constant="10" id="Kcu-rx-uJA"/>
                                                 <constraint firstItem="8DB-tp-1Fh" firstAttribute="top" secondItem="BBQ-R8-VJt" secondAttribute="top" constant="5" id="WCJ-no-W3t"/>
                                                 <constraint firstItem="HP0-Iw-Kyk" firstAttribute="leading" secondItem="7lo-A5-ltE" secondAttribute="trailing" constant="10" id="WSz-Xc-5iq"/>
                                                 <constraint firstItem="HP0-Iw-Kyk" firstAttribute="bottom" secondItem="7lo-A5-ltE" secondAttribute="bottom" id="Yqb-8N-fh0"/>
                                                 <constraint firstItem="8DB-tp-1Fh" firstAttribute="leading" secondItem="BBQ-R8-VJt" secondAttribute="leading" constant="20" id="aD7-y2-9H4"/>
-                                                <constraint firstAttribute="bottom" secondItem="4st-A8-Y2C" secondAttribute="bottom" constant="5" id="flZ-HG-su2"/>
                                                 <constraint firstItem="7lo-A5-ltE" firstAttribute="top" secondItem="8DB-tp-1Fh" secondAttribute="bottom" constant="5" id="iI7-Wq-yMK"/>
                                                 <constraint firstAttribute="trailing" secondItem="8DB-tp-1Fh" secondAttribute="trailing" id="ica-sU-MWc"/>
                                                 <constraint firstItem="wTa-DQ-IBn" firstAttribute="bottom" secondItem="7lo-A5-ltE" secondAttribute="bottom" id="ldQ-oY-4Gv"/>
@@ -133,7 +113,6 @@
                                         <connections>
                                             <outlet property="audioDuration" destination="HP0-Iw-Kyk" id="KgJ-8Y-u8E"/>
                                             <outlet property="deleteButton" destination="7lo-A5-ltE" id="SlC-pr-yiz"/>
-                                            <outlet property="playButton" destination="4st-A8-Y2C" id="fOA-Br-qC8"/>
                                             <outlet property="reRecordButton" destination="wTa-DQ-IBn" id="NFS-mR-6gm"/>
                                             <outlet property="textTitle" destination="8DB-tp-1Fh" id="Riu-Q3-wkZ"/>
                                             <outlet property="timeRecorded" destination="CGi-FY-8st" id="ySg-c1-EDS"/>
@@ -438,9 +417,7 @@
         <image name="folder" catalog="system" width="128" height="95"/>
         <image name="mic" catalog="system" width="108" height="128"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
-        <image name="play" catalog="system" width="120" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
-        <image name="stop" catalog="system" width="128" height="113"/>
         <image name="trash" catalog="system" width="121" height="128"/>
     </resources>
 </document>

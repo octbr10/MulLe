@@ -49,7 +49,15 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil, userInfo: ["audioURL": currentAudio as Any])
         isPlaying = false
         NotificationCenter.default.removeObserver(self)
-        
+
+    }
+    
+    func getNowPlaying() {
+        if isPlaying == true {
+            print("currentAudioURL: ", currentAudio as Any)
+        } else {
+            print("no current playing URL, no audio is playing")
+        }
         
     }
     
