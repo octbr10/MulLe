@@ -6,7 +6,7 @@
 //  Copyright © 2020 Jeeyoung Park. All rights reserved.
 //
 
-import SwiftUI
+import UIKit
 import AVFoundation
 
 class AudioPlayer: NSObject, AVAudioPlayerDelegate {

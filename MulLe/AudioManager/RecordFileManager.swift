@@ -25,6 +25,7 @@ class RecordFileManager: NSObject {
         folderName = folder
         let fileManager = FileManager.default
         documentPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
         folderPath = documentPath.appendingPathComponent(folderName)
         self.fileManager = FileManager.default
         
@@ -34,6 +35,19 @@ class RecordFileManager: NSObject {
         
     }
     
+    override init() {
+        
+        folderName = "All Folders"
+        let fileManager = FileManager.default
+        documentPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        folderPath = documentPath
+        self.fileManager = FileManager.default
+        
+        super.init()
+        
+        fetchRecordings()
+    }
+    
 //    override init() {
 //        super.init()
 //        fetchRecordings()
@@ -41,6 +55,10 @@ class RecordFileManager: NSObject {
     
     func fetchRecordings() {
         recordings.removeAll()
+        
+        
+        
+        
         let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
         for audio in directoryContents {
             let recording = Recording(fileURL: audio, filePath: audio.deletingLastPathComponent().relativePath, fileName: audio.lastPathComponent, createdAt: getCreationDate(for: audio), textRecognized: "non")
@@ -61,11 +79,6 @@ class RecordFileManager: NSObject {
     func getIndexForURL(audioURL: URL) -> Int {
         return recordings.firstIndex(where: { $0.fileURL == audioURL }) ?? 0
     }
-    
-    func getRecordingsCount() -> Int {
-        return recordings.count
-    }
-    
-    
+  
 }
 

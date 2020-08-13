@@ -20,9 +20,9 @@ class CustomTableViewCell: UITableViewCell{
     var audioURL: URL!
     var audioRecorder = AudioRecorder()
     var audioQueuePlayer: AudioQueuePlayer?
-    var audioPlayer: AudioPlayer?
+    var audioPlayer: AudioPlayer!
     var recordFileManager: RecordFileManager?
-
+    
     @IBOutlet var textTitle: UILabel!
     @IBOutlet var audioDuration: UILabel!
     @IBOutlet var timeRecorded: UILabel!
@@ -46,13 +46,15 @@ class CustomTableViewCell: UITableViewCell{
         
         delegate?.buttonTapped(cell: self)
 
+        self.setSelected(true, animated: true)
+        //self.isSelected = !self.isSelected
+        
         if  audioPlayer?.isPlaying == true {
             audioPlayer?.stopPlayback()
             playButton.setTitle("Play", for: .normal)
         } else {
-            audioPlayer = AudioPlayer()
+            //audioPlayer = AudioPlayer()
             audioPlayer?.startPlayback(audio: audioURL)
-
             playButton.setTitle("Stop", for: .normal)
         }
     }
@@ -82,6 +84,11 @@ class CustomTableViewCell: UITableViewCell{
 //                 print("recordingStopped")
 //        }
 //     }
+    
+    @IBAction func copyTextTitle() {
+        UIPasteboard.general.string = textTitle.text
+        
+    }
     
     @IBAction func touchDownReRecord(_ sender: Any) {
         if audioRecorder.isRecording == false {
@@ -121,6 +128,8 @@ class CustomTableViewCell: UITableViewCell{
              self.audioDuration.frame = frame;
         }
     }
+    
+  
     
 }
 

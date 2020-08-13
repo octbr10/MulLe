@@ -9,7 +9,23 @@
 import UIKit
 import Foundation
 
+
+protocol ChildToParentProtocol:class {
+    func buttonClickedByUser()
+    func needToPassInforToParent(with : [Folder])
+}
+
+
 class FolderViewController: UIViewController {
+    
+
+    weak var delegate:ChildToParentProtocol? = nil
+    
+    
+    @IBAction func createTourPressed(_ sender: UIButton) {
+        delegate?.buttonClickedByUser()
+    }
+    
         
 //    var folderArray: [String] = []
 //    var fileCountArray: [String] = []
@@ -22,6 +38,9 @@ class FolderViewController: UIViewController {
         folderManager?.fetchFolders()
         self.tableView.reloadData()
         print("folderViewController viewWillAppear")
+        delegate?.needToPassInforToParent(with : folderManager!.folders)
+
+
     }
     
     
@@ -38,13 +57,16 @@ class FolderViewController: UIViewController {
         }
         
         print("folderview did load")
-        
+
     }
 
     
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func addFolder(_ sender: UIBarButtonItem) {
+        
+        delegate?.needToPassInforToParent(with : folderManager!.folders)
+        print("delegate", delegate ?? "delegate is empty" )
         
         let alertController = UIAlertController(title: "New Forder", message: "Please input a folder name.", preferredStyle: .alert)
         alertController.addTextField {(UITextField) in UITextField.placeholder = "Folder Name for Voice Recordings"}
@@ -80,11 +102,16 @@ class FolderViewController: UIViewController {
             return
         }
         
+//        guard let nowPlayingViewController: NowPlayingViewController = segue.destination as? NowPlayingViewController else{
+//            return
+//        }
+        
         guard let cell: UITableViewCell = sender as? UITableViewCell else {
             return
         }
         
         recordingViewController.titleText = cell.textLabel?.text
+        //nowPlayingViewController.folderName.text = cell.textLabel?.text
         
     }
 

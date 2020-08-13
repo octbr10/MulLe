@@ -23,8 +23,6 @@ class RecordingViewController: UIViewController{
     var userLanguage: String?
       
     @IBOutlet weak var tableView:UITableView!
-    
-    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playAllButton: UIButton!
     @IBOutlet weak var changeLanguage: UIButton!
@@ -44,7 +42,7 @@ class RecordingViewController: UIViewController{
         
         recordFileManager = RecordFileManager(in: titleText ?? "Default Folder")
         audioRecorder = AudioRecorder()
-        //speechLanguage = SpeechLanguage()
+        audioPlayer = AudioPlayer()
           
         let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
         print("userDefaultLanguage: ", userDefaultLanguage ?? "de-DE")
@@ -210,7 +208,8 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
 
         cell.delegate = self
- 
+        
+        cell.audioPlayer = audioPlayer
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
        
         let s = cell.audioURL.lastPathComponent
@@ -262,7 +261,25 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         }
     }
     
-  
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
+        let labelText = cell.textTitle.text
+        UIPasteboard.general.string = labelText
+        print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
+        
+        audioPlayer?.startPlayback(audio: cell.audioURL)
+        cell.textTitle.text = "playing"
+
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
+        cell.setSelected(false, animated: true)
+        cell.textTitle.text = "deselected"
+        
+
+    }
     
 //   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 //       let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
