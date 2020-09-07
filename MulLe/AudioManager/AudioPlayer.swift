@@ -57,9 +57,7 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if flag {
-            isPlaying = false
-        }
+        isPlaying = false
 
         switch playbackType {
             case .Normal:
@@ -69,18 +67,6 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
             case .ReRecord:
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil,userInfo: ["playbackType": "ReRecord", "audioURL": currentAudio!])
         }
-        
-        isPlaying = false
-
     }
-    
-//    func getNowPlaying() {
-//        if isPlaying == true {
-//            print("currentAudioURL: ", currentAudio as Any)
-//        } else {
-//            print("no current playing URL, no audio is playing")
-//        }
-//
-//    }
     
 }

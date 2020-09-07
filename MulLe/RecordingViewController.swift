@@ -87,7 +87,6 @@ class RecordingViewController: UIViewController{
         case .Normal:
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
             if index + 1 != (recordFileManager?.recordings.count)! {
-                audioPlayer?.isPlaying = true
                 audioPlayer?.startPlayback(audio: (recordFileManager?.recordings[index + 1].fileURL)!)
                 tableView.selectRow(at: IndexPath(row: index + 1, section: 0), animated: true, scrollPosition: .bottom)
             }
