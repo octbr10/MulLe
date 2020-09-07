@@ -12,14 +12,8 @@ import Foundation
 
 
 class FolderViewController: UIViewController {
-    
-      
-//    var folderArray: [String] = []
-//    var fileCountArray: [String] = []
-    
+     
     var folderManager: FolderManager?
-    var audioQueuePlayer: AudioQueuePlayer?
-    
     let cellIdentifier: String = "CellForFolder"
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,7 +30,6 @@ class FolderViewController: UIViewController {
         navigationItem.leftBarButtonItem = editButtonItem
 
         folderManager = FolderManager()
-        audioQueuePlayer = AudioQueuePlayer(items: [FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]])
 
         if isKeyPresentInUserDefaults(key: "speechLanguage") != true {
             UserDefaults.standard.set("de-DE", forKey: "speechLanguage")
@@ -87,17 +80,11 @@ class FolderViewController: UIViewController {
             return
         }
         
-//        guard let nowPlayingViewController: NowPlayingViewController = segue.destination as? NowPlayingViewController else{
-//            return
-//        }
-        
         guard let cell: UITableViewCell = sender as? UITableViewCell else {
             return
         }
         
         recordingViewController.titleText = cell.textLabel?.text
-        recordingViewController.audioQueuePlayer = self.audioQueuePlayer
-        //nowPlayingViewController.folderName.text = cell.textLabel?.text
         
     }
 
@@ -212,14 +199,12 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
                 print("indexPath.row : ", indexPath.row)
             }
             
+            self.folderManager?.fetchFolders()
+            self.tableView.reloadData()
+            
         }
     }
     
-   
-//    // cell move
-//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//       
-//    }
         
 }
 

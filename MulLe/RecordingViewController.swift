@@ -14,10 +14,8 @@ class RecordingViewController: UIViewController{
  
     var avAudioPlayer: AVAudioPlayer?
     var recordFileManager: RecordFileManager?
-    var audioQueuePlayer: AudioQueuePlayer!
     var audioRecorder: AudioRecorder?
     var audioPlayer: AudioPlayer?
-    //var speechLanguage: SpeechLanguage?
 
     var titleText: String?
     var userLanguage: String?
@@ -39,11 +37,11 @@ class RecordingViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.reloadData()
         
         recordFileManager = RecordFileManager(in: titleText ?? "Default Folder")
         audioRecorder = AudioRecorder()
         audioPlayer = AudioPlayer()
+        
           
         let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
         print("userDefaultLanguage: ", userDefaultLanguage ?? "de-DE")
@@ -68,44 +66,57 @@ class RecordingViewController: UIViewController{
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadCell), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTable), name: NSNotification.Name(rawValue: "qPlayerDidFinishPlaying"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(itemPlayed), name: NSNotification.Name(rawValue: "qPlayerItemPlayed"), object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(manageNotification), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
 
 
     }
     
-    @objc func itemPlayed(notification: NSNotification) {
-        if let itemcount = notification.userInfo?["audioItemsCount"] as? Int {
-            print("itemcount", itemcount)
+    @objc func manageNotification(notification: NSNotification) {
+        guard let audioURL = notification.userInfo?["audioURL"] as? URL else {return}
+        guard let playType = (notification.userInfo? ["playbackType"]) as? String else {return}
+        let index = recordFileManager?.getIndexForURL(audioURL: audioURL) ?? 0
         
-        }
-    }
-  
-    @objc func reloadTable() {
-        playAllButton.setTitle("Play all", for: .normal)
-        recordFileManager?.fetchRecordings()
-        self.tableView.reloadData()
-    }
-    
-    @objc func reloadCell(notification: NSNotification) {
-        
-        if let audioURL = notification.userInfo?["audioURL"] as? URL {
-
-            print("notification audioURL: ", audioURL)
-            let index = recordFileManager?.getIndexForURL(audioURL: audioURL) ?? 0
-            print("index: ", index)
+        switch PlaybackType(rawValue: playType) {
+        case .NewRecord:
+                recordFileManager?.fetchRecordings()
+                self.tableView.reloadRows(at: [IndexPath.init(row: ((recordFileManager?.recordings.count)! - 1), section: 0)], with: .automatic)
+        case .ReRecord:
+            recordFileManager?.fetchRecordings()
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
 
+        case .Normal:
+            self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
+            if index + 1 != (recordFileManager?.recordings.count)! {
+                audioPlayer?.isPlaying = true
+                audioPlayer?.startPlayback(audio: (recordFileManager?.recordings[index + 1].fileURL)!)
+                tableView.selectRow(at: IndexPath(row: index + 1, section: 0), animated: true, scrollPosition: .bottom)
+            }
+        default:
+            self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
         }
-
-           //audioRecorder?.fetchRecordings()
-           //self.tableView.reloadData()
+        
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+        if self.audioPlayer?.isPlaying == true {
+            self.audioPlayer?.stopPlayback()
+        }
+    }
+    
+    @objc func QPlayerItems(notification: NSNotification) {
+        if let avPlayerItems = notification.userInfo? ["QPlayerItems"] as? [AVPlayerItem] {
+           
+            for item in avPlayerItems {
+                let url: URL? = (item.asset as? AVURLAsset)?.url
+ 
+                print("playerItems URL: ", url!)
+            }
+         
+        }
+    }
+
+
    
     @IBAction func touchDownRecord(_ sender: UIButton) {
 
@@ -136,37 +147,9 @@ class RecordingViewController: UIViewController{
     func playNewRecord(fileURL: URL) {
         
         let url = fileURL
-//        audioPlayer = AudioPlayer()
-//        audioPlayer?.startPlayback(audio: url)
-        audioQueuePlayer = AudioQueuePlayer(items: [url])
-        audioQueuePlayer?.startPlayback()
+        audioPlayer?.newRecordPlayback(audio: url)
     }
     
-    @IBAction func playAllAudios(_ sender: UIButton) {
-        
-        if  audioQueuePlayer?.isPlaying == true{
-            audioQueuePlayer?.stopPlayback()
-            playAllButton.setTitle("Play all", for: .normal)
-        } else {
-
-           // var urls: [URL] = []
-            var audioItems: [AVPlayerItem] = []
-            for item in recordFileManager!.recordings {
-                let url = item.fileURL
-                //print("url", url)
-                let audioItem = AVPlayerItem(url: url)
-                audioItems.append(audioItem)
-                //urls.append(url)
-                }
-            playAllButton.setTitle("Stop", for: .normal)
-            print("audioItems", audioItems)
-            audioQueuePlayer?.replacePlayerItems(newPlayerItem: audioItems)
-            //audioQueuePlayer = AudioQueuePlayer(items: urls)
-
-            
-        }
-    
-  }
     
     // MARK - IBACTION
     @IBAction func editRecordingList(_ sender: UIBarItem) {
@@ -174,7 +157,6 @@ class RecordingViewController: UIViewController{
         print(self.tableView.isEditing)
         sender.title = (self.tableView.isEditing) ? "Done": "Edit"
         
-        //if self.tableView.isEditing != true {self.tableView.reloadData()}
     
     }
     
@@ -220,7 +202,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
 
         cell.delegate = self
         
-        //cell.audioPlayer = audioPlayer
+        cell.audioPlayer = audioPlayer
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
        
         let s = cell.audioURL.lastPathComponent
@@ -230,15 +212,13 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
             cell.textTitle.text = cell.audioURL.lastPathComponent
         } else {cell.textTitle.text = String(s[start..<end])}
         
-        //cell.fileName.text = cell.audioURL.lastPathComponent
            
             cell.reRecordButton.isEnabled = true
-            //cell.playButton.setTitle("Play", for: .normal)
          
         
         cell.myTableViewController = self
         cell.timeRecorded.text = String(recordFileManager!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss"))
-        
+  
   
         do {
             avAudioPlayer = try AVAudioPlayer(contentsOf: cell.audioURL)
@@ -278,27 +258,20 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
 
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
         
-        if audioPlayer?.currentAudio == cell.audioURL {
+        if  audioPlayer?.isPlaying == true && audioPlayer?.currentAudio == cell.audioURL {
+            tableView.deselectRow(at: indexPath, animated: true)
             audioPlayer?.stopPlayback()
+       
         } else {
         
-        let labelText = cell.textTitle.text
-        UIPasteboard.general.string = labelText
-        print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
-        print("cell.isSelected", cell.isSelected)
-       
-        audioPlayer?.startPlayback(audio: cell.audioURL)
+            let labelText = cell.textTitle.text
+            UIPasteboard.general.string = labelText
+            print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
+            print("cell.isSelected", cell.isSelected)
+           
+            audioPlayer?.startPlayback(audio: cell.audioURL)
         
         }
-  
-       
-//        if cell.isSelected == true {
-//            audioPlayer?.stopPlayback()
-//        } else {
-//            audioPlayer?.startPlayback(audio: cell.audioURL)
-//        }
-
-        //cell.textTitle.text = "playing"
 
     }
     
@@ -310,13 +283,6 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         
 
     }
-    
-//   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//       let movedObjTemp = recordFileManager!.recordings[sourceIndexPath.item]
-//       print("sourceIndexPath.item: ", sourceIndexPath.item)
-//       recordFileManager!.recordings.remove(at: sourceIndexPath.item)
-//       recordFileManager!.recordings.insert(movedObjTemp, at: destinationIndexPath.item)
-//   }
     
 }
 

@@ -35,6 +35,7 @@ class RecordFileManager: NSObject {
         
     }
     
+    
     override init() {
         
         folderName = "All Folders"
@@ -48,16 +49,9 @@ class RecordFileManager: NSObject {
         fetchRecordings()
     }
     
-//    override init() {
-//        super.init()
-//        fetchRecordings()
-//    }
     
     func fetchRecordings() {
         recordings.removeAll()
-        
-        
-        
         
         let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
         for audio in directoryContents {
@@ -69,12 +63,14 @@ class RecordFileManager: NSObject {
         print("====", recordings.count, " audio files are fetched.====")
     }
     
+
     func getNewAudioURL() -> URL {
         let newAudioURL = folderPath.appendingPathComponent("\(Date().toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss")).m4a")
         print("currentAudioFileName: ", newAudioURL.lastPathComponent)
         
         return newAudioURL
     }
+    
     
     func getIndexForURL(audioURL: URL) -> Int {
         return recordings.firstIndex(where: { $0.fileURL == audioURL }) ?? 0

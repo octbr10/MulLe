@@ -11,8 +11,9 @@ import AVFoundation
 
 class AudioPlayer: NSObject, AVAudioPlayerDelegate {
     
+    var playbackType = PlaybackType.Normal
     var isPlaying = false
-    var audioPlayer: AVAudioPlayer!
+    var avAudioPlayer: AVAudioPlayer?
     var currentAudio: URL?
     
     func startPlayback (audio: URL) {
@@ -25,19 +26,33 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
     
       
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: audio)
-            audioPlayer.delegate = self
-            audioPlayer.play()
-            isPlaying = true
+            avAudioPlayer = try AVAudioPlayer(contentsOf: audio)
+            avAudioPlayer?.delegate = self
+            avAudioPlayer?.play()
+            playbackType = .Normal
             currentAudio = audio
+            isPlaying = true
+            
         } catch {
             print("Playback failed.")
         }
 
     }
     
+    func newRecordPlayback(audio:URL) {
+        let audioURL = audio
+        startPlayback(audio: audioURL)
+        playbackType = .NewRecord
+    }
+    
+    func reRecordPlayback(audio:URL) {
+        let audioURL = audio
+        startPlayback(audio: audioURL)
+        playbackType = .ReRecord
+    }
+    
     func stopPlayback() {
-        audioPlayer.stop()
+        avAudioPlayer?.stop()
         isPlaying = false
     }
     
@@ -45,10 +60,17 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         if flag {
             isPlaying = false
         }
+
+        switch playbackType {
+            case .Normal:
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil, userInfo: ["playbackType": "Normal", "audioURL": currentAudio!])
+            case .NewRecord:
+                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil, userInfo: ["playbackType": "NewRecord", "audioURL": currentAudio!])
+            case .ReRecord:
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil,userInfo: ["playbackType": "ReRecord", "audioURL": currentAudio!])
+        }
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil, userInfo: ["audioURL": currentAudio as Any])
         isPlaying = false
-        NotificationCenter.default.removeObserver(self)
 
     }
     

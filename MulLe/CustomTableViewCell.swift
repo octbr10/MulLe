@@ -19,8 +19,8 @@ class CustomTableViewCell: UITableViewCell{
 
     var audioURL: URL!
     var audioRecorder = AudioRecorder()
-    var audioQueuePlayer: AudioQueuePlayer?
-    //var audioPlayer: AudioPlayer!
+//    var audioQueuePlayer: AudioQueuePlayer?
+    var audioPlayer: AudioPlayer!
     var recordFileManager: RecordFileManager?
     
     @IBOutlet var textTitle: UILabel!
@@ -106,8 +106,7 @@ class CustomTableViewCell: UITableViewCell{
         }
         
         let url = audioURL!
-        audioQueuePlayer = AudioQueuePlayer(items: [url])
-        audioQueuePlayer?.startPlayback()
+        audioPlayer.reRecordPlayback(audio: url)
         
     }
     
