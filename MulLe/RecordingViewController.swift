@@ -114,11 +114,9 @@ class RecordingViewController: UIViewController{
          
         }
     }
-
-
    
     @IBAction func touchDownRecord(_ sender: UIButton) {
-
+        audioPlayer?.stopPlayback()
         let newAudioURL = recordFileManager!.getNewAudioURL()
         audioRecorder?.startRecording(at: newAudioURL)
     }
@@ -144,7 +142,6 @@ class RecordingViewController: UIViewController{
     }
         
     func playNewRecord(fileURL: URL) {
-        
         let url = fileURL
         audioPlayer?.newRecordPlayback(audio: url)
     }
@@ -253,8 +250,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
     
     // cell select then playback
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-
+    
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
         
         if  audioPlayer?.isPlaying == true && audioPlayer?.currentAudio == cell.audioURL {

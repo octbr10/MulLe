@@ -91,6 +91,12 @@ class CustomTableViewCell: UITableViewCell{
     }
     
     @IBAction func touchDownReRecord(_ sender: Any) {
+        
+        if let indexPath = myTableViewController?.tableView.indexPathForSelectedRow {
+            myTableViewController?.tableView.deselectRow(at: indexPath, animated: true)
+            audioPlayer?.stopPlayback()
+        }
+        
         if audioRecorder.isRecording == false {
             audioRecorder.updateRecording(audio: audioURL)
             
