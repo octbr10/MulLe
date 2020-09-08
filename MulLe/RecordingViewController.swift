@@ -86,10 +86,11 @@ class RecordingViewController: UIViewController{
 
         case .Normal:
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
-            if index + 1 != (recordFileManager?.recordings.count)! {
+            if index + 1 < (recordFileManager?.recordings.count)! {
                 audioPlayer?.startPlayback(audio: (recordFileManager?.recordings[index + 1].fileURL)!)
-                tableView.selectRow(at: IndexPath(row: index + 1, section: 0), animated: true, scrollPosition: .bottom)
+                tableView.selectRow(at: IndexPath(row: index + 1, section: 0), animated: true, scrollPosition: .middle)
             }
+            
         default:
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
         }
@@ -115,7 +116,7 @@ class RecordingViewController: UIViewController{
         }
     }
    
-    @IBAction func touchDownRecord(_ sender: UIButton) {
+    @IBAction func touchUpRecord(_ sender: UIButton) {
         if audioRecorder?.isRecording == true {
             recordButton?.isSelected = false
             recordButton?.tintColor = .darkGray
@@ -133,11 +134,11 @@ class RecordingViewController: UIViewController{
 
             // scroll to the last row
             let indexPath = IndexPath(row: lastIndex, section: 0)
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
         } else {
+            audioPlayer?.stopPlayback()
             recordButton?.isSelected = true
             recordButton?.tintColor = .systemRed
-            audioPlayer?.stopPlayback()
             let newAudioURL = recordFileManager!.getNewAudioURL()
             audioRecorder?.startRecording(at: newAudioURL)
         }
@@ -270,6 +271,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
 
         }
     }
+  
     
     // cell select then playback
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -279,6 +281,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         if  audioPlayer?.isPlaying == true && audioPlayer?.currentAudio == cell.audioURL {
             tableView.deselectRow(at: indexPath, animated: true)
             audioPlayer?.stopPlayback()
+            
        
         } else {
         

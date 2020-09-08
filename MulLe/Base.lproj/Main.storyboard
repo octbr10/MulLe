@@ -77,7 +77,7 @@
                                                         <action selector="deleteRecord:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="yFW-zo-kEy"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleAspectFit" enabled="NO" highlighted="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTa-DQ-IBn">
+                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTa-DQ-IBn">
                                                     <rect key="frame" x="329" y="36" width="70" height="40"/>
                                                     <rect key="contentStretch" x="0.0" y="0.0" width="0.5" height="0.5"/>
                                                     <constraints>
@@ -90,13 +90,14 @@
                                                         <color key="titleColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                     </state>
-                                                    <state key="selected" title="Stop record" image="stopBlackRed"/>
+                                                    <state key="selected" title="Stop" image="mic.circle.fill" catalog="system">
+                                                        <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                     <state key="highlighted" title="Stop" image="mic.circle.fill" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="touchDownReRecord:" destination="DyK-Ph-yqi" eventType="touchDown" id="79n-e2-Iof"/>
-                                                        <action selector="touchUpReRecordStop:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="Rr1-NX-RIi"/>
+                                                        <action selector="touchDownReRecord:" destination="DyK-Ph-yqi" eventType="touchUpInside" id="KaA-l7-LpQ"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -166,7 +167,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="touchDownRecord:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ioJ-Bi-fpS"/>
+                                    <action selector="touchUpRecord:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ioJ-Bi-fpS"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Lanaguage: " textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9b6-aj-Is9">
@@ -383,7 +384,6 @@
         <image name="folder" catalog="system" width="128" height="95"/>
         <image name="mic.circle.fill" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
-        <image name="stopBlackRed" width="102" height="102"/>
         <image name="trash" catalog="system" width="121" height="128"/>
     </resources>
 </document>

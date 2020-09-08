@@ -92,29 +92,46 @@ class CustomTableViewCell: UITableViewCell{
     
     @IBAction func touchDownReRecord(_ sender: Any) {
         
-        if let indexPath = myTableViewController?.tableView.indexPathForSelectedRow {
-            myTableViewController?.tableView.deselectRow(at: indexPath, animated: true)
-            audioPlayer?.stopPlayback()
-        }
-        
-        if audioRecorder.isRecording == false {
-            audioRecorder.updateRecording(audio: audioURL)
+        if audioRecorder.isRecording == true {
+            reRecordButton.isSelected = false
+            reRecordButton?.tintColor = .darkGray
+            audioRecorder.stopRecording()
+            recordFileManager?.fetchRecordings()
             
+            if audioRecorder.speechToText(fileURL: audioURL) != "no text recognized" {
+                print(audioRecorder.speechToText(fileURL: audioURL)) //return 값이 "no text recognized" 임
+            }
+            
+            let url = audioURL!
+            audioPlayer.reRecordPlayback(audio: url)
+        } else {
+            
+            reRecordButton.isSelected = true
+            reRecordButton?.tintColor = .systemRed
+            if let indexPath = myTableViewController?.tableView.indexPathForSelectedRow {
+                myTableViewController?.tableView.deselectRow(at: indexPath, animated: true)
+                audioPlayer?.stopPlayback()
+            }
+            
+            if audioRecorder.isRecording == false {
+                audioRecorder.updateRecording(audio: audioURL)
+                
+            }
         }
     }
     
-    @IBAction func touchUpReRecordStop(_ sender: Any) {
-        audioRecorder.stopRecording()
-        recordFileManager?.fetchRecordings()
-        
-        if audioRecorder.speechToText(fileURL: audioURL) != "no text recognized" {
-            print(audioRecorder.speechToText(fileURL: audioURL)) //return 값이 "no text recognized" 임
-        }
-        
-        let url = audioURL!
-        audioPlayer.reRecordPlayback(audio: url)
-        
-    }
+//    @IBAction func touchUpReRecordStop(_ sender: Any) {
+//        audioRecorder.stopRecording()
+//        recordFileManager?.fetchRecordings()
+//
+//        if audioRecorder.speechToText(fileURL: audioURL) != "no text recognized" {
+//            print(audioRecorder.speechToText(fileURL: audioURL)) //return 값이 "no text recognized" 임
+//        }
+//
+//        let url = audioURL!
+//        audioPlayer.reRecordPlayback(audio: url)
+//
+//    }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
