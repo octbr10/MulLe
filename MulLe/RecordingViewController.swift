@@ -249,7 +249,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         let end = s.index(s.endIndex, offsetBy: -4)
         if s.count == 23 {
             cell.textTitle.text = cell.audioURL.lastPathComponent
-        } else {cell.textTitle.text = String(s[start..<end])}
+        } else {cell.textTitle.text = String(s[start..<end]) + "."}
         
           
         cell.myTableViewController = self
