@@ -23,7 +23,7 @@ class RecordingViewController: UIViewController{
     @IBOutlet weak var tableView:UITableView!
     
     @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var playAllButton: UIButton!
+    //@IBOutlet weak var playAllButton: UIButton!
     @IBOutlet weak var changeLanguage: UIButton!
 
     
@@ -116,30 +116,53 @@ class RecordingViewController: UIViewController{
     }
    
     @IBAction func touchDownRecord(_ sender: UIButton) {
-        audioPlayer?.stopPlayback()
-        let newAudioURL = recordFileManager!.getNewAudioURL()
-        audioRecorder?.startRecording(at: newAudioURL)
-    }
-    
-    @IBAction func touchUpRecordStop(_ sender: UIButton) {
-        
-        audioRecorder?.stopRecording()
-        recordFileManager?.fetchRecordings()
-        
-        let lastIndex = recordFileManager!.recordings.endIndex - 1
-        let url = recordFileManager!.recordings[lastIndex].fileURL
-        if audioRecorder?.speechToText(fileURL: url) != "no text recognized" {
-            print(audioRecorder?.speechToText(fileURL: url) ?? "no text recognized") //return 값이 "no text recognized" 임
+        if audioRecorder?.isRecording == true {
+            recordButton?.isSelected = false
+            recordButton?.tintColor = .darkGray
+            audioRecorder?.stopRecording()
+            recordFileManager?.fetchRecordings()
+            
+            let lastIndex = recordFileManager!.recordings.endIndex - 1
+            let url = recordFileManager!.recordings[lastIndex].fileURL
+            if audioRecorder?.speechToText(fileURL: url) != "no text recognized" {
+                print(audioRecorder?.speechToText(fileURL: url) ?? "no text recognized") //return 값이 "no text recognized" 임
+            }
+            
+            playNewRecord(fileURL: url)
+            self.tableView.reloadData()
+
+            // scroll to the last row
+            let indexPath = IndexPath(row: lastIndex, section: 0)
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        } else {
+            recordButton?.isSelected = true
+            recordButton?.tintColor = .systemRed
+            audioPlayer?.stopPlayback()
+            let newAudioURL = recordFileManager!.getNewAudioURL()
+            audioRecorder?.startRecording(at: newAudioURL)
         }
         
-        playNewRecord(fileURL: url)
-        self.tableView.reloadData()
-
-        // scroll to the last row
-        let indexPath = IndexPath(row: lastIndex, section: 0)
-        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-
     }
+    
+//    @IBAction func touchUpRecordStop(_ sender: UIButton) {
+//
+//        audioRecorder?.stopRecording()
+//        recordFileManager?.fetchRecordings()
+//
+//        let lastIndex = recordFileManager!.recordings.endIndex - 1
+//        let url = recordFileManager!.recordings[lastIndex].fileURL
+//        if audioRecorder?.speechToText(fileURL: url) != "no text recognized" {
+//            print(audioRecorder?.speechToText(fileURL: url) ?? "no text recognized") //return 값이 "no text recognized" 임
+//        }
+//
+//        playNewRecord(fileURL: url)
+//        self.tableView.reloadData()
+//
+//        // scroll to the last row
+//        let indexPath = IndexPath(row: lastIndex, section: 0)
+//        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+//
+//    }
         
     func playNewRecord(fileURL: URL) {
         let url = fileURL

@@ -132,7 +132,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqt-Rg-Qow">
-                                <rect key="frame" x="119" y="812" width="132" height="30"/>
+                                <rect key="frame" x="119" y="812" width="200" height="30"/>
                                 <state key="normal" title="German (Germany)">
                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -148,13 +148,16 @@
                                     <constraint firstAttribute="height" constant="50" id="g3g-5v-KfT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Record" image="mic.fill" catalog="system">
-                                    <color key="titleColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
-                                <state key="selected" image="stopRedBig"/>
-                                <state key="highlighted" image="mic.circle.fill" catalog="system">
+                                <state key="selected" title="Stop" image="mic.circle.fill" catalog="system">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -163,11 +166,10 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="touchDownRecord:" destination="BYZ-38-t0r" eventType="touchDown" id="2B8-UK-OFh"/>
-                                    <action selector="touchUpRecordStop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hba-Yt-MiJ"/>
+                                    <action selector="touchDownRecord:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ioJ-Bi-fpS"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Lanaguage: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9b6-aj-Is9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Lanaguage: " textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9b6-aj-Is9">
                                 <rect key="frame" x="20" y="812" width="89" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -185,6 +187,7 @@
                             <constraint firstItem="CUv-im-zOK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mcP-hB-W3w"/>
                             <constraint firstItem="Dda-vW-BBu" firstAttribute="top" secondItem="CUv-im-zOK" secondAttribute="bottom" constant="20" id="nF5-Aa-kse"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Dda-vW-BBu" secondAttribute="trailing" constant="15" id="oid-d5-qmH"/>
+                            <constraint firstItem="Dda-vW-BBu" firstAttribute="leading" secondItem="jqt-Rg-Qow" secondAttribute="trailing" constant="10" id="wKN-eR-raa"/>
                             <constraint firstItem="CUv-im-zOK" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="xbA-fF-eLx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -381,7 +384,6 @@
         <image name="mic.circle.fill" catalog="system" width="128" height="121"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="stopBlackRed" width="102" height="102"/>
-        <image name="stopRedBig" width="190" height="190"/>
         <image name="trash" catalog="system" width="121" height="128"/>
     </resources>
 </document>
