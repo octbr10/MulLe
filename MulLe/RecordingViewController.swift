@@ -123,9 +123,12 @@ class RecordingViewController: UIViewController{
             
             reRecordButtonEnabled = true
             tableView.reloadData()
-            
+            tableView.allowsSelection = true
             recordButton?.isSelected = false
             recordButton?.tintColor = .darkGray
+            
+            
+            
             audioRecorder?.stopRecording()
             recordFileManager?.fetchRecordings()
             
@@ -145,10 +148,11 @@ class RecordingViewController: UIViewController{
             
             reRecordButtonEnabled = false
             tableView.reloadData()
-            
             audioPlayer?.stopPlayback()
             recordButton?.isSelected = true
             recordButton?.tintColor = .systemRed
+            tableView.allowsSelection = false
+
             let newAudioURL = recordFileManager!.getNewAudioURL()
             audioRecorder?.startRecording(at: newAudioURL)
         }
@@ -287,23 +291,19 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
     
     // cell select then playback
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+ 
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
-        
+       
         if  audioPlayer?.isPlaying == true && audioPlayer?.currentAudio == cell.audioURL {
             tableView.deselectRow(at: indexPath, animated: true)
             audioPlayer?.stopPlayback()
-            
-       
         } else {
-        
             let labelText = cell.textTitle.text
             UIPasteboard.general.string = labelText
             print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
             print("cell.isSelected", cell.isSelected)
            
             audioPlayer?.startPlayback(audio: cell.audioURL)
-        
         }
 
     }

@@ -98,6 +98,7 @@ class CustomTableViewCell: UITableViewCell{
             audioRecorder.stopRecording()
             myTableViewController?.reRecordButtonEnabled = true
             myTableViewController?.recordButton.isEnabled = true
+            myTableViewController?.tableView.allowsSelection = true
             myTableViewController?.tableView.reloadData()
             recordFileManager?.fetchRecordings()
             
@@ -111,6 +112,7 @@ class CustomTableViewCell: UITableViewCell{
             reRecordButton.isSelected = true
             myTableViewController?.reRecordButtonEnabled = false
             myTableViewController?.recordButton.isEnabled = false
+            myTableViewController?.tableView.allowsSelection = false
             myTableViewController?.tableView.reloadData()
             reRecordButton?.tintColor = .systemRed
              if let indexPath = myTableViewController?.tableView.indexPathForSelectedRow {
