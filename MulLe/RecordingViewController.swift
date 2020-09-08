@@ -19,6 +19,8 @@ class RecordingViewController: UIViewController{
 
     var titleText: String?
     var userLanguage: String?
+    
+    var reRecordButtonEnabled: Bool = true
       
     @IBOutlet weak var tableView:UITableView!
     
@@ -118,6 +120,10 @@ class RecordingViewController: UIViewController{
    
     @IBAction func touchUpRecord(_ sender: UIButton) {
         if audioRecorder?.isRecording == true {
+            
+            reRecordButtonEnabled = true
+            tableView.reloadData()
+            
             recordButton?.isSelected = false
             recordButton?.tintColor = .darkGray
             audioRecorder?.stopRecording()
@@ -136,6 +142,10 @@ class RecordingViewController: UIViewController{
             let indexPath = IndexPath(row: lastIndex, section: 0)
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
         } else {
+            
+            reRecordButtonEnabled = false
+            tableView.reloadData()
+            
             audioPlayer?.stopPlayback()
             recordButton?.isSelected = true
             recordButton?.tintColor = .systemRed
@@ -221,10 +231,15 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as! CustomTableViewCell
 
         cell.delegate = self
+        if cell.reRecordButton.isSelected == true {
+            cell.reRecordButton.isEnabled = true
+        } else {
+            cell.reRecordButton.isEnabled = reRecordButtonEnabled
+        }
         
         cell.audioPlayer = audioPlayer
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
-       
+        
         let s = cell.audioURL.lastPathComponent
         let start = s.index(s.startIndex, offsetBy: 20)
         let end = s.index(s.endIndex, offsetBy: -4)
@@ -232,10 +247,7 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
             cell.textTitle.text = cell.audioURL.lastPathComponent
         } else {cell.textTitle.text = String(s[start..<end])}
         
-           
-            cell.reRecordButton.isEnabled = true
-         
-        
+          
         cell.myTableViewController = self
         cell.timeRecorded.text = String(recordFileManager!.recordings[indexPath.row].createdAt.toStringLocalTime(dateFormat: "YYYY-MM-dd HH:mm:ss"))
   

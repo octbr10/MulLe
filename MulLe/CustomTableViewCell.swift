@@ -96,6 +96,9 @@ class CustomTableViewCell: UITableViewCell{
             reRecordButton.isSelected = false
             reRecordButton?.tintColor = .darkGray
             audioRecorder.stopRecording()
+            myTableViewController?.reRecordButtonEnabled = true
+            myTableViewController?.recordButton.isEnabled = true
+            myTableViewController?.tableView.reloadData()
             recordFileManager?.fetchRecordings()
             
             if audioRecorder.speechToText(fileURL: audioURL) != "no text recognized" {
@@ -105,10 +108,12 @@ class CustomTableViewCell: UITableViewCell{
             let url = audioURL!
             audioPlayer.reRecordPlayback(audio: url)
         } else {
-            
             reRecordButton.isSelected = true
+            myTableViewController?.reRecordButtonEnabled = false
+            myTableViewController?.recordButton.isEnabled = false
+            myTableViewController?.tableView.reloadData()
             reRecordButton?.tintColor = .systemRed
-            if let indexPath = myTableViewController?.tableView.indexPathForSelectedRow {
+             if let indexPath = myTableViewController?.tableView.indexPathForSelectedRow {
                 myTableViewController?.tableView.deselectRow(at: indexPath, animated: true)
                 audioPlayer?.stopPlayback()
             }
