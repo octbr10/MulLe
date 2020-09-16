@@ -143,7 +143,7 @@ class RecordingViewController: UIViewController{
 
             // scroll to the last row
             let indexPath = IndexPath(row: lastIndex, section: 0)
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         } else {
             
             reRecordButtonEnabled = false
@@ -293,7 +293,6 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
  
         let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
-       
         if  audioPlayer?.isPlaying == true && audioPlayer?.currentAudio == cell.audioURL {
             tableView.deselectRow(at: indexPath, animated: true)
             audioPlayer?.stopPlayback()

@@ -66,5 +66,7 @@
 	<string>Recorded speech will be converted to text. Do you allow it?</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-2125545117091534~5206157319</string>
 </dict>
 </plist>

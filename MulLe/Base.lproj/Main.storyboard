@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kfk-Ju-Y1o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gpr-Vd-jtY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -12,11 +12,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="RecordingViewController" customModule="MulLe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CUv-im-zOK">
-                                <rect key="frame" x="0.0" y="88" width="414" height="694"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="672"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationLevel="18" indentationWidth="10" reuseIdentifier="cell" rowHeight="112" id="DyK-Ph-yqi" customClass="CustomTableViewCell" customModule="MulLe" customModuleProvider="target">
@@ -26,7 +26,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="112"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8DB-tp-1Fh">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8DB-tp-1Fh">
                                                     <rect key="frame" x="20" y="0.0" width="309" height="83"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" selected="YES" staticText="YES"/>
@@ -133,7 +133,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqt-Rg-Qow">
-                                <rect key="frame" x="119" y="812" width="200" height="30"/>
+                                <rect key="frame" x="119" y="758" width="200" height="30"/>
                                 <state key="normal" title="German (Germany)">
                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -142,7 +142,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dda-vW-BBu">
-                                <rect key="frame" x="329" y="802" width="70" height="50"/>
+                                <rect key="frame" x="329" y="748" width="70" height="50"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.5" height="0.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="GMd-bV-SON"/>
@@ -289,11 +289,11 @@
             <objects>
                 <viewController id="UqZ-mB-BgI" customClass="FolderViewController" customModule="MulLe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7C4-c1-sMc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CPk-tT-HRA">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="752"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CellForFolder" textLabel="Vvc-DC-FbG" detailTextLabel="ZWB-2s-nTa" imageView="fxS-Vc-r0j" style="IBUITableViewCellStyleValue1" id="ty1-LD-Y5U">
@@ -360,6 +360,56 @@
             </objects>
             <point key="canvasLocation" x="-452.17391304347831" y="-186.16071428571428"/>
         </scene>
+        <!--Onboarding View Controller-->
+        <scene sceneID="AUv-BI-WGN">
+            <objects>
+                <viewController id="gpr-Vd-jtY" customClass="OnboardingViewController" customModule="MulLe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hUA-hr-7SH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Tn-aA-3g9" customClass="OnboardingView" customModule="MulLe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="668"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LW4-eM-osx">
+                                        <rect key="frame" x="122" y="632" width="170" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                        <state key="normal" title="Skip and Get Started">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Kfk-Ju-Y1o" kind="show" id="WKP-rx-Ixq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="y4C-aB-O1b">
+                                <rect key="frame" x="148" y="812" width="118" height="31"/>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="EvR-qF-58T" firstAttribute="bottom" secondItem="y4C-aB-O1b" secondAttribute="bottom" constant="20" id="2sS-N6-HRY"/>
+                            <constraint firstItem="9Tn-aA-3g9" firstAttribute="leading" secondItem="EvR-qF-58T" secondAttribute="leading" id="7cL-rY-Z5C"/>
+                            <constraint firstItem="y4C-aB-O1b" firstAttribute="centerX" secondItem="hUA-hr-7SH" secondAttribute="centerX" id="KmE-jd-KPm"/>
+                            <constraint firstItem="9Tn-aA-3g9" firstAttribute="top" secondItem="EvR-qF-58T" secondAttribute="top" id="d6P-cw-9dk"/>
+                            <constraint firstItem="9Tn-aA-3g9" firstAttribute="trailing" secondItem="EvR-qF-58T" secondAttribute="trailing" id="lmG-lW-m70"/>
+                            <constraint firstItem="y4C-aB-O1b" firstAttribute="leading" secondItem="EvR-qF-58T" secondAttribute="leading" constant="150" id="u19-ao-JCQ"/>
+                            <constraint firstItem="y4C-aB-O1b" firstAttribute="top" secondItem="9Tn-aA-3g9" secondAttribute="bottom" constant="100" id="ups-Ep-Dbe"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EvR-qF-58T"/>
+                    </view>
+                    <connections>
+                        <outlet property="getStartedButton" destination="LW4-eM-osx" id="ub0-qP-kEe"/>
+                        <outlet property="onboardingView" destination="9Tn-aA-3g9" id="isy-tc-6J2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pON-8K-8bW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1979.7101449275365" y="-186.16071428571428"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="tYq-KN-ziP">
             <objects>
@@ -367,7 +417,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="OYg-P8-og5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Zu3-Sk-pYJ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

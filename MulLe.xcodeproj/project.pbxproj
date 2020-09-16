@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		601546E8250D6B44002D0B54 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601546E7250D6B44002D0B54 /* OnboardingViewController.swift */; };
 		6024D5B124DB047700279381 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024D5B024DB047700279381 /* FolderManager.swift */; };
 		6039E12A24C8789F00438E51 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6039E12924C8789F00438E51 /* Extensions.swift */; };
 		6039E12F24C88C8100438E51 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6039E12E24C88C8100438E51 /* AudioRecorder.swift */; };
@@ -18,6 +19,7 @@
 		6055CFA924D9F86100973790 /* FolderDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CFA824D9F86100973790 /* FolderDataModel.swift */; };
 		6098593D24E1901200C2652A /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6098593C24E1901200C2652A /* AudioPlayer.swift */; };
 		60B3A8B824E691700074161E /* PlaybackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B3A8B724E691700074161E /* PlaybackType.swift */; };
+		60B53C81250FBE4C00729C2E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B53C80250FBE4C00729C2E /* OnboardingView.swift */; };
 		60E9EF1224BF14F3005C7CD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9EF1124BF14F3005C7CD8 /* AppDelegate.swift */; };
 		60E9EF1424BF14F3005C7CD8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9EF1324BF14F3005C7CD8 /* SceneDelegate.swift */; };
 		60E9EF1624BF14F3005C7CD8 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E9EF1524BF14F3005C7CD8 /* RecordingViewController.swift */; };
@@ -26,9 +28,13 @@
 		60E9EF1E24BF14F4005C7CD8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60E9EF1C24BF14F4005C7CD8 /* LaunchScreen.storyboard */; };
 		60F6FF9324DDF40C003CA49A /* LocaleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F6FF9224DDF40C003CA49A /* LocaleViewController.swift */; };
 		60F6FF9524DDF9D8003CA49A /* LanguageDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F6FF9424DDF9D8003CA49A /* LanguageDataModel.swift */; };
+		A0E5544DF532037F0F98186F /* Pods_MulLe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E371EBB46D885D06F0C6EA8 /* Pods_MulLe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E371EBB46D885D06F0C6EA8 /* Pods_MulLe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MulLe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DBD99A50232B96851123312 /* Pods-MulLe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MulLe.debug.xcconfig"; path = "Target Support Files/Pods-MulLe/Pods-MulLe.debug.xcconfig"; sourceTree = "<group>"; };
+		601546E7250D6B44002D0B54 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		6024D5B024DB047700279381 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		6039E12924C8789F00438E51 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6039E12E24C88C8100438E51 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -40,6 +46,7 @@
 		6055CFA824D9F86100973790 /* FolderDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDataModel.swift; sourceTree = "<group>"; };
 		6098593C24E1901200C2652A /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		60B3A8B724E691700074161E /* PlaybackType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackType.swift; sourceTree = "<group>"; };
+		60B53C80250FBE4C00729C2E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		60E9EF0E24BF14F3005C7CD8 /* MulLe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MulLe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E9EF1124BF14F3005C7CD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60E9EF1324BF14F3005C7CD8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +57,7 @@
 		60E9EF1F24BF14F4005C7CD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60F6FF9224DDF40C003CA49A /* LocaleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleViewController.swift; sourceTree = "<group>"; };
 		60F6FF9424DDF9D8003CA49A /* LanguageDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDataModel.swift; sourceTree = "<group>"; };
+		7E64CCEC022BAF15596753C3 /* Pods-MulLe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MulLe.release.xcconfig"; path = "Target Support Files/Pods-MulLe/Pods-MulLe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0E5544DF532037F0F98186F /* Pods_MulLe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +101,8 @@
 			children = (
 				60E9EF1024BF14F3005C7CD8 /* MulLe */,
 				60E9EF0F24BF14F3005C7CD8 /* Products */,
+				80F3299FD3B4406A060FABA2 /* Pods */,
+				747BD320D552C8C5203747E3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +119,8 @@
 			children = (
 				60E9EF1124BF14F3005C7CD8 /* AppDelegate.swift */,
 				60E9EF1324BF14F3005C7CD8 /* SceneDelegate.swift */,
+				60B53C80250FBE4C00729C2E /* OnboardingView.swift */,
+				601546E7250D6B44002D0B54 /* OnboardingViewController.swift */,
 				6055CFA624D9737100973790 /* FolderViewController.swift */,
 				60E9EF1524BF14F3005C7CD8 /* RecordingViewController.swift */,
 				603E802024CA13850099ACA8 /* CustomTableViewCell.swift */,
@@ -122,6 +135,23 @@
 			path = MulLe;
 			sourceTree = "<group>";
 		};
+		747BD320D552C8C5203747E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E371EBB46D885D06F0C6EA8 /* Pods_MulLe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		80F3299FD3B4406A060FABA2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5DBD99A50232B96851123312 /* Pods-MulLe.debug.xcconfig */,
+				7E64CCEC022BAF15596753C3 /* Pods-MulLe.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -129,9 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 60E9EF2224BF14F4005C7CD8 /* Build configuration list for PBXNativeTarget "MulLe" */;
 			buildPhases = (
+				64F994F710006791AE5900CD /* [CP] Check Pods Manifest.lock */,
 				60E9EF0A24BF14F3005C7CD8 /* Sources */,
 				60E9EF0B24BF14F3005C7CD8 /* Frameworks */,
 				60E9EF0C24BF14F3005C7CD8 /* Resources */,
+				A4C1007444C54718D6C5C82A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,6 +220,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		64F994F710006791AE5900CD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MulLe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4C1007444C54718D6C5C82A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MulLe/Pods-MulLe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MulLe/Pods-MulLe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MulLe/Pods-MulLe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		60E9EF0A24BF14F3005C7CD8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -196,6 +270,8 @@
 				6055CFA524D9437800973790 /* RecordFileManager.swift in Sources */,
 				603E802124CA13850099ACA8 /* CustomTableViewCell.swift in Sources */,
 				60E9EF1624BF14F3005C7CD8 /* RecordingViewController.swift in Sources */,
+				60B53C81250FBE4C00729C2E /* OnboardingView.swift in Sources */,
+				601546E8250D6B44002D0B54 /* OnboardingViewController.swift in Sources */,
 				6039E13324C88DC200438E51 /* Helper.swift in Sources */,
 				60F6FF9324DDF40C003CA49A /* LocaleViewController.swift in Sources */,
 				60E9EF1224BF14F3005C7CD8 /* AppDelegate.swift in Sources */,
@@ -288,6 +364,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -341,6 +418,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -350,6 +428,7 @@
 		};
 		60E9EF2324BF14F4005C7CD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DBD99A50232B96851123312 /* Pods-MulLe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -368,6 +447,7 @@
 		};
 		60E9EF2424BF14F4005C7CD8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E64CCEC022BAF15596753C3 /* Pods-MulLe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
