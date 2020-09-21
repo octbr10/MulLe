@@ -29,6 +29,11 @@ class FolderViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let userDefaults = UserDefaults.standard
+//        userDefaults.set(false, forKey: "onboardingComplete")
+//        userDefaults.synchronize()
+//        print("onboardingComplete: ", userDefaults.bool(forKey: "onboardingComplete"))
 
         navigationItem.leftBarButtonItem = editButtonItem
 

@@ -19,24 +19,26 @@ class OnboardingViewController: UIViewController{
                            title: "Speech to Text",
                            description: "Mul-Le is a recorder player designed specifically for a language learner to improve speaking. It enables you to check the precision of you speaking for yourself by converting your speech to text.",
                            pageIcon: Asset.key.image,
-                           color: UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00),
+                           color: UIColor(red: 217/255, green:72/255, blue: 89/255, alpha: 1.00),
+                           //color: UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
         OnboardingItemInfo(informationImage: Asset.banks.image,
                            title: "Listen your speaking",
                            description: "Mul-Le enables you to listen your speecking in an enjoyable way. You just need to tab a sentence that you want to listen. Moreover, it plays your speech automatically right after recording.",
                            pageIcon: Asset.wallet.image,
-                           color: UIColor(red: 0.40, green: 0.69, blue: 0.71, alpha: 1.00),
+                           color: UIColor(red: 106/255, green:166/255, blue: 211/255, alpha: 1.00),
+                           //color: UIColor(red: 0.40, green: 0.69, blue: 0.71, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
         OnboardingItemInfo(informationImage: Asset.stores.image,
                            title: "Folder",
                            description: "Record your speech sentence by sentence and manage your recordings by a folder. It is easy to re-record a sentence and improve your speech.",
                            pageIcon: Asset.shoppingCart.image,
-                           color: UIColor(red: 0.61, green: 0.56, blue: 0.74, alpha: 1.00),
+                           color: UIColor(red: 168/255, green:200/255, blue: 78/255, alpha: 1.00),
+                           //color: UIColor(red: 0.61, green: 0.56, blue: 0.74, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
-
         
     ]
     
@@ -47,7 +49,19 @@ class OnboardingViewController: UIViewController{
         setupPaperOnboardingView()
 
         view.bringSubviewToFront(getStartedButton)
+  
+        
     }
+    
+    
+    @IBAction func gotStarted(_ sender: Any) {
+        
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "onboardingComplete")
+        userDefaults.synchronize()
+        print("onboardingComplete: ", userDefaults.bool(forKey: "onboardingComplete"))
+    }
+    
     
         private func setupPaperOnboardingView() {
             let onboarding = PaperOnboarding()
@@ -132,112 +146,4 @@ class OnboardingViewController: UIViewController{
     }
     
     
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        let onboarding = PaperOnboarding()
-//
-//        onboarding.dataSource = self
-//        onboardingView.delegate = self
-//
-//        onboarding.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(onboarding)
-//
-//
-//
-//        // add constraints
-//        for attribute: NSLayoutConstraint.Attribute in [.left, .right, .top, .bottom] {
-//          let constraint = NSLayoutConstraint(item: onboarding,
-//                                              attribute: attribute,
-//                                              relatedBy: .equal,
-//                                              toItem: view,
-//                                              attribute: attribute,
-//                                              multiplier: 1,
-//                                              constant: 0)
-//          view.addConstraint(constraint)
-//
-//        }
-//        onboarding.bringSubviewToFront(getStartedButton)
-//    }
-//
-//
-//    func onboardingItemsCount() -> Int {
-//        3
-//    }
-//
-//
-//    func onboardingItem(at index: Int) -> OnboardingItemInfo {
-//        let backgroundColorOne = UIColor(red: 217/255, green: 72/255, blue: 89/255, alpha:1)
-//        let backgroundColorTwo = UIColor(red: 106/255, green: 166/255, blue: 211/255, alpha:1)
-//        let backgroundColorThree = UIColor(red: 168/255, green: 200/255, blue: 78/255, alpha:1)
-//
-//        let titleFont = UIFont(name: "AvenirNext-Bold", size: 24)!
-//        let descirptionFont = UIFont(name: "AvenirNext-Bold", size: 18)!
-//        let ro  = UIImage(named: "rocket") as UIImage?
-//
-//        return [
-//          OnboardingItemInfo(informationImage: ro!,
-//                                        title: "Rocket",
-//                                  description: "Cotton",
-//                                     pageIcon: ro!,
-//                                        color: backgroundColorOne,
-//                                   titleColor: UIColor.white,
-//                             descriptionColor: UIColor.white,
-//                                    titleFont: titleFont,
-//                              descriptionFont: descirptionFont),
-//
-//          OnboardingItemInfo(informationImage: ro!,
-//                                         title: "title",
-//                                   description: "Dessert ",
-//                                      pageIcon: ro!,
-//                                         color: backgroundColorTwo,
-//                                    titleColor: UIColor.white,
-//                              descriptionColor: UIColor.white,
-//                                     titleFont: titleFont,
-//                               descriptionFont: descirptionFont),
-//
-//         OnboardingItemInfo(informationImage: ro!,
-//                                      title: "title",
-//                                description: "Chocolate",
-//                                   pageIcon: ro!,
-//                                      color: backgroundColorThree,
-//                                 titleColor: UIColor.white,
-//                           descriptionColor: UIColor.white,
-//                                  titleFont: titleFont,
-//                            descriptionFont: descirptionFont)
-//          ][index]
-//
-////return [(imageName: rocket, title: "title", description: "description", iconName: rocket , color: backgroundColorOne, titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descirptionFont)][index]
-//
-//
-//    }
-//
-//
-//    func onboardingConfigurationItem(item: OnboardingContentViewItem, index: Int) {
-//
-//    //    item.titleLabel?.backgroundColor = .redColor()
-//    //    item.descriptionLabel?.backgroundColor = .redColor()
-//    //    item.imageView = ...
-//      }
-//
-//    func onboardingWillTransitonToIndex(_ index: Int) {
-////        if index == 1 {
-////            if self.getStartedButton.alpha == 1 {
-////                UIView.animate(withDuration: 0.2, animations: {
-////                    self.getStartedButton.alpha = 0
-////                })
-////            }
-////        }
-//    }
-//
-//    func onboardingDidTransitonToIndex(_ index: Int) {
-//
-////        if index == 2 {
-////            UIView.animate (withDuration: 0.4, animations: {
-////                self.getStartedButton.alpha = 1
-////            })
-////        }
-//    }
-//
 

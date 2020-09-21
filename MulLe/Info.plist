@@ -18,8 +18,14 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-2125545117091534~5206157319</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Recorder will use mic. Do you allow it?</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Recorded speech will be converted to text. Do you allow it?</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -33,16 +39,14 @@
 					<string>Default Configuration</string>
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
 				</dict>
 			</array>
 		</dict>
 	</dict>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -60,13 +64,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Recorder will use mic. Do you allow it?</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Recorded speech will be converted to text. Do you allow it?</string>
-	<key>UIFileSharingEnabled</key>
-	<true/>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-2125545117091534~5206157319</string>
 </dict>
 </plist>
