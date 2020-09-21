@@ -44,11 +44,12 @@ class RecordingViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+      
         recordFileManager = RecordFileManager(in: titleText ?? "Default Folder")
         audioRecorder = AudioRecorder()
         audioPlayer = AudioPlayer()
         
-                  let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
+        let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
         print("userDefaultLanguage: ", userDefaultLanguage ?? "de-DE")
         let lang = Locale.init(identifier: userDefaultLanguage ?? "de-DE")
         let enLocale = Locale.init(identifier: "en")
@@ -73,8 +74,18 @@ class RecordingViewController: UIViewController{
         
         NotificationCenter.default.addObserver(self, selector: #selector(manageNotification), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
         
-        tipSpeechLanguage.show(text: "Choose your speech language", direction: .up, maxWidth: 200, in: view, from: changeLanguage.frame.offsetBy(dx: -80, dy: -80))
-        tipNewRecord.show(text: "Record a new sentence", direction: .down, maxWidth: 200, in: view, from: recordButton.frame.offsetBy(dx: -20, dy: -100))
+        let userDefaults = UserDefaults.standard
+        if userDefaults.bool(forKey: "tipSpeechLanguageTabbed") == false {
+            tipSpeechLanguage.shouldDismissOnTapOutside = false
+            tipSpeechLanguage.bubbleColor = UIColor(red: 223/255, green:166/255, blue: 64/255, alpha: 0.8)
+            tipSpeechLanguage.show(text: "Choose your record language", direction: .up, maxWidth: 200, in: view, from: changeLanguage.frame.offsetBy(dx: -80, dy: -80))
+        }
+        
+        if userDefaults.bool(forKey: "tipNewRecordTabbed") == false {
+            tipNewRecord.bubbleColor = UIColor(red: 168/255, green:220/255, blue: 78/255, alpha: 1.00)
+            tipNewRecord.shouldDismissOnTapOutside = false
+            tipNewRecord.show(text: "Record a new sentence", direction: .down, maxWidth: 200, in: view, from: recordButton.frame.offsetBy(dx: -20, dy: -100))
+        }
         
     }
     
@@ -160,6 +171,14 @@ class RecordingViewController: UIViewController{
 
             let newAudioURL = recordFileManager!.getNewAudioURL()
             audioRecorder?.startRecording(at: newAudioURL)
+            
+            tipNewRecord.hide()
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(true, forKey: "tipNewRecordTabbed")
+            userDefaults.synchronize()
+            print("tipNewRecordTabbed: ", userDefaults.bool(forKey: "tipNewRecordTabbed"))
+            
+            
         }
         
     }
@@ -207,6 +226,12 @@ class RecordingViewController: UIViewController{
         let enLocale = Locale.init(identifier: "en")
         userLanguage =  enLocale.localizedString(forIdentifier: lang.identifier)
         changeLanguage.setTitle(userLanguage, for: .normal)
+        
+        tipSpeechLanguage.hide()
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "tipSpeechLanguageTabbed")
+        userDefaults.synchronize()
+        print("tipSpeechLanguageTabbed: ", userDefaults.bool(forKey: "tipSpeechLanguageTabbed"))
        
         
       // You can use segue.source to retrieve the VC

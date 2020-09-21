@@ -10,14 +10,14 @@ import UIKit
 import Foundation
 import AMPopTip
 
-
-
 class FolderViewController: UIViewController {
      
     var folderManager: FolderManager?
     let cellIdentifier: String = "CellForFolder"
     
-    let popTip = PopTip()
+    let tipCreateFolder = PopTip()
+    let tipGoToFolder = PopTip()
+
     
     override func viewWillAppear(_ animated: Bool) {
         folderManager?.fetchFolders()
@@ -30,10 +30,16 @@ class FolderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let userDefaults = UserDefaults.standard
-//        userDefaults.set(false, forKey: "onboardingComplete")
-//        userDefaults.synchronize()
-//        print("onboardingComplete: ", userDefaults.bool(forKey: "onboardingComplete"))
+        let userDefaults = UserDefaults.standard
+
+        // 첫 로딩 테스트를 위해 초기화 하는 부분
+        userDefaults.set(false, forKey: "onboardingComplete")
+        userDefaults.set(false, forKey: "tipCreateFolderTabbed")
+        userDefaults.set(false, forKey: "tipGoToFolderTabbed")
+        userDefaults.set(false, forKey: "tipSpeechLanguageTabbed")
+        userDefaults.set(false, forKey: "tipNewRecordTabbed")
+        userDefaults.synchronize()
+
 
         navigationItem.leftBarButtonItem = editButtonItem
 
@@ -46,15 +52,29 @@ class FolderViewController: UIViewController {
         
         print("folderview did load")
         
-        popTip.show(text: "Create a folder", direction: .down, maxWidth: 200, in: view, from: CGRect(x: view.frame.width - 28, y: self.navigationController!.navigationBar.frame.height, width: 1, height: self.navigationController!.navigationBar.frame.height))
+        
+        if userDefaults.bool(forKey: "tipCreateFolderTabbed") == false {
+            print("tipCreateFolderTabbed: ", userDefaults.bool(forKey: "tipCreateFolderTabbed"))
 
+            tipCreateFolder.bubbleColor = UIColor.red.withAlphaComponent(0.8)
+            tipCreateFolder.shouldDismissOnTapOutside = false
+            tipCreateFolder.show(text: "Create a folder", direction: .down, maxWidth: 200, in: view, from: CGRect(x: view.frame.width - 28, y: self.navigationController!.navigationBar.frame.height, width: 1, height: self.navigationController!.navigationBar.frame.height))
+            
+        }
+        
     }
 
     
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func addFolder(_ sender: UIBarButtonItem) {
- 
+        
+        tipCreateFolder.hide()
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "tipCreateFolderTabbed")
+        userDefaults.synchronize()
+        print("tipCreateFolderTabbed: ", userDefaults.bool(forKey: "tipCreateFolderTabbed"))
+        
        
         let alertController = UIAlertController(title: "New Forder", message: "Please input a folder name.", preferredStyle: .alert)
         alertController.addTextField {(UITextField) in UITextField.placeholder = "Folder Name for Voice Recordings"}
@@ -67,6 +87,15 @@ class FolderViewController: UIViewController {
                createFolder(folderName: newFolderName)
                self.folderManager?.fetchFolders()
                self.tableView.reloadData()
+                
+                if userDefaults.bool(forKey: "tipGoToFolderTabbed") == false {
+                    self.tipGoToFolder.bubbleColor = UIColor.orange.withAlphaComponent(0.8)
+                    self.tipGoToFolder.shouldDismissOnTapOutside = false
+                    self.tipGoToFolder.show(text: "Tab a folder", direction: .up, maxWidth: 200, in: self.view, from: self.tableView.frame.offsetBy(dx: -50, dy: 35))
+                      
+                }
+
+                
                 }
             }
                         
@@ -77,6 +106,8 @@ class FolderViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
         
     }
+    
+    
 
     
     // MARK: - Navigation
@@ -84,7 +115,7 @@ class FolderViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Pass the selected object to the new view controller
         
         guard let recordingViewController: RecordingViewController = segue.destination as? RecordingViewController else {
             return
@@ -95,6 +126,12 @@ class FolderViewController: UIViewController {
         }
         
         recordingViewController.titleText = cell.textLabel?.text
+        
+        tipGoToFolder.hide()
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "tipGoToFolderTabbed")
+        userDefaults.synchronize()
+        print("tipGoToFolderTabbed: ", userDefaults.bool(forKey: "tipGoToFolderTabbed"))
         
     }
 
@@ -113,7 +150,7 @@ class FolderViewController: UIViewController {
 }
 
 extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return folderManager?.folders.count ?? 0
     }
@@ -172,9 +209,6 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
             }
     }
     
-    
-    
-    
     // delete by swipe
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
@@ -184,7 +218,7 @@ extension FolderViewController: UITableViewDataSource, UITableViewDelegate {
             
             if folderManager?.folders[indexPath.row].fileCount != 0 {
                 
-                let alertController = UIAlertController(title: "Warning", message: "Recording files in this folder will be deleted too.", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Warning", message: "Audio files in the folder will be deleted too.", preferredStyle: .alert)
                 
                 let confirmAction = UIAlertAction(title: "OK", style: .default) { _ in
                     

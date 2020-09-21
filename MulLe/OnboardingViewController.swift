@@ -25,7 +25,7 @@ class OnboardingViewController: UIViewController{
         
         OnboardingItemInfo(informationImage: Asset.banks.image,
                            title: "Listen your speaking",
-                           description: "Mul-Le enables you to listen your speecking in an enjoyable way. You just need to tab a sentence that you want to listen. Moreover, it plays your speech automatically right after recording.",
+                           description: "Mul-Le enables you to listen your speacking in an enjoyable way. It plays your speech automatically right after recording. To listen a sentence or stop listening, please just tab the sentence.",
                            pageIcon: Asset.wallet.image,
                            color: UIColor(red: 106/255, green:166/255, blue: 211/255, alpha: 1.00),
                            //color: UIColor(red: 0.40, green: 0.69, blue: 0.71, alpha: 1.00),
@@ -33,7 +33,7 @@ class OnboardingViewController: UIViewController{
         
         OnboardingItemInfo(informationImage: Asset.stores.image,
                            title: "Folder",
-                           description: "Record your speech sentence by sentence and manage your recordings by a folder. It is easy to re-record a sentence and improve your speech.",
+                           description: "Record your speech, sentence by sentence. Manage recordings by a folder. It is easier to re-record a sentence instead of a whole page or a whole dialogue",
                            pageIcon: Asset.shoppingCart.image,
                            color: UIColor(red: 168/255, green:200/255, blue: 78/255, alpha: 1.00),
                            //color: UIColor(red: 0.61, green: 0.56, blue: 0.74, alpha: 1.00),
@@ -55,7 +55,7 @@ class OnboardingViewController: UIViewController{
     
     
     @IBAction func gotStarted(_ sender: Any) {
-        
+
         let userDefaults = UserDefaults.standard
         userDefaults.set(true, forKey: "onboardingComplete")
         userDefaults.synchronize()
