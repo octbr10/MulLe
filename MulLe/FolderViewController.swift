@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import AMPopTip
 
 
 
@@ -15,6 +16,9 @@ class FolderViewController: UIViewController {
      
     var folderManager: FolderManager?
     let cellIdentifier: String = "CellForFolder"
+    
+    let popTip = PopTip()
+    let there = CGRect(x: 300, y: 80, width: 10, height: 10)
     
     override func viewWillAppear(_ animated: Bool) {
         folderManager?.fetchFolders()
@@ -37,6 +41,8 @@ class FolderViewController: UIViewController {
         }
         
         print("folderview did load")
+        
+        popTip.show(text: "Create a folder", direction: .down, maxWidth: 200, in: view, from: CGRect(x: view.frame.width - 28, y: self.navigationController!.navigationBar.frame.height, width: 1, height: self.navigationController!.navigationBar.frame.height))
 
     }
 

@@ -12,39 +12,41 @@ import paper_onboarding
 class OnboardingViewController: UIViewController{
   
 //
-    @IBOutlet weak var onboardingView: OnboardingView!
     @IBOutlet weak var getStartedButton: UIButton!
     
     fileprivate let items = [
-        OnboardingItemInfo(informationImage: UIImage(named: "Hotels")!,
-                           title: "Hotels",
-                           description: "All hotels and hostels are sorted by hospitality rating",
-                           pageIcon: UIImage(named: "Hotels")!,
+        OnboardingItemInfo(informationImage: Asset.hotels.image,
+                           title: "Speech to Text",
+                           description: "Mul-Le is a recorder player designed specifically for a language learner to improve speaking. It enables you to check the precision of you speaking for yourself by converting your speech to text.",
+                           pageIcon: Asset.key.image,
                            color: UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
-        OnboardingItemInfo(informationImage: UIImage(named: "Hotels")!,
-                           title: "Hotels",
-                           description: "We carefully verify all banks before add them into the app",
-                           pageIcon: UIImage(named: "Hotels")!,
+        OnboardingItemInfo(informationImage: Asset.banks.image,
+                           title: "Listen your speaking",
+                           description: "Mul-Le enables you to listen your speecking in an enjoyable way. You just need to tab a sentence that you want to listen. Moreover, it plays your speech automatically right after recording.",
+                           pageIcon: Asset.wallet.image,
                            color: UIColor(red: 0.40, green: 0.69, blue: 0.71, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
         
-        OnboardingItemInfo(informationImage: UIImage(named: "Hotels")!,
-                           title: "Hotels",
-                           description: "All local stores are categorized for your convenience",
-                           pageIcon: UIImage(named: "Hotels")!,
+        OnboardingItemInfo(informationImage: Asset.stores.image,
+                           title: "Folder",
+                           description: "Record your speech sentence by sentence and manage your recordings by a folder. It is easy to re-record a sentence and improve your speech.",
+                           pageIcon: Asset.shoppingCart.image,
                            color: UIColor(red: 0.61, green: 0.56, blue: 0.74, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: titleFont, descriptionFont: descriptionFont),
+        
+
+        
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         getStartedButton.isHidden = false
 
         setupPaperOnboardingView()
 
+        view.bringSubviewToFront(getStartedButton)
     }
     
         private func setupPaperOnboardingView() {
@@ -81,9 +83,9 @@ class OnboardingViewController: UIViewController{
     // MARK: PaperOnboardingDelegate
     extension OnboardingViewController: PaperOnboardingDelegate {
 
-        func onboardingWillTransitonToIndex(_ index: Int) {
-            //getStartedButton.isHidden = index == 2 ? false : true
-        }
+//        func onboardingWillTransitonToIndex(_ index: Int) {
+//            getStartedButton.isHidden = index == 2 ? false : true
+//        }
 
         func onboardingConfigurationItem(_ item: OnboardingContentViewItem, index: Int) {
             
