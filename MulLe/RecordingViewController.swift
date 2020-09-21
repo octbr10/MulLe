@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import Speech
+import AMPopTip
 
 class RecordingViewController: UIViewController{
  
@@ -21,6 +22,9 @@ class RecordingViewController: UIViewController{
     var userLanguage: String?
     
     var reRecordButtonEnabled: Bool = true
+    
+    let tipSpeechLanguage = PopTip()
+    let tipNewRecord = PopTip()
       
     @IBOutlet weak var tableView:UITableView!
     
@@ -44,8 +48,7 @@ class RecordingViewController: UIViewController{
         audioRecorder = AudioRecorder()
         audioPlayer = AudioPlayer()
         
-          
-        let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
+                  let userDefaultLanguage = UserDefaults.standard.object(forKey: "speechLanguage") as? String
         print("userDefaultLanguage: ", userDefaultLanguage ?? "de-DE")
         let lang = Locale.init(identifier: userDefaultLanguage ?? "de-DE")
         let enLocale = Locale.init(identifier: "en")
@@ -69,8 +72,10 @@ class RecordingViewController: UIViewController{
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(manageNotification), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
-
-
+        
+        tipSpeechLanguage.show(text: "Choose your speech language", direction: .up, maxWidth: 200, in: view, from: changeLanguage.frame.offsetBy(dx: -80, dy: -80))
+        tipNewRecord.show(text: "Record a new sentence", direction: .down, maxWidth: 200, in: view, from: recordButton.frame.offsetBy(dx: -20, dy: -100))
+        
     }
     
     @objc func manageNotification(notification: NSNotification) {

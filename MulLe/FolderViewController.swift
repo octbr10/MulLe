@@ -18,7 +18,6 @@ class FolderViewController: UIViewController {
     let cellIdentifier: String = "CellForFolder"
     
     let popTip = PopTip()
-    let there = CGRect(x: 300, y: 80, width: 10, height: 10)
     
     override func viewWillAppear(_ animated: Bool) {
         folderManager?.fetchFolders()
