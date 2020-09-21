@@ -96,6 +96,16 @@ class OnboardingViewController: UIViewController{
 
     // MARK: PaperOnboardingDelegate
     extension OnboardingViewController: PaperOnboardingDelegate {
+        
+       
+        func onboardingWillTransitonToLeaving() {
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "Mainapp")
+            nextViewController.modalPresentationStyle = .fullScreen
+            self.present(nextViewController, animated:false, completion:nil)
+            
+        }
 
 //        func onboardingWillTransitonToIndex(_ index: Int) {
 //            getStartedButton.isHidden = index == 2 ? false : true

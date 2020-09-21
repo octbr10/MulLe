@@ -11,7 +11,7 @@ import Foundation
 import AMPopTip
 
 class FolderViewController: UIViewController {
-     
+    
     var folderManager: FolderManager?
     let cellIdentifier: String = "CellForFolder"
     
