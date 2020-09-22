@@ -47,7 +47,7 @@ class FolderViewController: UIViewController {
 
       
          // 첫 로딩 테스트를 위해 초기화 하는 부분
-        let userDefaults = UserDefaults.standard
+//        let userDefaults = UserDefaults.standard
 //        userDefaults.set(false, forKey: "onboardingComplete")
 //        userDefaults.set(false, forKey: "tipCreateFolderTabbed")
 //        userDefaults.set(false, forKey: "tipGoToFolderTabbed")

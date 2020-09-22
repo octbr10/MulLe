@@ -33,7 +33,7 @@ class OnboardingViewController: UIViewController{
         
         OnboardingItemInfo(informationImage: Asset.stores.image,
                            title: "Folder",
-                           description: "Record your speech, sentence by sentence. Manage recordings by a folder. It is easier to re-record a sentence instead of a whole page or a whole dialogue",
+                           description: "Record your speech, sentence by sentence. Manage recordings by a folder. It is easier to re-record a sentence rather than a whole page or a whole dialogue",
                            pageIcon: Asset.shoppingCart.image,
                            color: UIColor(red: 168/255, green:200/255, blue: 78/255, alpha: 1.00),
                            //color: UIColor(red: 0.61, green: 0.56, blue: 0.74, alpha: 1.00),
