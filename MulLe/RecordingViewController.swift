@@ -25,8 +25,9 @@ class RecordingViewController: UIViewController{
     
     let tipSpeechLanguage = PopTip()
     let tipNewRecord = PopTip()
+    let tipPlayRecord = PopTip()
       
-    @IBOutlet weak var tableView:UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var recordButton: UIButton!
     //@IBOutlet weak var playAllButton: UIButton!
@@ -44,7 +45,6 @@ class RecordingViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      
         recordFileManager = RecordFileManager(in: titleText ?? "Default Folder")
         audioRecorder = AudioRecorder()
         audioPlayer = AudioPlayer()
@@ -74,20 +74,25 @@ class RecordingViewController: UIViewController{
         
         NotificationCenter.default.addObserver(self, selector: #selector(manageNotification), name: NSNotification.Name(rawValue: "audioPlayerDidFinishPlaying"), object: nil)
         
+    }
+ 
+   
+    override func viewDidAppear(_ animated: Bool) {
         let userDefaults = UserDefaults.standard
+        
         if userDefaults.bool(forKey: "tipSpeechLanguageTabbed") == false {
             tipSpeechLanguage.shouldDismissOnTapOutside = false
             tipSpeechLanguage.bubbleColor = UIColor(red: 223/255, green:166/255, blue: 64/255, alpha: 0.8)
-            tipSpeechLanguage.show(text: "Choose your record language", direction: .up, maxWidth: 200, in: view, from: changeLanguage.frame.offsetBy(dx: -80, dy: -80))
+            tipSpeechLanguage.show(text: "Choose your record language", direction: .up, maxWidth: 100, in: view, from: changeLanguage.frame)
         }
         
         if userDefaults.bool(forKey: "tipNewRecordTabbed") == false {
-            tipNewRecord.bubbleColor = UIColor(red: 168/255, green:220/255, blue: 78/255, alpha: 1.00)
+            tipNewRecord.bubbleColor = UIColor(red: 168/255, green:220/255, blue: 78/255, alpha: 0.80)
             tipNewRecord.shouldDismissOnTapOutside = false
-            tipNewRecord.show(text: "Record a new sentence", direction: .down, maxWidth: 200, in: view, from: recordButton.frame.offsetBy(dx: -20, dy: -100))
+            tipNewRecord.show(text: "Record a new sentence", direction: .up, maxWidth: 100, in: view, from: recordButton.frame)
         }
-        
     }
+    
     
     @objc func manageNotification(notification: NSNotification) {
         guard let audioURL = notification.userInfo?["audioURL"] as? URL else {return}
@@ -98,6 +103,7 @@ class RecordingViewController: UIViewController{
         case .NewRecord:
                 recordFileManager?.fetchRecordings()
                 self.tableView.reloadRows(at: [IndexPath.init(row: ((recordFileManager?.recordings.count)! - 1), section: 0)], with: .automatic)
+                showPopTip()
         case .ReRecord:
             recordFileManager?.fetchRecordings()
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
@@ -113,6 +119,19 @@ class RecordingViewController: UIViewController{
             self.tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: UITableView.RowAnimation.none)
         }
         
+    }
+    
+    func showPopTip() {
+        
+        let userDefaults = UserDefaults.standard
+        
+        if userDefaults.bool(forKey: "tipPlayRecordTabbed") == false {
+            self.tipPlayRecord.bubbleColor = UIColor(red: 106/255, green:166/255, blue: 211/255, alpha: 0.80)
+            self.tipPlayRecord.shouldDismissOnTapOutside = false
+            let tableCell: CGRect = CGRect(x: self.tableView.frame.origin.x, y: self.tableView.frame.origin.y, width: self.view.frame.width, height: 30)
+            self.tipPlayRecord.show(text: "Tab to start or stop playing the recording", direction: .down, maxWidth: 200, in: self.view, from: tableCell)
+              
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -135,6 +154,8 @@ class RecordingViewController: UIViewController{
     }
    
     @IBAction func touchUpRecord(_ sender: UIButton) {
+        
+       
         if audioRecorder?.isRecording == true {
             
             reRecordButtonEnabled = true
@@ -171,14 +192,13 @@ class RecordingViewController: UIViewController{
 
             let newAudioURL = recordFileManager!.getNewAudioURL()
             audioRecorder?.startRecording(at: newAudioURL)
-            
+           
             tipNewRecord.hide()
             let userDefaults = UserDefaults.standard
             userDefaults.set(true, forKey: "tipNewRecordTabbed")
             userDefaults.synchronize()
             print("tipNewRecordTabbed: ", userDefaults.bool(forKey: "tipNewRecordTabbed"))
-            
-            
+
         }
         
     }
@@ -327,12 +347,20 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
             tableView.deselectRow(at: indexPath, animated: true)
             audioPlayer?.stopPlayback()
         } else {
-            let labelText = cell.textTitle.text
-            UIPasteboard.general.string = labelText
-            print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
+            // Text 복사하는 부분
+//            let labelText = cell.textTitle.text
+//            UIPasteboard.general.string = labelText
+//            print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
             print("cell.isSelected", cell.isSelected)
-           
             audioPlayer?.startPlayback(audio: cell.audioURL)
+            
+            tipPlayRecord.hide()
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(true, forKey: "tipPlayRecordTabbed")
+            userDefaults.synchronize()
+            print("tipPlayRecordTabbed: ", userDefaults.bool(forKey: "tipPlayRecordTabbed"))
+            
+            
         }
 
     }

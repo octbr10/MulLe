@@ -30,18 +30,7 @@ class FolderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userDefaults = UserDefaults.standard
-
-        // 첫 로딩 테스트를 위해 초기화 하는 부분
-        userDefaults.set(false, forKey: "onboardingComplete")
-        userDefaults.set(false, forKey: "tipCreateFolderTabbed")
-        userDefaults.set(false, forKey: "tipGoToFolderTabbed")
-        userDefaults.set(false, forKey: "tipSpeechLanguageTabbed")
-        userDefaults.set(false, forKey: "tipNewRecordTabbed")
-        userDefaults.synchronize()
-
-
-        navigationItem.leftBarButtonItem = editButtonItem
+         navigationItem.leftBarButtonItem = editButtonItem
 
         folderManager = FolderManager()
 
@@ -52,16 +41,29 @@ class FolderViewController: UIViewController {
         
         print("folderview did load")
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+      
+         // 첫 로딩 테스트를 위해 초기화 하는 부분
+        let userDefaults = UserDefaults.standard
+//        userDefaults.set(false, forKey: "onboardingComplete")
+//        userDefaults.set(false, forKey: "tipCreateFolderTabbed")
+//        userDefaults.set(false, forKey: "tipGoToFolderTabbed")
+//        userDefaults.set(false, forKey: "tipSpeechLanguageTabbed")
+//        userDefaults.set(false, forKey: "tipNewRecordTabbed")
+//        userDefaults.set(false, forKey: "tipPlayRecordTabbed")
+//        userDefaults.synchronize()
         
-        if userDefaults.bool(forKey: "tipCreateFolderTabbed") == false {
-            print("tipCreateFolderTabbed: ", userDefaults.bool(forKey: "tipCreateFolderTabbed"))
+        if UserDefaults.standard.bool(forKey: "tipCreateFolderTabbed") == false {
+            print("tipCreateFolderTabbed: ", UserDefaults.standard.bool(forKey: "tipCreateFolderTabbed"))
 
             tipCreateFolder.bubbleColor = UIColor.red.withAlphaComponent(0.8)
             tipCreateFolder.shouldDismissOnTapOutside = false
             tipCreateFolder.show(text: "Create a folder", direction: .down, maxWidth: 200, in: view, from: CGRect(x: view.frame.width - 28, y: self.navigationController!.navigationBar.frame.height, width: 1, height: self.navigationController!.navigationBar.frame.height))
             
         }
-        
     }
 
     
@@ -94,7 +96,6 @@ class FolderViewController: UIViewController {
                     self.tipGoToFolder.show(text: "Tab a folder", direction: .up, maxWidth: 200, in: self.view, from: self.tableView.frame.offsetBy(dx: -50, dy: 35))
                       
                 }
-
                 
                 }
             }
