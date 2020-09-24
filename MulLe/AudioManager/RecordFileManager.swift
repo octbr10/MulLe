@@ -54,6 +54,7 @@ class RecordFileManager: NSObject {
         recordings.removeAll()
         
         let directoryContents = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil)
+        
         for audio in directoryContents {
             let recording = Recording(fileURL: audio, filePath: audio.deletingLastPathComponent().relativePath, fileName: audio.lastPathComponent, createdAt: getCreationDate(for: audio), textRecognized: "non")
             recordings.append(recording)

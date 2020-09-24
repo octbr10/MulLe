@@ -295,11 +295,15 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
         cell.audioURL = recordFileManager!.recordings[indexPath.row].fileURL
         
         let s = cell.audioURL.lastPathComponent
-        let start = s.index(s.startIndex, offsetBy: 20)
-        let end = s.index(s.endIndex, offsetBy: -4)
-        if s.count == 23 {
-            cell.textTitle.text = cell.audioURL.lastPathComponent
-        } else {cell.textTitle.text = String(s[start..<end]) + "."}
+        if s.count > 20 {
+            let start = s.index(s.startIndex, offsetBy: 20)
+            let end = s.index(s.endIndex, offsetBy: -4)
+            
+            if s.count == 23 {
+                cell.textTitle.text = cell.audioURL.lastPathComponent
+            } else {cell.textTitle.text = String(s[start..<end]) + "."}
+        } else {cell.textTitle.text = cell.audioURL.lastPathComponent}
+
         
           
         cell.myTableViewController = self
@@ -348,9 +352,9 @@ extension RecordingViewController: UITableViewDataSource, UITableViewDelegate, C
             audioPlayer?.stopPlayback()
         } else {
             // Text 복사하는 부분
-//            let labelText = cell.textTitle.text
-//            UIPasteboard.general.string = labelText
-//            print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
+            let labelText = cell.textTitle.text
+            UIPasteboard.general.string = labelText
+            print("selected cell index path:", indexPath, "Copyed LabelText:", labelText ?? "no Label Text")
             print("cell.isSelected", cell.isSelected)
             audioPlayer?.startPlayback(audio: cell.audioURL)
             

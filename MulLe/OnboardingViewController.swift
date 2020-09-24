@@ -17,7 +17,7 @@ class OnboardingViewController: UIViewController{
     fileprivate let items = [
         OnboardingItemInfo(informationImage: Asset.hotels.image,
                            title: "Speech to Text",
-                           description: "Mul-Le is a recorder player designed specifically for a language learner to improve speaking. It enables you to check the precision of you speaking for yourself by converting your speech to text.",
+                           description: "MULLE is a recorder player designed specifically for a language learner to improve speaking. It enables you to check the precision of you speaking for yourself by converting your speech to text.",
                            pageIcon: Asset.key.image,
                            color: UIColor(red: 217/255, green:72/255, blue: 89/255, alpha: 1.00),
                            //color: UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00),
@@ -25,7 +25,7 @@ class OnboardingViewController: UIViewController{
         
         OnboardingItemInfo(informationImage: Asset.banks.image,
                            title: "Listen your speaking",
-                           description: "Mul-Le enables you to listen your speacking in an enjoyable way. It plays your speech automatically right after recording. To listen a sentence or stop listening, please just tab the sentence.",
+                           description: "MULLE enables you to listen your speacking in an enjoyable way. It plays your speech automatically right after recording. To listen a sentence or stop listening, please just tab the sentence.",
                            pageIcon: Asset.wallet.image,
                            color: UIColor(red: 106/255, green:166/255, blue: 211/255, alpha: 1.00),
                            //color: UIColor(red: 0.40, green: 0.69, blue: 0.71, alpha: 1.00),

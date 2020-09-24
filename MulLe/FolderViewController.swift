@@ -41,20 +41,20 @@ class FolderViewController: UIViewController {
         
         print("folderview did load")
         
+        // 첫 로딩 테스트를 위해 초기화 하는 부분
+//       let userDefaults = UserDefaults.standard
+//       userDefaults.set(false, forKey: "onboardingComplete")
+//       userDefaults.set(false, forKey: "tipCreateFolderTabbed")
+//       userDefaults.set(false, forKey: "tipGoToFolderTabbed")
+//       userDefaults.set(false, forKey: "tipSpeechLanguageTabbed")
+//       userDefaults.set(false, forKey: "tipNewRecordTabbed")
+//       userDefaults.set(false, forKey: "tipPlayRecordTabbed")
+//       userDefaults.synchronize()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-
-      
-         // 첫 로딩 테스트를 위해 초기화 하는 부분
-//        let userDefaults = UserDefaults.standard
-//        userDefaults.set(false, forKey: "onboardingComplete")
-//        userDefaults.set(false, forKey: "tipCreateFolderTabbed")
-//        userDefaults.set(false, forKey: "tipGoToFolderTabbed")
-//        userDefaults.set(false, forKey: "tipSpeechLanguageTabbed")
-//        userDefaults.set(false, forKey: "tipNewRecordTabbed")
-//        userDefaults.set(false, forKey: "tipPlayRecordTabbed")
-//        userDefaults.synchronize()
+ 
         
         if UserDefaults.standard.bool(forKey: "tipCreateFolderTabbed") == false {
             print("tipCreateFolderTabbed: ", UserDefaults.standard.bool(forKey: "tipCreateFolderTabbed"))
