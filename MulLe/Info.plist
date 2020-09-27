@@ -25,7 +25,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To record your voice when you press the record button on the app, MULLE accesses Mic.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Recorded speech will be converted to text. Do you allow it?</string>
+	<string>Recorded speech is converted to text, and the text is displayed in the app.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
