@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>GADApplicationIdentifier</key>
@@ -23,7 +23,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Recorder will use mic. Do you allow it?</string>
+	<string>To record your voice when you press the record button on the app, MULLE accesses Mic.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Recorded speech will be converted to text. Do you allow it?</string>
 	<key>UIApplicationSceneManifest</key>
