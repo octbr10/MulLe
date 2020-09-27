@@ -23,9 +23,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>To record your voice when you press the record button on the app, MULLE accesses Mic.</string>
+	<string>MULLE needs access to your microphone so that you can record your speech.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Recorded speech is converted to text, and the text is displayed in the app.</string>
+	<string>MULLE needs access to Speech Recognition so that recorded speech can be converted to text and displayed.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
